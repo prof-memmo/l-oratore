@@ -7,9 +7,28 @@ window.Auth = {
   user: null,
   role: 'guest', // 'viandante' | 'docente' | 'studente' | 'admin' | 'guest'
   plan: 'base',  // 'viandante' | 'docente_didattico' | 'docente_ecosistema' | 'base'
-  name: 'Ospite',
-  avatar: 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/avatar.png',
+  name: 'Prof. Memmo',
+  avatar: 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png',
   xp: 150,
+
+  getSafeAvatarUrl: function (avatar, isSuperAdmin) {
+    const defaultAvatar = 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png';
+    if (isSuperAdmin && (!avatar || avatar === '1' || avatar === 'assets/avatars/1.png' || avatar === 'assets/pedine/1.png' || String(avatar).includes('1.png'))) {
+      return defaultAvatar;
+    }
+    if (!avatar) return defaultAvatar;
+    const aStr = String(avatar).trim();
+    if (!aStr || aStr === 'null' || aStr === 'undefined' || aStr === 'default') return defaultAvatar;
+    if (aStr.startsWith('http://') || aStr.startsWith('https://') || aStr.startsWith('data:')) return aStr;
+    if (/^\d+$/.test(aStr)) return `https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/${aStr}.png`;
+    if (aStr.startsWith('assets/avatars/')) return `https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/${aStr}`;
+    if (aStr.startsWith('shared/')) return `https://prof-memmo.github.io/prof-memmo-gestione-siti/${aStr}`;
+    if (aStr.includes('.png') || aStr.includes('.jpg') || aStr.includes('.jpeg') || aStr.includes('.webp')) {
+      const cleanName = aStr.split('/').pop();
+      return `https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/${cleanName}`;
+    }
+    return defaultAvatar;
+  },
 
   init: async function () {
     // 1. Check local session storage first
@@ -20,8 +39,9 @@ window.Auth = {
         this.user = parsed;
         this.role = parsed.role || 'guest';
         this.plan = parsed.plan || 'base';
-        this.name = parsed.name || 'Oratore';
-        this.avatar = parsed.avatar || this.avatar;
+        this.name = parsed.name || 'Prof. Memmo';
+        const isSuperAdmin = (this.role === 'admin' || (parsed.email && parsed.email.toLowerCase() === 'prof.memmo@gmail.com'));
+        this.avatar = this.getSafeAvatarUrl(parsed.avatar, isSuperAdmin);
         this.xp = parsed.xp || 150;
       } catch (e) {
         localStorage.removeItem('pm_oratore_user');
@@ -45,26 +65,36 @@ window.Auth = {
   },
 
   handleFirebaseUser: async function (fbUser) {
+    const email = fbUser.email ? fbUser.email.toLowerCase() : '';
+    const isSuperAdmin = (email === 'prof.memmo@gmail.com');
     this.user = fbUser;
-    this.name = fbUser.displayName || fbUser.email.split('@')[0];
+    this.name = isSuperAdmin ? 'Prof. Memmo' : (fbUser.displayName || fbUser.email.split('@')[0]);
 
     try {
       if (window.fbDb) {
         const doc = await window.fbDb.collection('hub_users').doc(fbUser.uid).get();
         if (doc.exists) {
-          const data = doc.data();
-          this.role = data.role || 'studente';
-          this.plan = data.subscription || data.abbonamento || 'base';
+          const data = doc.data() || {};
+          this.role = (data.role === 'admin' || isSuperAdmin) ? 'admin' : (data.role || 'studente');
+          this.plan = data.subscription || data.abbonamento || (isSuperAdmin ? 'docente_ecosistema' : 'base');
           if (data.anagrafica && data.anagrafica.nome) {
             this.name = data.anagrafica.nome;
           }
-          if (data.avatar) {
-            this.avatar = data.avatar;
-          }
+          const rawAvatar = data.avatar || (data.anagrafica && data.anagrafica.avatar) || fbUser.photoURL || '';
+          this.avatar = this.getSafeAvatarUrl(rawAvatar, isSuperAdmin);
+        } else {
+          this.role = isSuperAdmin ? 'admin' : 'studente';
+          this.plan = isSuperAdmin ? 'docente_ecosistema' : 'base';
+          this.avatar = this.getSafeAvatarUrl('', isSuperAdmin);
         }
       }
     } catch (e) {
       console.warn("Lettura profilo hub_users in fallback:", e);
+      if (isSuperAdmin) {
+        this.role = 'admin';
+        this.plan = 'docente_ecosistema';
+        this.avatar = this.getSafeAvatarUrl('', true);
+      }
     }
 
     this.saveSession();
@@ -83,12 +113,21 @@ window.Auth = {
   },
 
   updateUI: function () {
+    const isSuperAdmin = (this.user && this.user.email && this.user.email.toLowerCase() === 'prof.memmo@gmail.com') || (this.role === 'admin');
+    const safeAvatar = this.getSafeAvatarUrl(this.avatar, isSuperAdmin);
+    this.avatar = safeAvatar;
+
     const nameEl = document.getElementById('header-user-name');
+    const roleEl = document.getElementById('header-user-role');
+    const roleSubEl = document.getElementById('dropdown-user-role-sub');
     const avatarEl = document.getElementById('header-user-avatar');
     const xpEl = document.getElementById('dropdown-user-xp');
 
-    if (nameEl) nameEl.textContent = this.name;
-    if (avatarEl) avatarEl.src = this.avatar;
+    if (nameEl) nameEl.textContent = this.name.toUpperCase();
+    const roleLabel = (this.role === 'admin' ? 'AMMINISTRATORE' : (this.role === 'docente' ? 'DOCENTE' : (this.role === 'viandante' ? 'VIANDANTE' : 'STUDENTE')));
+    if (roleEl) roleEl.textContent = roleLabel;
+    if (roleSubEl) roleSubEl.textContent = roleLabel;
+    if (avatarEl) avatarEl.src = safeAvatar;
     if (xpEl) xpEl.textContent = `${this.xp} XP`;
   },
 
