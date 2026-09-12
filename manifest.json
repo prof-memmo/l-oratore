@@ -1,0 +1,16 @@
+{
+  "name": "L'Oratore - Prof. Memmo",
+  "short_name": "L'Oratore",
+  "description": "Sfida didattica di narrazione, lessico ed espressione orale.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1329",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/avatar.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

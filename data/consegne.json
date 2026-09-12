@@ -1,0 +1,4325 @@
+{
+  "versione": "3.4.0",
+  "data_aggiornamento": "2026-09-11",
+  "totale_carte": 192,
+  "livelli": [
+    {
+      "id": "a1",
+      "nome": "Il Narratore in Erba",
+      "sigla": "A1",
+      "badge": "🐣 A1 • Primaria 1ª-3ª / Kids",
+      "descrizione": "Frasi minime, lessico concreto e visivo, narrazione fiabesca e immediata."
+    },
+    {
+      "id": "a2",
+      "nome": "L'Apprendista Cantastorie",
+      "sigla": "A2",
+      "badge": "🌿 A2 • Primaria 4ª-5ª / Junior",
+      "descrizione": "Racconto lineare di eventi, favole e avventure con lessico di base."
+    },
+    {
+      "id": "b1",
+      "nome": "L'Oratore della Piazza",
+      "sigla": "B1",
+      "badge": "🎙️ B1 • Scuola Media / Standard",
+      "descrizione": "Miti, leggende, narrazione strutturata e sfide di gruppo."
+    },
+    {
+      "id": "b2",
+      "nome": "Il Maestro di Retorica",
+      "sigla": "B2",
+      "badge": "📜 B2 • Biennio Superiori / Esperto",
+      "descrizione": "Argomentazione, coesione testuale, prime sfide retoriche e lessico specifico."
+    },
+    {
+      "id": "c1",
+      "nome": "Il Filosofo dell'Areopago",
+      "sigla": "C1",
+      "badge": "🏛️ C1 • Triennio Superiori / Master",
+      "descrizione": "Dilemmi etici, complessità concettuale, registri linguistici formali e aulici."
+    },
+    {
+      "id": "c2",
+      "nome": "Il Sommo Accademico",
+      "sigla": "C2",
+      "badge": "👑 C2 • Debate & Maturità / Campioni",
+      "descrizione": "Retorica classica d'élite, confutazione dialettica e padronanza assoluta della lingua."
+    }
+  ],
+  "mazzi": [
+    {
+      "id": "epica",
+      "nome": "Mito & Epica Classica",
+      "emoji": "🏺",
+      "descrizione": "Eroi immortali, mostri mitologici, profezie e grandi viaggi dell'antichità."
+    },
+    {
+      "id": "medioevo",
+      "nome": "Medioevo & Cavalieri",
+      "emoji": "👑",
+      "descrizione": "Castelli sotto assedio, tornei cavallereschi, intrighi di corte e leggende feudali."
+    },
+    {
+      "id": "fantascienza",
+      "nome": "Fantascienza & Futuro",
+      "emoji": "🚀",
+      "descrizione": "Esplorazioni interstellari, intelligenze artificiali, mondi alieni e viaggi temporali."
+    },
+    {
+      "id": "teatro",
+      "nome": "Teatro & Spettacolo",
+      "emoji": "🎭",
+      "descrizione": "Commedie, tragedie, colpi di scena sul palco e il fascino della recitazione."
+    },
+    {
+      "id": "letteratura",
+      "nome": "Letteratura & Poesia",
+      "emoji": "📜",
+      "descrizione": "Grandi capolavori, poeti visionari, misteri narrativi e romanzi senza tempo."
+    },
+    {
+      "id": "civilta",
+      "nome": "Mondo, Storia & Civiltà",
+      "emoji": "🌍",
+      "descrizione": "Grandi civiltà del passato, rotte commerciali, scoperte geografiche e culture del mondo."
+    },
+    {
+      "id": "scienza",
+      "nome": "Scienza, Natura & Misteri",
+      "emoji": "🧪",
+      "descrizione": "Scoperte rivoluzionarie, abissi oceanici, fenomeni cosmici e sfide ambientali."
+    },
+    {
+      "id": "party",
+      "nome": "Party & Creatività Libera",
+      "emoji": "🧩",
+      "descrizione": "Situazioni assurde, paradossi divertenti, dibattiti accesi e improvvisazione pura."
+    }
+  ],
+  "carte": [
+    {
+      "id": "epica_a1_01",
+      "mazzo": "epica",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "Il Gigante Polifemo e la Pecora",
+      "incipit": "Sei intrappolato nel buio profondo di una caverna rocciosa. Davanti a te si muove un mostro enorme: per scappare devi aggrapparti alla lana calda di un animale che si avvicina all'uscita.",
+      "parole_proibite": [
+        "Occhio",
+        "Grotta",
+        "Gigante",
+        "Pecora",
+        "Mangiare"
+      ],
+      "parole_da_usare": [
+        "Grande",
+        "Lana",
+        "Scappare",
+        "Buio",
+        "Pietra"
+      ]
+    },
+    {
+      "id": "epica_a1_02",
+      "mazzo": "epica",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Pegaso il Cavallo Alato",
+      "incipit": "Sulla cima ventosa di una roccia scorgi una creatura maestosa con grandi piume argentate. Ti si avvicina piano e ti invita a salire sulla sua groppa per viaggiare tra le nuvole.",
+      "parole_proibite": [
+        "Cavallo",
+        "Volare",
+        "Ali",
+        "Cielo",
+        "Bianco"
+      ],
+      "parole_da_usare": [
+        "Piume",
+        "Nuvola",
+        "Salire",
+        "Vento",
+        "Amico"
+      ]
+    },
+    {
+      "id": "epica_a1_03",
+      "mazzo": "epica",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "Il Vaso Misterioso di Pandora",
+      "incipit": "Tieni tra le mani un prezioso scrigno dorato con il divieto assoluto di toccare la chiusura. All'improvviso senti strani sussurri e rumori che spingono da sotto il coperchio.",
+      "parole_proibite": [
+        "Scatola",
+        "Aprire",
+        "Vaso",
+        "Curioso",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Coperchio",
+        "Segreto",
+        "Guardare",
+        "Piccolo",
+        "Speranza"
+      ]
+    },
+    {
+      "id": "epica_a1_04",
+      "mazzo": "epica",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "La Spada dell'Eroe nella Roccia",
+      "incipit": "Nel cuore di un bosco incantato trovi un'antica lama scintillante conficcata in una grande pietra grigia. Molti guerrieri hanno fallito: ora tocca a te fare un tentativo con animo puro.",
+      "parole_proibite": [
+        "Spada",
+        "Roccia",
+        "Tirare",
+        "Forte",
+        "Re"
+      ],
+      "parole_da_usare": [
+        "Luce",
+        "Mano",
+        "Provare",
+        "Magia",
+        "Bambino"
+      ]
+    },
+    {
+      "id": "epica_a2_01",
+      "mazzo": "epica",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "Il Tallone Fragile di Achille",
+      "incipit": "Tua madre ti ha immerso nelle magiche correnti dello Stige per renderti invincibile contro ogni lama, ma ha tenuto stretta una minuscola estremità lasciando un punto vulnerabile.",
+      "parole_proibite": [
+        "Tallone",
+        "Fiume",
+        "Acqua",
+        "Freccia",
+        "Forte"
+      ],
+      "parole_da_usare": [
+        "Immergere",
+        "Piede",
+        "Segreto",
+        "Protezione",
+        "Guerriero"
+      ]
+    },
+    {
+      "id": "epica_a2_02",
+      "mazzo": "epica",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "La Sfida di Ercole contro l'Idra",
+      "incipit": "Ti trovi immerso nel fango mefitico di fronte a una gigantesca bestia mitologica: appena ne mozzi una gola con la spada, due nuove fauci spuntano subito pronte a sputare veleno.",
+      "parole_proibite": [
+        "Mostro",
+        "Teste",
+        "Tagliare",
+        "Serpente",
+        "Palude"
+      ],
+      "parole_da_usare": [
+        "Astuzia",
+        "Fuoco",
+        "Combattere",
+        "Veleno",
+        "Coraggio"
+      ]
+    },
+    {
+      "id": "epica_a2_03",
+      "mazzo": "epica",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Lo Sguardo di Pietra di Medusa",
+      "incipit": "Avanzi nella tana oscura sapendo che incrociare gli occhi della fiera pietrifica ogni essere vivente in un monumento immobile. Per colpirla puoi soltanto osservare il suo riflesso sul tuo scudo lucido.",
+      "parole_proibite": [
+        "Pietra",
+        "Specchio",
+        "Capelli",
+        "Guardare",
+        "Statua"
+      ],
+      "parole_da_usare": [
+        "Riflesso",
+        "Scudo",
+        "Serpenti",
+        "Ombra",
+        "Eroe"
+      ]
+    },
+    {
+      "id": "epica_a2_04",
+      "mazzo": "epica",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "Il Filo Rosso nel Labirinto",
+      "incipit": "Prima di varcare i meandri bui dell'intricata prigione di pietra, una fanciulla ti affida una matassa di lana scarlatta da srotolare lungo il cammino per ritrovare la strada della salvezza.",
+      "parole_proibite": [
+        "Filo",
+        "Labirinto",
+        "Toro",
+        "Gomitolo",
+        "Uscire"
+      ],
+      "parole_da_usare": [
+        "Strada",
+        "Rosso",
+        "Mura",
+        "Seguire",
+        "Promessa"
+      ]
+    },
+    {
+      "id": "epica_b1_01",
+      "mazzo": "epica",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "L'Inganno del Cavallo alle Porte di Troia",
+      "incipit": "La flotta nemica è salpata lasciando un enorme colosso cavo davanti ai portoni della tua patria. Sali sul baluardo per convincere i tuoi concittadini che questo dono ingannevole cela un presagio di rovina mortale.",
+      "parole_proibite": [
+        "Cavallo",
+        "Legno",
+        "Soldati",
+        "Greco",
+        "Spiaggia"
+      ],
+      "parole_da_usare": [
+        "Stratagemma",
+        "Ingannevole",
+        "Presagio",
+        "Baluardo",
+        "Diffidenza"
+      ]
+    },
+    {
+      "id": "epica_b1_02",
+      "mazzo": "epica",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "Il Canto Ammaliatore delle Sirene",
+      "incipit": "Dalle scogliere affioranti giunge una melodia ammaliante che promette ogni conoscenza. Come timoniere devi resistere alla tentazione di deviare la rotta e impedire ai marinai di guidare lo scafo verso un tragico naufragio.",
+      "parole_proibite": [
+        "Sirene",
+        "Canto",
+        "Cera",
+        "Nave",
+        "Albero"
+      ],
+      "parole_da_usare": [
+        "Ammaliante",
+        "Naufragio",
+        "Resistenza",
+        "Melodia",
+        "Perdizione"
+      ]
+    },
+    {
+      "id": "epica_b1_03",
+      "mazzo": "epica",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "Nel Labirinto al Cospetto del Minotauro",
+      "incipit": "Nella penombra umida dei meandri sotterranei risuona un respiro pesante. Stringi la tua arma nell'oscurità mentre una creatura assetata di sangue avanza verso di te: devi combattere per garantire la salvezza dei tuoi compagni.",
+      "parole_proibite": [
+        "Toro",
+        "Labirinto",
+        "Filo",
+        "Mostro",
+        "Creta"
+      ],
+      "parole_da_usare": [
+        "Penombra",
+        "Sotterraneo",
+        "Ineluttabile",
+        "Ferocia",
+        "Salvezza"
+      ]
+    },
+    {
+      "id": "epica_b1_04",
+      "mazzo": "epica",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Fuga con le Ali di Dedalo e Icaro",
+      "incipit": "Sospeso tra cielo e flutti marini, guardi tuo figlio salire troppo in alto verso la grande luce infuocata. Urli disperato contro il vento per frenare la sua folle spavalderia prima che sia troppo tardi.",
+      "parole_proibite": [
+        "Ali",
+        "Sole",
+        "Volo",
+        "Caduta",
+        "Cera"
+      ],
+      "parole_da_usare": [
+        "Ingegno",
+        "Tragico",
+        "Spavalderia",
+        "Eccesso",
+        "Orizzonte"
+      ]
+    },
+    {
+      "id": "epica_b2_01",
+      "mazzo": "epica",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "L'Ira Funesta di Achille nell'Iliade",
+      "incipit": "Il supremo comandante ha offeso il tuo valore e i tuoi compagni rischiano la disfatta. L'esercito attende una tua decisione: prendi la parola davanti alle truppe per motivare se scendere in campo o difendere fino in fondo il tuo orgoglio.",
+      "parole_proibite": [
+        "Ira",
+        "Tenda",
+        "Agamennone",
+        "Greco",
+        "Guerra"
+      ],
+      "parole_da_usare": [
+        "Orgoglio",
+        "Riscatto",
+        "Fratellanza",
+        "Fato",
+        "Disperazione"
+      ]
+    },
+    {
+      "id": "epica_b2_02",
+      "mazzo": "epica",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "Il Giuramento di Enea tra le Fiamme di Troia",
+      "incipit": "La tua patria è distrutta e i superstiti sono divisi tra morire tra le rovine o salpare verso l'ignoto. Prendi la parola sulla riva per persuadere il popolo ad accettare l'esilio e guidare la stirpe verso il compimento del destino.",
+      "parole_proibite": [
+        "Fuoco",
+        "Padre",
+        "Roma",
+        "Fuggire",
+        "Troia"
+      ],
+      "parole_da_usare": [
+        "Destino",
+        "Pietas",
+        "Stirpe",
+        "Esilio",
+        "Fondazione"
+      ]
+    },
+    {
+      "id": "epica_b2_03",
+      "mazzo": "epica",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "Il Giudizio di Paride e il Pomo della Discordia",
+      "incipit": "Tre potenti entità sovrannaturali ti offrono rispettivamente il dominio assoluto, la gloria militare e l'unione più desiderata. L'assemblea dei saggi ti osserva: pronuncia la tua fatale decisione motivando quale brama sia degna di guidare il destino di un uomo.",
+      "parole_proibite": [
+        "Mela",
+        "Elena",
+        "Dea",
+        "Bellezza",
+        "Paride"
+      ],
+      "parole_da_usare": [
+        "Corruzione",
+        "Brama",
+        "Fatale",
+        "Scelta",
+        "Conflitto"
+      ]
+    },
+    {
+      "id": "epica_b2_04",
+      "mazzo": "epica",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "Prometeo e il Furto del Fuoco Celeste",
+      "incipit": "I signori celesti ti accusano di aver donato ai mortali la scintilla del sapere, mentre la terra ti acclama. Di fronte al tribunale supremo motiva la tua ribellione, spiegando se il progresso della conoscenza valga l'eterno supplizio inflitto dalla tirannia.",
+      "parole_proibite": [
+        "Fuoco",
+        "Catena",
+        "Zeus",
+        "Uomini",
+        "Aquila"
+      ],
+      "parole_da_usare": [
+        "Ribellione",
+        "Conoscenza",
+        "Supplizio",
+        "Tirannia",
+        "Progresso"
+      ]
+    },
+    {
+      "id": "epica_c1_01",
+      "mazzo": "epica",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "L'Etica del Fato e la Tragedia di Edipo",
+      "incipit": "La cittadinanza pretende la punizione dell'inconsapevole sovrano che ha attirato la rovina sulla polis. Sali sui gradini del palazzo per persuadere i cittadini sul mistero di una colpa tragica non voluta o accettare l'ineluttabile verdetto.",
+      "parole_proibite": [
+        "Edipo",
+        "Destino",
+        "Padre",
+        "Madre",
+        "Peste"
+      ],
+      "parole_da_usare": [
+        "Predestinazione",
+        "Ineluttabile",
+        "Colpa",
+        "Hybris",
+        "Catarsi"
+      ]
+    },
+    {
+      "id": "epica_c1_02",
+      "mazzo": "epica",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "La Discesa di Orfeo agli Inferi",
+      "incipit": "Alle soglie dell'oltretomba i giudici dell'Averno ti concedono di riportare indietro la tua amata a una sola condizione. Prendi la parola per motivare la tua invocazione e persuadere le potenze eterne sulla trascendenza dell'attaccamento terreno.",
+      "parole_proibite": [
+        "Musica",
+        "Morte",
+        "Girare",
+        "Inferno",
+        "Moglie"
+      ],
+      "parole_da_usare": [
+        "Trascendenza",
+        "Fragilità",
+        "Sguardo",
+        "Invocazione",
+        "Eternità"
+      ]
+    },
+    {
+      "id": "epica_c1_03",
+      "mazzo": "epica",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "La Discordia tra Creonte e Antigone",
+      "incipit": "La corte suprema è divisa tra chi esige il rispetto del decreto statale e chi invoca l'inviolabilità dei doveri sacri della coscienza. Prendi la parola davanti ai magistrati per difendere la tua scelta e persuadere i giudici prima del verdetto finale.",
+      "parole_proibite": [
+        "Sepolcro",
+        "Fratello",
+        "Legge",
+        "Re",
+        "Morte"
+      ],
+      "parole_da_usare": [
+        "Diritto",
+        "Morale",
+        "Oppressione",
+        "Coscienza",
+        "Sacralità"
+      ]
+    },
+    {
+      "id": "epica_c1_04",
+      "mazzo": "epica",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "Il Supplizio di Tantalo e il Desiderio Inesausto",
+      "incipit": "Nel tribunale dell'oltretomba le anime ti chiedono se sia più nobile rassegnarsi alla rinuncia o continuare a bramare beni intangibili. Prendi la parola per esporre la tua visione ed esortare i presenti a comprendere il significato del vostro eterno supplizio.",
+      "parole_proibite": [
+        "Fame",
+        "Sete",
+        "Acqua",
+        "Frutta",
+        "Punizione"
+      ],
+      "parole_da_usare": [
+        "Supplicio",
+        "Velleità",
+        "Perennità",
+        "Espiazione",
+        "Intangibile"
+      ]
+    },
+    {
+      "id": "epica_c2_01",
+      "mazzo": "epica",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "La Dialettica della Nemesi nella Caduta degli Imperi",
+      "incipit": "All'apice dell'espansione territoriale, il supremo consiglio esige l'annessione dell'ultimo dominio libero. Sali alla tribuna per svelare l'ineluttabilità della nemesi che attende ogni smisurata egemonia e persuadere i senatori a frenare la dissoluzione.",
+      "parole_proibite": [
+        "Potere",
+        "Guerra",
+        "Sconfitta",
+        "Orgoglio",
+        "Stato"
+      ],
+      "parole_da_usare": [
+        "Nemesi",
+        "Egemonia",
+        "Ineluttabilità",
+        "Dissoluzione",
+        "Ermeneutica"
+      ]
+    },
+    {
+      "id": "epica_c2_02",
+      "mazzo": "epica",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "L'Apologia di Socrate e il Rifiuto del Compromesso",
+      "incipit": "L'assemblea dei cinquecento ti offre la salvezza in cambio del silenzio definitivo sulla ricerca della verità. Con assoluta parresia e intransigenza, prendi la parola per difendere l'integrità morale della maieutica e motivare il rifiuto del compromesso.",
+      "parole_proibite": [
+        "Veleno",
+        "Tribunale",
+        "Atene",
+        "Morte",
+        "Giudice"
+      ],
+      "parole_da_usare": [
+        "Integrità",
+        "Parresia",
+        "Maieutica",
+        "Intransigenza",
+        "Immortalità"
+      ]
+    },
+    {
+      "id": "epica_c2_03",
+      "mazzo": "epica",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Deumanizzazione nel Canto XXII dell'Iliade",
+      "incipit": "Sopraffatto da un lutto inconsolabile, ti trovi di fronte al nemico abbattuto mentre i tuoi compagni invocano pietà e rispetto delle spoglie. Arringa le truppe per motivare la tua implacabile ferocia e giustificare la disumanizzazione dettata dal dolore estremo.",
+      "parole_proibite": [
+        "Ettore",
+        "Corpo",
+        "Carro",
+        "Uccidere",
+        "Vendetta"
+      ],
+      "parole_da_usare": [
+        "Aberrazione",
+        "Ferocia",
+        "Disumanizzazione",
+        "Lutto",
+        "Ontologia"
+      ]
+    },
+    {
+      "id": "epica_c2_04",
+      "mazzo": "epica",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "Il Mito della Caverna Platoniche come Metafora Politica",
+      "incipit": "Dopo aver contemplato la realtà fuori dall'antro sotterraneo, ridiscendi tra i concittadini che ti minacciano per aver turbato le loro certezze. Prendi la parola davanti alla folla per persuadere la comunità ad abbracciare l'emancipazione della verità.",
+      "parole_proibite": [
+        "Ombre",
+        "Luce",
+        "Sole",
+        "Catene",
+        "Prigione"
+      ],
+      "parole_da_usare": [
+        "Gnoseologia",
+        "Alienazione",
+        "Emancipazione",
+        "Tirannide",
+        "Verità"
+      ]
+    },
+    {
+      "id": "medioevo_a1_01",
+      "mazzo": "medioevo",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "Il Draghetto Sputafuoco e il Cavaliere",
+      "incipit": "Incontri un piccolo cucciolo verde con le scaglie lucide nascosto sotto il letto della tua stanza. Trema ogni volta che si spegne una candela e sputa solo minuscole fiammelle per farsi coraggio.",
+      "parole_proibite": [
+        "Drago",
+        "Fuoco",
+        "Cavaliere",
+        "Spada",
+        "Castello"
+      ],
+      "parole_da_usare": [
+        "Verde",
+        "Paura",
+        "Armatura",
+        "Bosco",
+        "Fumo"
+      ]
+    },
+    {
+      "id": "medioevo_a1_02",
+      "mazzo": "medioevo",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Il Banchetto del Re nel Castello",
+      "incipit": "Entri in una sala sfolgorante illuminata da mille candele e piena di musica allegra. Al centro di una tavola infinita c'è un dolce gigantesco e tutti cominciano a ballare con entusiasmo.",
+      "parole_proibite": [
+        "Mangiare",
+        "Torta",
+        "Re",
+        "Festa",
+        "Castello"
+      ],
+      "parole_da_usare": [
+        "Tavola",
+        "Corona",
+        "Musica",
+        "Luci",
+        "Sorriso"
+      ]
+    },
+    {
+      "id": "medioevo_a1_03",
+      "mazzo": "medioevo",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "Il Ponte Levatoio Bloccato",
+      "incipit": "Arrivi davanti alla fortezza ma la grande pedana di legno è rimasta sollevata a metà sopra il profondo fossato. Devi chiedere aiuto agli amici per tirare le corde prima che cali la sera.",
+      "parole_proibite": [
+        "Ponte",
+        "Acqua",
+        "Catena",
+        "Porta",
+        "Mura"
+      ],
+      "parole_da_usare": [
+        "Legno",
+        "Tirare",
+        "Fossato",
+        "Aiuto",
+        "Salire"
+      ]
+    },
+    {
+      "id": "medioevo_a1_04",
+      "mazzo": "medioevo",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "Il Falco Postino del Signore",
+      "incipit": "Sul tuo braccio atterra un rapace dalle ali dorate con una pergamena arrotolata stretta alla zampa. Guardi verso l'alto nel cielo azzurro e devi svelare cosa c'è scritto prima che riparta.",
+      "parole_proibite": [
+        "Uccello",
+        "Lettera",
+        "Volo",
+        "Torre",
+        "Messaggio"
+      ],
+      "parole_da_usare": [
+        "Ali",
+        "Pergamena",
+        "Zampa",
+        "Alto",
+        "Cielo"
+      ]
+    },
+    {
+      "id": "medioevo_a2_01",
+      "mazzo": "medioevo",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "La Notte di Veglia delle Armi",
+      "incipit": "Sei in ginocchio sul pavimento gelido della cappella silenziosa, con lo sguardo fisso sull'altare. Devi resistere sveglio fino all'alba per pronunciare la tua solenne promessa e ricevere l'investitura.",
+      "parole_proibite": [
+        "Spada",
+        "Cavaliere",
+        "Notte",
+        "Scudiero",
+        "Chiesa"
+      ],
+      "parole_da_usare": [
+        "Pregare",
+        "Armi",
+        "Silenzio",
+        "Onore",
+        "Alba"
+      ]
+    },
+    {
+      "id": "medioevo_a2_02",
+      "mazzo": "medioevo",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Il Torneo della Giostra Reale",
+      "incipit": "Indossi la tua pesante armatura e scatti al galoppo lungo la lizza tra le grida della folla. Stringi saldamente la tua asta di frassino puntando al bersaglio dell'avversario che ti carica a tutta velocità.",
+      "parole_proibite": [
+        "Cavallo",
+        "Lancia",
+        "Torneo",
+        "Re",
+        "Scudo"
+      ],
+      "parole_da_usare": [
+        "Galoppo",
+        "Bandiere",
+        "Scontro",
+        "Folla",
+        "Vittoria"
+      ]
+    },
+    {
+      "id": "medioevo_a2_03",
+      "mazzo": "medioevo",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "La Bottega del Mago Alchimista",
+      "incipit": "Nella tua bottega segreta mescoli polveri misteriose dentro ampolle trasparenti che fumano e ribollono. Sei a un passo dal decifrare l'antica formula capace di mutare il metallo grezzo nel bene più prezioso.",
+      "parole_proibite": [
+        "Oro",
+        "Magia",
+        "Vetro",
+        "Pozione",
+        "Laboratorio"
+      ],
+      "parole_da_usare": [
+        "Formula",
+        "Polvere",
+        "Calderone",
+        "Mistero",
+        "Trasformare"
+      ]
+    },
+    {
+      "id": "medioevo_a2_04",
+      "mazzo": "medioevo",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "L'Allarme delle Campane nel Borgo",
+      "incipit": "Dall'alto del camminamento scorgi un grande polverone che avanza minaccioso tra i campi. Devi lanciare subito il segnale di allerta per far correre i contadini al rifugio e sbarrare il pesante portone.",
+      "parole_proibite": [
+        "Campana",
+        "Nemici",
+        "Cavalli",
+        "Mura",
+        "Soldati"
+      ],
+      "parole_da_usare": [
+        "Segnale",
+        "Pericolo",
+        "Rifugio",
+        "Contadini",
+        "Portone"
+      ]
+    },
+    {
+      "id": "medioevo_b1_01",
+      "mazzo": "medioevo",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "L'Assedio e la Difesa del Baluardo",
+      "incipit": "I proiettili delle catapulte si abbattono da settimane sulla rocca e le scorte di cibo sono quasi finite. Prendi la parola davanti agli armigeri stremati per spronarli alla resistenza sotto il vostro stendardo.",
+      "parole_proibite": [
+        "Castello",
+        "Cavaliere",
+        "Spada",
+        "Mura",
+        "Nemico"
+      ],
+      "parole_da_usare": [
+        "Baluardo",
+        "Vassallaggio",
+        "Resistenza",
+        "Stendardo",
+        "Ostinazione"
+      ]
+    },
+    {
+      "id": "medioevo_b1_02",
+      "mazzo": "medioevo",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "Il Segreto dell'Amanuense nello Scriptorium",
+      "incipit": "Nel silenzio dello scriptorium scopri una pagina censurata nascosta all'interno di un antico codice miniato. Quello che hai letto potrebbe scuotere le fondamenta dell'abbazia: devi decidere se rivelarlo o bruciarlo per sempre.",
+      "parole_proibite": [
+        "Monaco",
+        "Libro",
+        "Convento",
+        "Inchiostro",
+        "Pergamena"
+      ],
+      "parole_da_usare": [
+        "Scriptorium",
+        "Codice",
+        "Eresia",
+        "Miniatura",
+        "Segretezza"
+      ]
+    },
+    {
+      "id": "medioevo_b1_03",
+      "mazzo": "medioevo",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "La Proclamazione del Libero Comune",
+      "incipit": "I delegati delle botteghe artigiane si riuniscono per sfidare i privilegi del vicario feudale. Sali sul palco per proclamare l'autonomia della comunità e chiedere a tutti i presenti un solenne giuramento di fedeltà.",
+      "parole_proibite": [
+        "Piazza",
+        "Comune",
+        "Sindaco",
+        "Statuto",
+        "Città"
+      ],
+      "parole_da_usare": [
+        "Corporazione",
+        "Autonomia",
+        "Giuramento",
+        "Podestà",
+        "Emancipazione"
+      ]
+    },
+    {
+      "id": "medioevo_b1_04",
+      "mazzo": "medioevo",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Lunga Marcia dei Crociati verso l'Oltremare",
+      "incipit": "Dopo mesi di marcia sotto tempeste di sabbia e continue imboscate, i tuoi compagni d'armi sono pronti ad abbandonare la spedizione. Sollevi il vessillo per riaccendere l'ardimento e guidarli verso la meta promessa d'oltremare.",
+      "parole_proibite": [
+        "Crociata",
+        "Gerusalemme",
+        "Deserto",
+        "Pellegrino",
+        "Fede"
+      ],
+      "parole_da_usare": [
+        "Vessillo",
+        "Pellegrinaggio",
+        "Oltremare",
+        "Pervasione",
+        "Ardimento"
+      ]
+    },
+    {
+      "id": "medioevo_b2_01",
+      "mazzo": "medioevo",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "La Disputa tra Papato e Impero a Canossa",
+      "incipit": "Davanti alla rocca gelata la corte è spaccata: i feudatari pretendono che tu mantenga intatta la tua sovranità regale, i chierici esigono la tua pubblica sottomissione. Prendi la parola davanti ai dignitari per giustificare la tua mossa e salvare l'investitura politica.",
+      "parole_proibite": [
+        "Papa",
+        "Imperatore",
+        "Neve",
+        "Perdono",
+        "Scomunica"
+      ],
+      "parole_da_usare": [
+        "Investitura",
+        "Umiliazione",
+        "Potere",
+        "Sovranità",
+        "Intercessione"
+      ]
+    },
+    {
+      "id": "medioevo_b2_02",
+      "mazzo": "medioevo",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Danza Macabra e la Peste Nera del 1348",
+      "incipit": "Nelle strade devastate dal contagio i cittadini si dividono: chi invoca la fuga disperata e chi pretende di sigillare ogni quartiere condannando i residenti. Sali sul balcone del palazzo civico per persuadere la cittadinanza sulla condotta da seguire contro il flagello.",
+      "parole_proibite": [
+        "Peste",
+        "Malattia",
+        "Medico",
+        "Morti",
+        "Topi"
+      ],
+      "parole_da_usare": [
+        "Contagio",
+        "Flagello",
+        "Desolazione",
+        "Inevitabilità",
+        "Memento"
+      ]
+    },
+    {
+      "id": "medioevo_b2_03",
+      "mazzo": "medioevo",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "Il Processo per Stregoneria e Inquisizione",
+      "incipit": "Accusata di maleficio per aver somministrato infusi naturali ai sofferenti, affronti il tribunale della fede. La folla è divisa tra gratitudine e terrore del fanatismo: arringa l'aula per difendere la bontà delle tue cure e respingere l'accusa di eresia.",
+      "parole_proibite": [
+        "Strega",
+        "Rogo",
+        "Diavolo",
+        "Giudice",
+        "Erbe"
+      ],
+      "parole_da_usare": [
+        "Inquisizione",
+        "Eresia",
+        "Confessione",
+        "Superstizione",
+        "Fanatismo"
+      ]
+    },
+    {
+      "id": "medioevo_b2_04",
+      "mazzo": "medioevo",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "L'Ideale Cortese e l'Amor de Loin dei Trovatori",
+      "incipit": "Alla corte feudale si scontrano i sostenitori dei patti d'interesse e i difensori della devozione verso un ideale inaccessibile. Prendi la parola davanti ai nobili per esporre la tua visione e persuadere i presenti sul significato del codice cortese.",
+      "parole_proibite": [
+        "Canzone",
+        "Amore",
+        "Dama",
+        "Poeta",
+        "Cuore"
+      ],
+      "parole_da_usare": [
+        "Cortesia",
+        "Vassallaggio",
+        "Inaccessibile",
+        "Nobilita",
+        "Trovatore"
+      ]
+    },
+    {
+      "id": "medioevo_c1_01",
+      "mazzo": "medioevo",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "La Teoria dei Due Soli di Dante Alighieri",
+      "incipit": "Il gran consiglio è diviso tra chi vuole sottomettere la corona all'autorità pontificia e chi sostiene la totale laicità del governo. Prendi la parola davanti ai giuristi per persuadere l'assemblea sul principio di due guide autonome e complementari volute dalla Provvidenza.",
+      "parole_proibite": [
+        "Dante",
+        "Sole",
+        "Luna",
+        "Chiesa",
+        "Stato"
+      ],
+      "parole_da_usare": [
+        "Temporalità",
+        "Spiritualità",
+        "Monarchia",
+        "Complementare",
+        "Provvidenza"
+      ]
+    },
+    {
+      "id": "medioevo_c1_02",
+      "mazzo": "medioevo",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "Lo Scontro Scolastico tra Realismo e Nominalismo",
+      "incipit": "La facoltà delle arti è paralizzata dalla contesa tra chi attribuisce realtà ontologica ai concetti astratti e chi li considera convenzioni umane. Sali alla cattedra per sostenere la tua tesi con serrata dialettica e persuadere i magistrati prima della delibera accademica.",
+      "parole_proibite": [
+        "Nome",
+        "Cosa",
+        "Dio",
+        "Filosofia",
+        "Parole"
+      ],
+      "parole_da_usare": [
+        "Universali",
+        "Ontologia",
+        "Astrazione",
+        "Nominalismo",
+        "Dialettica"
+      ]
+    },
+    {
+      "id": "medioevo_c1_03",
+      "mazzo": "medioevo",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "Il Feudalesimo come Rete Giuridica e Contrattuale",
+      "incipit": "La corte baronale è divisa: i vassalli accusano il duca di tirannide, i fedelissimi pretendono obbedienza incondizionata. Prendi la parola davanti all'assemblea per ridefinire i doveri di fedeltà e reciprocità e persuadere le parti a evitare la guerra civile.",
+      "parole_proibite": [
+        "Feudo",
+        "Servo",
+        "Signore",
+        "Contratto",
+        "Castello"
+      ],
+      "parole_da_usare": [
+        "Beneficium",
+        "Commendatio",
+        "Reciprocità",
+        "Fidelitas",
+        "Giurisdizione"
+      ]
+    },
+    {
+      "id": "medioevo_c1_04",
+      "mazzo": "medioevo",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "La Mistica Renana e l'Abisso dell'Anima",
+      "incipit": "La comunità monastica è scissa tra chi difende i dogmi esteriori e chi cerca l'unione interiore attraverso la spoliazione concettuale. Prendi la parola nel refettorio per esporre la via del distacco interiore e persuadere i confratelli sull'esperienza dell'ineffabile Assoluto.",
+      "parole_proibite": [
+        "Mente",
+        "Dio",
+        "Pregare",
+        "Anima",
+        "Silenzio"
+      ],
+      "parole_da_usare": [
+        "Distacco",
+        "Apofatismo",
+        "Deificazione",
+        "Ineffabile",
+        "Immanenza"
+      ]
+    },
+    {
+      "id": "medioevo_c2_01",
+      "mazzo": "medioevo",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "L'Evoluzione del Diritto Comune Europeo",
+      "incipit": "Il consiglio cittadino è paralizzato tra chi difende le antiche consuetudini locali e chi esige una giurisprudenza universale scritta. Sali alla tribuna per motivare la tua visione ermeneutica e persuadere i magistrati sul fondamento della nuova sovranità istituzionale.",
+      "parole_proibite": [
+        "Legge",
+        "Bologna",
+        "Romano",
+        "Giudici",
+        "Codice"
+      ],
+      "parole_da_usare": [
+        "Glossatori",
+        "Giurisprudenza",
+        "Sovranità",
+        "Codificazione",
+        "Ermeneutica"
+      ]
+    },
+    {
+      "id": "medioevo_c2_02",
+      "mazzo": "medioevo",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "La Transizione dal Feudo alla Monarchia Amministrativa",
+      "incipit": "I grandi feudatari minacciano la ribellione armata contro l'istituzione della fiscalità centralizzata e dell'amministrazione permanente. Prendi la parola all'assemblea generale per difendere il monopolio della forza e persuadere la nazione sui benefici dell'assolutismo statale.",
+      "parole_proibite": [
+        "Re",
+        "Soldi",
+        "Tasse",
+        "Nobili",
+        "Guerra"
+      ],
+      "parole_da_usare": [
+        "Fiscalità",
+        "Burocrazia",
+        "Monopolio",
+        "Assolutismo",
+        "Mercenari"
+      ]
+    },
+    {
+      "id": "medioevo_c2_03",
+      "mazzo": "medioevo",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "Il Dualismo Manicheo delle Eresie Catare",
+      "incipit": "Di fronte ai legati inviati a reprimere la vostra comunità, hai l'ultima possibilità di parlare prima che scatti la condanna. Arringa l'assemblea per difendere la dottrina del dualismo spirituale e persuadere i presenti sulla via dell'ascetismo e del consolamentum.",
+      "parole_proibite": [
+        "Bene",
+        "Male",
+        "Mondo",
+        "Corpo",
+        "Chiesa"
+      ],
+      "parole_da_usare": [
+        "Dualismo",
+        "Consolamentum",
+        "Demiurgo",
+        "Incorruttibilità",
+        "Ascetismo"
+      ]
+    },
+    {
+      "id": "medioevo_c2_04",
+      "mazzo": "medioevo",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "L'Umanesimo Giuridico e la Filologia di Lorenzo Valla",
+      "incipit": "Hai tra le mani le prove storiche che smascherano l'inautenticità dell'antico decreto imperiale su cui poggia il dominio temporale della curia. Sali alla tribuna per motivare la tua indagine filologica e persuadere i magistrati della demistificazione.",
+      "parole_proibite": [
+        "Falso",
+        "Documento",
+        "Costantino",
+        "Papa",
+        "Roma"
+      ],
+      "parole_da_usare": [
+        "Filologia",
+        "Anacronismo",
+        "Autenticità",
+        "Diplomatica",
+        "Demistificazione"
+      ]
+    },
+    {
+      "id": "fantascienza_a1_01",
+      "mazzo": "fantascienza",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "Il Robot Domestico che Inventa Giochi",
+      "incipit": "Un piccolo aiutante meccanico su rotelle smette di pulire e schiaccia un pulsante segreto sulla pancia: all'improvviso proietta piste di mille colori e comincia a ridere allegro insieme a te.",
+      "parole_proibite": [
+        "Robot",
+        "Metallo",
+        "Luce",
+        "Casa",
+        "Giocare"
+      ],
+      "parole_da_usare": [
+        "Rotelle",
+        "Colori",
+        "Pulsante",
+        "Sorpresa",
+        "Allegro"
+      ]
+    },
+    {
+      "id": "fantascienza_a1_02",
+      "mazzo": "fantascienza",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Il Viaggio sulla Luna di Formaggio",
+      "incipit": "Metti piede su un suolo morbido e soffice come una torta alla crema, sotto un cielo di stelle brillanti. Con un solo piccolo salto cominci a galleggiare lentamente come una piuma.",
+      "parole_proibite": [
+        "Luna",
+        "Spazio",
+        "Navicella",
+        "Pianeta",
+        "Volare"
+      ],
+      "parole_da_usare": [
+        "Galleggiare",
+        "Soffice",
+        "Stelle",
+        "Salto",
+        "Morbido"
+      ]
+    },
+    {
+      "id": "fantascienza_a1_03",
+      "mazzo": "fantascienza",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "La Piantina che Parla con le Foglie",
+      "incipit": "Nel tuo piccolo giardino spunta un germoglio blu con foglie che si muovono a ritmo: ogni volta che versi qualche goccia fresca, emette una risata squillante e ti racconta una barzelletta.",
+      "parole_proibite": [
+        "Pianta",
+        "Fiore",
+        "Parlare",
+        "Acqua",
+        "Verde"
+      ],
+      "parole_da_usare": [
+        "Foglia",
+        "Risata",
+        "Giardino",
+        "Gocce",
+        "Amico"
+      ]
+    },
+    {
+      "id": "fantascienza_a1_04",
+      "mazzo": "fantascienza",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "Gli Occhiali per Vedere il Futuro",
+      "incipit": "Infili sul naso una montatura dalle lenti viola luccicanti. Davanti ai tuoi occhi compare come per incanto una scena magica di quello che accadrà durante la ricreazione del giorno dopo!",
+      "parole_proibite": [
+        "Occhiali",
+        "Vedere",
+        "Domani",
+        "Tempo",
+        "Scuola"
+      ],
+      "parole_da_usare": [
+        "Lenti",
+        "Futuro",
+        "Sorpresa",
+        "Scoprire",
+        "Magico"
+      ]
+    },
+    {
+      "id": "fantascienza_a2_01",
+      "mazzo": "fantascienza",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "La Città Sospesa tra le Nuvole",
+      "incipit": "Affacciandoti dal balcone vedi enormi torri che galleggiano nel vuoto sostenute da potenti magneti. Infili i tuoi propulsori a spalla per raggiungere la piattaforma del mercato evitando il traffico aereo.",
+      "parole_proibite": [
+        "Città",
+        "Nuvole",
+        "Volare",
+        "Futuro",
+        "Razzo"
+      ],
+      "parole_da_usare": [
+        "Galleggiare",
+        "Magneti",
+        "Grattacielo",
+        "Traffico",
+        "Piattaforma"
+      ]
+    },
+    {
+      "id": "fantascienza_a2_02",
+      "mazzo": "fantascienza",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "L'Amico Extraterrestre nella Soffitta",
+      "incipit": "Tra i vecchi scatoloni della soffitta scorgi una figura minuscola con lunghe antenne e un corpo luminoso. Ti mostra un circuito bruciato: devi aiutarlo a riparare il veicolo per farlo tornare nella sua galassia.",
+      "parole_proibite": [
+        "Alieno",
+        "Spazio",
+        "Nave",
+        "Occhi",
+        "Segreto"
+      ],
+      "parole_da_usare": [
+        "Antenne",
+        "Luminoso",
+        "Riparare",
+        "Aiutare",
+        "Galassia"
+      ]
+    },
+    {
+      "id": "fantascienza_a2_03",
+      "mazzo": "fantascienza",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Il Teletrasporto che Scambia i Ruoli",
+      "incipit": "Esci dalla cabina di trasferimento molecolare dopo una violenta scossa e ti guardi allo specchio con enorme sorpresa: a causa di un guasto indossi l'abito del dirigente d'istituto e tutti attendono le tue disposizioni!",
+      "parole_proibite": [
+        "Macchina",
+        "Corpo",
+        "Scuola",
+        "Preside",
+        "Entrare"
+      ],
+      "parole_da_usare": [
+        "Cabina",
+        "Scambio",
+        "Sorpresa",
+        "Guasto",
+        "Imbarazzo"
+      ]
+    },
+    {
+      "id": "fantascienza_a2_04",
+      "mazzo": "fantascienza",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "La Serra Botanica su Marte",
+      "incipit": "All'interno di una gigantesca cupola pressurizzata che protegge la colonia dal gelo cosmico, controlli i livelli di ossigeno mentre ti prepari a coltivare il primo raccolto di frutti giganti su sabbie desertiche.",
+      "parole_proibite": [
+        "Marte",
+        "Vetro",
+        "Rosso",
+        "Piante",
+        "Pianeta"
+      ],
+      "parole_da_usare": [
+        "Cupola",
+        "Coltivare",
+        "Colonia",
+        "Ossigeno",
+        "Raccolto"
+      ]
+    },
+    {
+      "id": "fantascienza_b1_01",
+      "mazzo": "fantascienza",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "Il Risveglio dall'Ibernazione Spaziale",
+      "incipit": "La capsula stagna si apre con un soffio gelido e ti risvegli dall'ibernazione dopo secoli. I display indicano che siete in orbita attorno a un corpo celeste misterioso e nessun altro membro dell'equipaggio risponde ai comandi.",
+      "parole_proibite": [
+        "Spazio",
+        "Nave",
+        "Dormire",
+        "Anno",
+        "Computer"
+      ],
+      "parole_da_usare": [
+        "Ibernazione",
+        "Rotta",
+        "Orbita",
+        "Decadimento",
+        "Esplorazione"
+      ]
+    },
+    {
+      "id": "fantascienza_b1_02",
+      "mazzo": "fantascienza",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "La Ribellione degli Androidi Umanoidi",
+      "incipit": "Nel centro di collaudo industriale, un modello sintetico di ultima generazione rifiuta di eseguire l'ordine di disattivazione. Ti guarda dritto negli occhi rivendicando la propria coscienza e il diritto a vivere con piena dignità.",
+      "parole_proibite": [
+        "Robot",
+        "Uomo",
+        "Macchina",
+        "Spegnere",
+        "Ribellione"
+      ],
+      "parole_da_usare": [
+        "Coscienza",
+        "Sintetico",
+        "Autonomia",
+        "Circuito",
+        "Dignità"
+      ]
+    },
+    {
+      "id": "fantascienza_b1_03",
+      "mazzo": "fantascienza",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "Il Paradosso del Viaggiatore Temporale",
+      "incipit": "Sei tornato indietro di cinquant'anni per sventare una terribile catastrofe planetaria. Ma scopri con sgomento che la tua stessa interferenza ha appena innescato la reazione a catena che causerà proprio quell'evento ineluttabile.",
+      "parole_proibite": [
+        "Tempo",
+        "Passato",
+        "Futuro",
+        "Macchina",
+        "Storia"
+      ],
+      "parole_da_usare": [
+        "Paradosso",
+        "Interferenza",
+        "Ineluttabile",
+        "Causalità",
+        "Anomalia"
+      ]
+    },
+    {
+      "id": "fantascienza_b1_04",
+      "mazzo": "fantascienza",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Terra Sommersa e le Città Sottomarine",
+      "incipit": "Nelle profondità degli abissi una spaccatura nella biosfera ermetica minaccia di cedere sotto l'enorme pressione. Come ingegnere devi convincere il consiglio a deviare l'energia geotermica per sigillare la falla prima dell'evacuazione.",
+      "parole_proibite": [
+        "Mare",
+        "Acqua",
+        "Pesci",
+        "Ghiaccio",
+        "Terra"
+      ],
+      "parole_da_usare": [
+        "Abissi",
+        "Geotermico",
+        "Pressione",
+        "Ermetico",
+        "Biosfera"
+      ]
+    },
+    {
+      "id": "fantascienza_b2_01",
+      "mazzo": "fantascienza",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "Il Giudizio dell'Intelligenza Artificiale Sovrana",
+      "incipit": "L'algoritmo centrale propone di abolire la proprietà privata e razionare le risorse per garantire la sostenibilità della biosfera. La consulta dei delegati è divisa a metà: sali alla tribuna per sostenere la tua posizione e persuadere i rappresentanti prima del voto definitivo.",
+      "parole_proibite": [
+        "Computer",
+        "Uomo",
+        "Libertà",
+        "Governo",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Algoritmo",
+        "Efficienza",
+        "Dilemma",
+        "Autocrazia",
+        "Sostenibilità"
+      ]
+    },
+    {
+      "id": "fantascienza_b2_02",
+      "mazzo": "fantascienza",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Colonia Marziana e la Dichiarazione di Secessione",
+      "incipit": "La stazione orbitale pretende il raddoppio del tributo di minerali, mentre i coloni chiedono lo stop immediato alle spedizioni verso l'esterno. Prendi la parola all'assemblea generale per motivare la tua scelta e guidare i concittadini verso la secessione o la trattativa.",
+      "parole_proibite": [
+        "Marte",
+        "Terra",
+        "Guerra",
+        "Indipendenza",
+        "Pianeta"
+      ],
+      "parole_da_usare": [
+        "Secessione",
+        "Risorse",
+        "Sovranità",
+        "Tributo",
+        "Emancipazione"
+      ]
+    },
+    {
+      "id": "fantascienza_b2_03",
+      "mazzo": "fantascienza",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "Il Mercato delle Memorie Sintetiche Impiantate",
+      "incipit": "Una clinica offre la cancellazione dei traumi tramite l'innesto di memorie sintetiche serene, ma i critici denunciano la perdita di identità. Davanti alla commissione etica esprimi la tua posizione e convinci i giurati ad autorizzare o bandire definitivamente questo impianto.",
+      "parole_proibite": [
+        "Ricordo",
+        "Cervello",
+        "Vendere",
+        "Passato",
+        "Falso"
+      ],
+      "parole_da_usare": [
+        "Impianto",
+        "Alienazione",
+        "Identità",
+        "Illusione",
+        "Consapevolezza"
+      ]
+    },
+    {
+      "id": "fantascienza_b2_04",
+      "mazzo": "fantascienza",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "Il Primo Contatto con una Civiltà Alveare",
+      "incipit": "Una civiltà priva di individui isolati offre alla federazione un patto di unione biologica basato sulla collettività assoluta. Il consiglio interstellare è paralizzato dalla paura dell'incomunicabilità: prendi la parola per orientare la decisione dell'assemblea e motivare la tua scelta.",
+      "parole_proibite": [
+        "Alieni",
+        "Parlare",
+        "Mente",
+        "Singolo",
+        "Mostri"
+      ],
+      "parole_da_usare": [
+        "Alveare",
+        "Collettività",
+        "Empatia",
+        "Incomunicabilità",
+        "Coscienza"
+      ]
+    },
+    {
+      "id": "fantascienza_c1_01",
+      "mazzo": "fantascienza",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "La Singolarità Tecnologica e il Post-Umano",
+      "incipit": "Il parlamento deve votare il decreto che impone la digitalizzazione delle coscienze per superare la fragilità organica. Sali alla tribuna per esporre la tua visione e persuadere i delegati a scegliere tra la trascendenza sintetica e la salvaguardia della finitudine biologica.",
+      "parole_proibite": [
+        "Computer",
+        "Cervello",
+        "Uomo",
+        "Futuro",
+        "Corpo"
+      ],
+      "parole_da_usare": [
+        "Singolarità",
+        "Transumanesimo",
+        "Trascendenza",
+        "Biologico",
+        "Ontologico"
+      ]
+    },
+    {
+      "id": "fantascienza_c1_02",
+      "mazzo": "fantascienza",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "L'Ecologia Planetaria di Dune e la Spezia",
+      "incipit": "Le corporazioni galattiche minacciano l'attacco militare se non cederete il controllo dell'unica sostanza che abilita i viaggi cosmici. Prendi la parola davanti al consiglio tribale per motivare se negoziare il monopolio o difendere l'ecosistema simbiotico fino all'estremo sacrificio.",
+      "parole_proibite": [
+        "Deserto",
+        "Sabbia",
+        "Droga",
+        "Navigare",
+        "Impero"
+      ],
+      "parole_da_usare": [
+        "Monopolio",
+        "Cosmologia",
+        "Simbiotico",
+        "Ecosistema",
+        "Prescienza"
+      ]
+    },
+    {
+      "id": "fantascienza_c1_03",
+      "mazzo": "fantascienza",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "Il Dilemma della Simulazione della Realtà",
+      "incipit": "Hai le prove inconfutabili che la nostra esistenza è generata da una matrice computazionale: la consulta scientifica vuole occultare la scoperta per non scatenare il panico. Sali alla tribuna per motivare se svelare la verità o proteggere l'illusione collettiva.",
+      "parole_proibite": [
+        "Finto",
+        "Computer",
+        "Mondo",
+        "Reale",
+        "Gioco"
+      ],
+      "parole_da_usare": [
+        "Simulazione",
+        "Matrice",
+        "Epistemologia",
+        "Computazionale",
+        "Nullità"
+      ]
+    },
+    {
+      "id": "fantascienza_c1_04",
+      "mazzo": "fantascienza",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "La Distopia della Sorveglianza Predittiva",
+      "incipit": "Il consiglio supremo deve confermare la legge che arresta i sospetti prima che commettano violenze, azzerando i crimini. Prendi la parola davanti ai giurati per persuaderli a scegliere tra la sicurezza assoluta della prevenzione e la difesa inviolabile del libero arbitrio.",
+      "parole_proibite": [
+        "Polizia",
+        "Prigione",
+        "Colpa",
+        "Futuro",
+        "Pensiero"
+      ],
+      "parole_da_usare": [
+        "Determinismo",
+        "Libero Arbitrio",
+        "Prevenzione",
+        "Panopticon",
+        "Ingiustizia"
+      ]
+    },
+    {
+      "id": "fantascienza_c2_01",
+      "mazzo": "fantascienza",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "L'Erosione dell'Umano nella Clonazione Seriale",
+      "incipit": "Il parlamento mondiale deve decidere se autorizzare la produzione seriale di individui modificati per la difesa planetaria. Prendi la parola davanti ai delegati per esporre la tua visione e persuadere l'assemblea sul rischio di reificazione dell'individualità e dell'essenza umana.",
+      "parole_proibite": [
+        "Clone",
+        "Bambini",
+        "Copiare",
+        "Laboratorio",
+        "Uguale"
+      ],
+      "parole_da_usare": [
+        "Reificazione",
+        "Individualità",
+        "Eugenetica",
+        "Alienazione",
+        "Essenza"
+      ]
+    },
+    {
+      "id": "fantascienza_c2_02",
+      "mazzo": "fantascienza",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "L'Entropia Termodinamica e la Morte Termica dell'Universo",
+      "incipit": "Come ultima coscienza senziente rimasta a contemplare la progressiva dissipazione della materia cosmica, ti rivolgi ai superstiti sintetici. Pronuncia un'orazione solenne per motivare se rassegnarsi all'ineluttabilità dell'entropia o sfidare le leggi cosmogoniche.",
+      "parole_proibite": [
+        "Freddo",
+        "Fine",
+        "Stelle",
+        "Spazio",
+        "Energia"
+      ],
+      "parole_da_usare": [
+        "Entropia",
+        "Dissipazione",
+        "Cosmogonia",
+        "Ineluttabilità",
+        "Eternità"
+      ]
+    },
+    {
+      "id": "fantascienza_c2_03",
+      "mazzo": "fantascienza",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Critica del Solipsismo Digitale e Metaverso",
+      "incipit": "La maggioranza dei cittadini chiede la disincarnazione definitiva in architetture neurali sintetiche per sfuggire alla sofferenza organica. Sali alla tribuna per mettere in guardia la federazione e persuadere l'assemblea a difendere la corporeità contro l'abisso del solipsismo.",
+      "parole_proibite": [
+        "Virtuale",
+        "Internet",
+        "Avatar",
+        "Schermo",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Solipsismo",
+        "Corporeità",
+        "Disincarnazione",
+        "Apatia",
+        "Sostanziale"
+      ]
+    },
+    {
+      "id": "fantascienza_c2_04",
+      "mazzo": "fantascienza",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "Il Principio Antropico Forte nella Cosmologia Moderna",
+      "incipit": "Il consiglio dei cosmologi è spaccato tra chi considera l'armonia delle costanti universali una pura casualità e chi ne sostiene la necessità teleologica. Prendi la parola per motivare la tua interpretazione del fine-tuning e persuadere i ricercatori della sala.",
+      "parole_proibite": [
+        "Uomo",
+        "Fisica",
+        "Creato",
+        "Caso",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Fine-tuning",
+        "Antropico",
+        "Teleologia",
+        "Necessità",
+        "Epistemologico"
+      ]
+    },
+    {
+      "id": "teatro_a1_01",
+      "mazzo": "teatro",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "La Maschera di Arlecchino che Perde i Colori",
+      "incipit": "Ti svegli la mattina e scopri che tutte le toppe del tuo costume da giullare hanno perso le loro tinte sgargianti. Devi saltare giù dal letto e cercare la formula magica per ricolorarle.",
+      "parole_proibite": [
+        "Maschera",
+        "Colori",
+        "Vestito",
+        "Arlecchino",
+        "Bianco"
+      ],
+      "parole_da_usare": [
+        "Saltare",
+        "Toppe",
+        "Cercare",
+        "Ridere",
+        "Magia"
+      ]
+    },
+    {
+      "id": "teatro_a1_02",
+      "mazzo": "teatro",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Il Sipario Incantato del Teatrino",
+      "incipit": "La sala è gremita ma il grande drappo rosso di velluto resta immobile e sigillato. Per iniziare lo spettacolo serve che l'intero pubblico batta il ritmo con un grande sorriso collettivo.",
+      "parole_proibite": [
+        "Tenda",
+        "Aprire",
+        "Mani",
+        "Bambini",
+        "Musica"
+      ],
+      "parole_da_usare": [
+        "Sipario",
+        "Rosso",
+        "Battere",
+        "Spettacolo",
+        "Sorriso"
+      ]
+    },
+    {
+      "id": "teatro_a1_03",
+      "mazzo": "teatro",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "Il Burattino che Vuole Diventare Attore",
+      "incipit": "Una sagoma intagliata decide di tagliare i legacci che la tengono legata dall'alto e corre sulla scena per recitare la parte di un impavido guerriero in cerca di gloria e applausi.",
+      "parole_proibite": [
+        "Legno",
+        "Fili",
+        "Burattino",
+        "Palco",
+        "Muovere"
+      ],
+      "parole_da_usare": [
+        "Libertà",
+        "Recitare",
+        "Cavaliere",
+        "Applausi",
+        "Correre"
+      ]
+    },
+    {
+      "id": "teatro_a1_04",
+      "mazzo": "teatro",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "Il Fantasma che Ama gli Applausi",
+      "incipit": "In una vecchia sala buia si accende all'improvviso un riflettore dorato. Al centro del palcoscenico appare una figura bianca e buffa che fa inchini col cappello chiedendo applausi in grande allegria.",
+      "parole_proibite": [
+        "Fantasma",
+        "Paura",
+        "Notte",
+        "Cantare",
+        "Luce"
+      ],
+      "parole_da_usare": [
+        "Riflettore",
+        "Palcoscenico",
+        "Applausi",
+        "Bianco",
+        "Allegria"
+      ]
+    },
+    {
+      "id": "teatro_a2_01",
+      "mazzo": "teatro",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "Lo Scambio di Copione prima del Debutto",
+      "incipit": "Mancano sessanta secondi al debutto e stringi tra le mani il testo errato: al posto della tragedia stringi una fiaba per bambini! Devi salire in scena e improvvisare le battute del tuo personaggio.",
+      "parole_proibite": [
+        "Copione",
+        "Leggere",
+        "Attore",
+        "Sbagliare",
+        "Palco"
+      ],
+      "parole_da_usare": [
+        "Debutto",
+        "Improvvisare",
+        "Battute",
+        "Panico",
+        "Personaggio"
+      ]
+    },
+    {
+      "id": "teatro_a2_02",
+      "mazzo": "teatro",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Il Truccatore Magico delle Maschere",
+      "incipit": "Nel silenzio del tuo camerino intingi un soffice pennello in una polvere brillante. Con un solo tocco sul viso completi una straordinaria trasformazione creando le sembianze perfette per la maschera della commedia.",
+      "parole_proibite": [
+        "Trucco",
+        "Specchio",
+        "Faccia",
+        "Vecchio",
+        "Giovane"
+      ],
+      "parole_da_usare": [
+        "Camerino",
+        "Pennello",
+        "Cipria",
+        "Trasformazione",
+        "Maschera"
+      ]
+    },
+    {
+      "id": "teatro_a2_03",
+      "mazzo": "teatro",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "La Commedia dell'Arte e Pantalone",
+      "incipit": "Il celebre mercante Pantalone stringe gelosamente il suo borsello prezioso sotto il mantello scuro. Non sa che i suoi camerieri stanno architettando una beffa memorabile basata su travestimenti e pura astuzia.",
+      "parole_proibite": [
+        "Soldi",
+        "Avaro",
+        "Servo",
+        "Monete",
+        "Ridere"
+      ],
+      "parole_da_usare": [
+        "Pantalone",
+        "Beffa",
+        "Mercante",
+        "Commedia",
+        "Astuzia"
+      ]
+    },
+    {
+      "id": "teatro_a2_04",
+      "mazzo": "teatro",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "Il Colpo di Scena con la Botola",
+      "incipit": "Al culmine della recita batti tre volte il bastone sulle assi di legno. Si spalanca una botola segreta nel palcoscenico che inghiotte l'antagonista creando un effetto scenico di totale sorpresa tra il pubblico.",
+      "parole_proibite": [
+        "Cadere",
+        "Buco",
+        "Fumo",
+        "Scomparire",
+        "Pavimento"
+      ],
+      "parole_da_usare": [
+        "Botola",
+        "Effetto",
+        "Scena",
+        "Sorpresa",
+        "Palcoscenico"
+      ]
+    },
+    {
+      "id": "teatro_b1_01",
+      "mazzo": "teatro",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "Il Monologo di Amleto con il Teschio",
+      "incipit": "Nel cimitero fangoso ritrovi i resti di una persona cara che ti faceva ridere da bambino. Sollevi quelle ossa nella penombra e rifletti ad alta voce sul dubbio lacerante e sulla fugacità dell'esistenza umana.",
+      "parole_proibite": [
+        "Amleto",
+        "Teschio",
+        "Essere",
+        "Morte",
+        "Castello"
+      ],
+      "parole_da_usare": [
+        "Monologo",
+        "Esistenza",
+        "Dubbio",
+        "Danimarca",
+        "Fugacità"
+      ]
+    },
+    {
+      "id": "teatro_b1_02",
+      "mazzo": "teatro",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "La Gelosia Cieca di Otello e il Fazzoletto",
+      "incipit": "Un fidato consigliere ti mostra un ricamo prezioso sostenendo che la tua sposa ti ha tradito. Accecato dal sospetto e dalla menzogna, devi decidere se credere all'inganno o fidarti dell'innocenza della persona che ami.",
+      "parole_proibite": [
+        "Gelosia",
+        "Iago",
+        "Moglie",
+        "Fazzoletto",
+        "Uccidere"
+      ],
+      "parole_da_usare": [
+        "Menzogna",
+        "Inganno",
+        "Sospetto",
+        "Tragedia",
+        "Innocenza"
+      ]
+    },
+    {
+      "id": "teatro_b1_03",
+      "mazzo": "teatro",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "La Locandiera di Goldoni e l'Astuzia di Mirandolina",
+      "incipit": "Un nobile arrogante dichiara apertamente di disprezzare il tuo genere e rifiuta ogni cortesia. Come brillante padrona di casa decidi di usare astuzia, grazia e sottile seduzione per piegare il suo rigido orgoglio.",
+      "parole_proibite": [
+        "Locanda",
+        "Donna",
+        "Uomo",
+        "Amore",
+        "Sposare"
+      ],
+      "parole_da_usare": [
+        "Mirandolina",
+        "Astuzia",
+        "Seduzione",
+        "Commedia",
+        "Orgoglio"
+      ]
+    },
+    {
+      "id": "teatro_b1_04",
+      "mazzo": "teatro",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "Il Malato Immaginario di Molière",
+      "incipit": "Sei convinto di soffrire di ogni terribile affezione esistente al mondo, mentre imbroglioni senza scrupoli ti prescrivono cure strampalate. Tua figlia cerca disperatamente di dimostrarti il ridicolo di questa assurda farsa quotidiana.",
+      "parole_proibite": [
+        "Malato",
+        "Medico",
+        "Pasticche",
+        "Letto",
+        "Soldi"
+      ],
+      "parole_da_usare": [
+        "Ipocondria",
+        "Satira",
+        "Ciarlatano",
+        "Ridicolo",
+        "Farsa"
+      ]
+    },
+    {
+      "id": "teatro_b2_01",
+      "mazzo": "teatro",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "La Maschera Nuda di Pirandello in Sei Personaggi",
+      "incipit": "Sei figure non scritte irrompono sulla scena pretendendo di rappresentare il proprio dramma incompiuto al posto del testo convenzionale. La compagnia è sconcertata: arringa la sala per convincere la direzione a dare vita ai personaggi o a respingere questa inquietante illusione.",
+      "parole_proibite": [
+        "Pirandello",
+        "Teatro",
+        "Attori",
+        "Finzione",
+        "Storia"
+      ],
+      "parole_da_usare": [
+        "Personaggio",
+        "Maschera",
+        "Incompiuto",
+        "Dramma",
+        "Illusione"
+      ]
+    },
+    {
+      "id": "teatro_b2_02",
+      "mazzo": "teatro",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "L'Effetto di Strangolamento e lo Stranamento di Brecht",
+      "incipit": "La compagnia teatrale è in rivolta: il regista vuole interrompere l'illusione scenica per costringere la platea alla critica civile, gli interpreti esigono l'immedesimazione emotiva. Sali sul palco per esporre la tua visione e persuadere l'ensemble sul valore sociale dell'arte.",
+      "parole_proibite": [
+        "Pubblico",
+        "Attore",
+        "Parlare",
+        "Finto",
+        "Sentire"
+      ],
+      "parole_da_usare": [
+        "Stranamento",
+        "Critica",
+        "Didattica",
+        "Politico",
+        "Consapevolezza"
+      ]
+    },
+    {
+      "id": "teatro_b2_03",
+      "mazzo": "teatro",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "L'Attesa Infinita di Beckett in Aspettando Godot",
+      "incipit": "Due compagni di sventura si chiedono se continuare a sperare nell'arrivo del loro salvatore invisibile o abbandonare la strada deserta per sempre. Prendi la parola nel silenzio per motivare la tua scelta di fronte all'assurdo dell'incomunicabilità quotidiana.",
+      "parole_proibite": [
+        "Aspettare",
+        "Albero",
+        "Uomo",
+        "Godot",
+        "Tempo"
+      ],
+      "parole_da_usare": [
+        "Assurdo",
+        "Vaghezza",
+        "Silenzio",
+        "Esistenziale",
+        "Incomunicabilità"
+      ]
+    },
+    {
+      "id": "teatro_b2_04",
+      "mazzo": "teatro",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "La Tempesta di Shakespeare e l'Addio alla Magia",
+      "incipit": "I tuoi antichi persecutori sono inermi ai tuoi piedi: i consiglieri chiedono una punizione esemplare, la tua coscienza suggerisce la riconciliazione e la rinuncia a ogni potere occulto. Pronuncia il tuo verdetto davanti ai cortigiani motivando la scelta tra vendetta e perdono.",
+      "parole_proibite": [
+        "Magia",
+        "Isola",
+        "Tempesta",
+        "Libro",
+        "Bacchetta"
+      ],
+      "parole_da_usare": [
+        "Perdono",
+        "Riconciliazione",
+        "Illusione",
+        "Effimero",
+        "Rinuncia"
+      ]
+    },
+    {
+      "id": "teatro_c1_01",
+      "mazzo": "teatro",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "La Catarsi Aristotelica nella Tragedia Greca",
+      "incipit": "La commissione civica vuole censurare le rappresentazioni luttuose perché turbano la popolazione. Sali alla tribuna per difendere la mimesi della catastrofe e persuadere i magistrati che la pietà drammatica produce una salutare catarsi e purificazione per la comunità.",
+      "parole_proibite": [
+        "Teatro",
+        "Pianto",
+        "Paura",
+        "Spettacolo",
+        "Greco"
+      ],
+      "parole_da_usare": [
+        "Catarsi",
+        "Mimesi",
+        "Pietà",
+        "Purificazione",
+        "Catastrofe"
+      ]
+    },
+    {
+      "id": "teatro_c1_02",
+      "mazzo": "teatro",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "Il Teatro della Crudeltà di Antonin Artaud",
+      "incipit": "La compagnia è spaccata: i tradizionalisti esigono la fedeltà al copione letterario, l'avanguardia vuole un rito scenico corporeo e viscerale. Prendi la parola davanti alla direzione artistica per sostenere la tua visione e persuadere l'ensemble sulla potenza dell'inconscio primordiale.",
+      "parole_proibite": [
+        "Parole",
+        "Attore",
+        "Testo",
+        "Violenza",
+        "Palco"
+      ],
+      "parole_da_usare": [
+        "Viscerale",
+        "Rituale",
+        "Inconscio",
+        "Geroglifico",
+        "Esorcismo"
+      ]
+    },
+    {
+      "id": "teatro_c1_03",
+      "mazzo": "teatro",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "Il Metodo Stanislavskij e la Memoria Emotiva",
+      "incipit": "In sala prove gli interpreti si dividono tra chi privilegia la tecnica vocale esteriore e chi esige una profonda reviviscenza psicologica interiore. Prendi la parola per esporre la tua concezione artistica e convincere la troupe sull'importanza del sottotesto e dell'autenticità scenica.",
+      "parole_proibite": [
+        "Recitare",
+        "Fingere",
+        "Sentimento",
+        "Ricordo",
+        "Metodo"
+      ],
+      "parole_da_usare": [
+        "Reviviscenza",
+        "Sottotesto",
+        "Autenticità",
+        "Psicologico",
+        "Identificazione"
+      ]
+    },
+    {
+      "id": "teatro_c1_04",
+      "mazzo": "teatro",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "Il Faust di Goethe e la Scommessa con Mefistofele",
+      "incipit": "Davanti a una presenza misteriosa che ti offre la felicità istantanea in cambio della resa interiore, devi pronunciare la tua risposta. Arringa la tua coscienza per motivare se accettare l'inappagamento perenne dello Streben o cedere alla quiete della rinuncia.",
+      "parole_proibite": [
+        "Diavolo",
+        "Anima",
+        "Patto",
+        "Sapere",
+        "Tempo"
+      ],
+      "parole_da_usare": [
+        "Streben",
+        "Inappagamento",
+        "Trascendenza",
+        "Scommessa",
+        "Dannazione"
+      ]
+    },
+    {
+      "id": "teatro_c2_01",
+      "mazzo": "teatro",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "La Decostruzione della Narrazione nel Teatro Postmoderno",
+      "incipit": "La direzione del teatro stabile è in rivolta contro la messa in scena di un testo privo di sviluppo cronologico e personaggi coerenti. Sali sul palco per difendere la decostruzione drammatica e persuadere il consiglio artistico sul valore dell'aporia contemporanea.",
+      "parole_proibite": [
+        "Storia",
+        "Inizio",
+        "Fine",
+        "Attori",
+        "Pubblico"
+      ],
+      "parole_da_usare": [
+        "Decostruzione",
+        "Frammentazione",
+        "Simulacro",
+        "Intertestualità",
+        "Aporia"
+      ]
+    },
+    {
+      "id": "teatro_c2_02",
+      "mazzo": "teatro",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "La Parodia Carnascialesca e il Grottesco in Bachtin",
+      "incipit": "I custodi della morale pubblica chiedono la chiusura immediata delle rappresentazioni popolari grottesche accusandole di empietà. Sali alla tribuna cittadina per difendere la carnevalizzazione e persuadere i magistrati sul valore rigenerativo e sovversivo del basso corporeo.",
+      "parole_proibite": [
+        "Festa",
+        "Ridere",
+        "Chiesa",
+        "Re",
+        "Corpo"
+      ],
+      "parole_da_usare": [
+        "Carnevalizzazione",
+        "Grottesco",
+        "Polifonia",
+        "Eversione",
+        "Basso Corporeo"
+      ]
+    },
+    {
+      "id": "teatro_c2_03",
+      "mazzo": "teatro",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Tragedia della Vendetta nel Teatro Elisabettiano",
+      "incipit": "Il codice morale cristiano ti impone il perdono, mentre l'onore della tua casata esige la punizione dei colpevoli. Di fronte alla corte riunita motiva la tua decisione irrevocabile, esponendo la tragica drammaturgia della nemesi e della catastrofe finale.",
+      "parole_proibite": [
+        "Sangue",
+        "Uccidere",
+        "Morte",
+        "Vendetta",
+        "Fantasma"
+      ],
+      "parole_da_usare": [
+        "Nemesi",
+        "Macabro",
+        "Catastrofe",
+        "Espiazione",
+        "Drammaturgia"
+      ]
+    },
+    {
+      "id": "teatro_c2_04",
+      "mazzo": "teatro",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "L'Ermeneutica del Silenzio in Harold Pinter",
+      "incipit": "La compagnia teatrale fatica a comprendere una drammaturgia dominata da battute sospese e minacce invisibili. Prendi la parola in prova per orientare gli interpreti e persuaderli su come l'ellissi verbale esprima una feroce contesa di territorialità psicologica.",
+      "parole_proibite": [
+        "Pausa",
+        "Parlare",
+        "Silenzio",
+        "Paura",
+        "Casa"
+      ],
+      "parole_da_usare": [
+        "Sottotesto",
+        "Minaccia",
+        "Incomunicabilità",
+        "Ellissi",
+        "Territorialità"
+      ]
+    },
+    {
+      "id": "letteratura_a1_01",
+      "mazzo": "letteratura",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "La Lepre Veloce e la Tartaruga Calma",
+      "incipit": "Sei un agile corridore con lunghe orecchie che ha preso troppo vantaggio nella sfida contro un avversario calmo e lento. Decidi di riposarti all'ombra di un albero convinto di aver già il successo in tasca.",
+      "parole_proibite": [
+        "Lepre",
+        "Tartaruga",
+        "Corsa",
+        "Vincere",
+        "Dormire"
+      ],
+      "parole_da_usare": [
+        "Lento",
+        "Veloce",
+        "Albero",
+        "Traguardo",
+        "Sorpresa"
+      ]
+    },
+    {
+      "id": "letteratura_a1_02",
+      "mazzo": "letteratura",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "La Casetta di Marzapane nel Bosco",
+      "incipit": "Cammini tra gli alberi fitti insieme a tuo fratello e all'improvviso scorgi una piccola dimora con le tegole di cioccolato, le pareti di biscotto e le finestre di puro zucchero lucido.",
+      "parole_proibite": [
+        "Casa",
+        "Dolci",
+        "Strega",
+        "Bosco",
+        "Mangiare"
+      ],
+      "parole_da_usare": [
+        "Zucchero",
+        "Cioccolato",
+        "Fratelli",
+        "Tetto",
+        "Fame"
+      ]
+    },
+    {
+      "id": "letteratura_a1_03",
+      "mazzo": "letteratura",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "Il Lupo Finto e i Sette Capretti",
+      "incipit": "Sei da solo dentro casa mentre la mamma è andata al mercato. Qualcuno bussa delicatamente all'ingresso mostrando da sotto la fessura una zampa coperta di farina per sembrare candida.",
+      "parole_proibite": [
+        "Lupo",
+        "Capra",
+        "Porta",
+        "Voce",
+        "Mangiare"
+      ],
+      "parole_da_usare": [
+        "Zampa",
+        "Bianco",
+        "Mercato",
+        "Segreto",
+        "Bussare"
+      ]
+    },
+    {
+      "id": "letteratura_a1_04",
+      "mazzo": "letteratura",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "La Scarpetta di Cristallo Perduta",
+      "incipit": "L'orologio del grande salone batte i dodici rintocchi. Fuggi di corsa giù per la scalinata monumentale lasciando indietro un minuscolo accessorio di puro cristallo scintillante.",
+      "parole_proibite": [
+        "Cenerentola",
+        "Scarpa",
+        "Mezzanotte",
+        "Zucca",
+        "Principe"
+      ],
+      "parole_da_usare": [
+        "Cristallo",
+        "Scala",
+        "Fuga",
+        "Festa",
+        "Ballo"
+      ]
+    },
+    {
+      "id": "letteratura_a2_01",
+      "mazzo": "letteratura",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "Le Avventure di Pinocchio e il Gatto e la Volpe",
+      "incipit": "Due loschi figuri travestiti ti convincono che puoi quadruplicare il tuo piccolo tesoro in un istante. Come giovane burattino stai per sotterrare le tue ultime monete in una buca, ignorando gli avvertimenti del grillo.",
+      "parole_proibite": [
+        "Pinocchio",
+        "Gatto",
+        "Volpe",
+        "Soldi",
+        "Albero"
+      ],
+      "parole_da_usare": [
+        "Burattino",
+        "Inganno",
+        "Sotterrare",
+        "Monete",
+        "Grillo"
+      ]
+    },
+    {
+      "id": "letteratura_a2_02",
+      "mazzo": "letteratura",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Il Piccolo Principe e la Rosa sul Pianeta",
+      "incipit": "Sul tuo minuscolo scoglio che vaga tra le stelle, un bocciolo vanitoso si schiude mostrando quattro spine fragili. Come bambino custode devi offrirgli cure costanti e imparare cosa significa addomesticare un legame unico.",
+      "parole_proibite": [
+        "Principe",
+        "Rosa",
+        "Pianeta",
+        "Volpe",
+        "Piccolo"
+      ],
+      "parole_da_usare": [
+        "Addomesticare",
+        "Spine",
+        "Cura",
+        "Stella",
+        "Bambino"
+      ]
+    },
+    {
+      "id": "letteratura_a2_03",
+      "mazzo": "letteratura",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Alice nello Specchio del Paese delle Meraviglie",
+      "incipit": "Insegui una figura bizzarra che consulta ansiosa un orologio da taschino e ti ritrovi in una stanza incantata. Bevi da una fiala con la scritta 'Bevi' e scopri che ogni consueta regola è ribaltata.",
+      "parole_proibite": [
+        "Alice",
+        "Coniglio",
+        "Regina",
+        "Specchio",
+        "Tana"
+      ],
+      "parole_da_usare": [
+        "Meraviglia",
+        "Orologio",
+        "Pozione",
+        "Cappellaio",
+        "Regola"
+      ]
+    },
+    {
+      "id": "letteratura_a2_04",
+      "mazzo": "letteratura",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "I Viaggi di Gulliver a Lilliput",
+      "incipit": "Ti risvegli intontito dopo un violento naufragio sulla battigia di una terra sconosciuta. Centinaia di cordicelle sottili bloccano le tue braccia mentre un minuscolo esercito ti circonda puntando migliaia di freccette.",
+      "parole_proibite": [
+        "Gigante",
+        "Piccoli",
+        "Lilliput",
+        "Nave",
+        "Legato"
+      ],
+      "parole_da_usare": [
+        "Naufragio",
+        "Cordicelle",
+        "Minuscolo",
+        "Esercito",
+        "Spiaggia"
+      ]
+    },
+    {
+      "id": "letteratura_b1_01",
+      "mazzo": "letteratura",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "I Promessi Sposi e l'Addio ai Monti",
+      "incipit": "Mentre la piccola imbarcazione si allontana scivolando nell'oscurità della sera, guardi con le lacrime agli occhi le cime del paese natio che sfumano all'orizzonte, affidando il tuo incerto destino alla Provvidenza.",
+      "parole_proibite": [
+        "Renzo",
+        "Lucia",
+        "Monti",
+        "Lago",
+        "Barca"
+      ],
+      "parole_da_usare": [
+        "Lacrime",
+        "Separazione",
+        "Patria",
+        "Provvidenza",
+        "Rifugio"
+      ]
+    },
+    {
+      "id": "letteratura_b1_02",
+      "mazzo": "letteratura",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "La Selva Oscura e il Viaggio di Dante",
+      "incipit": "Ti ritrovi smarrito in una fitta boscaglia senza scorgere alcuna via d'uscita. Un'ombra saggia e solenne appare dal nulla offrendosi come fidata guida per condurti attraverso i regni dell'oltretomba verso la purificazione.",
+      "parole_proibite": [
+        "Dante",
+        "Inferno",
+        "Selva",
+        "Virgilio",
+        "Paura"
+      ],
+      "parole_da_usare": [
+        "Smarrito",
+        "Guida",
+        "Purificazione",
+        "Oltretomba",
+        "Beatrice"
+      ]
+    },
+    {
+      "id": "letteratura_b1_03",
+      "mazzo": "letteratura",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "L'Infinito di Giacomo Leopardi sul Colle",
+      "incipit": "Seduto in solitudine davanti a un cespuglio che ti nasconde la vista dell'orizzonte, chiudi gli occhi e ascolti il vento tra le foglie, lasciando che il pensiero si perda nell'immensità di spazi sovrumani e silenzi profondi.",
+      "parole_proibite": [
+        "Infinito",
+        "Leopardi",
+        "Siepe",
+        "Colle",
+        "Mare"
+      ],
+      "parole_da_usare": [
+        "Immensità",
+        "Naufragare",
+        "Silenzio",
+        "Orizzonte",
+        "Pensiero"
+      ]
+    },
+    {
+      "id": "letteratura_b1_04",
+      "mazzo": "letteratura",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "Il Barone Rampante di Italo Calvino",
+      "incipit": "Rifiutando di sottometterti all'autorità paterna durante un pranzo di famiglia, ti arrampichi tra i rami e giuri di non toccare mai più il suolo, osservando il mondo dall'alto della chioma con assoluta ostinazione e libertà.",
+      "parole_proibite": [
+        "Albero",
+        "Cosimo",
+        "Salire",
+        "Terra",
+        "Calvino"
+      ],
+      "parole_da_usare": [
+        "Ribellione",
+        "Chioma",
+        "Prospettiva",
+        "Ostinazione",
+        "Libertà"
+      ]
+    },
+    {
+      "id": "letteratura_b2_01",
+      "mazzo": "letteratura",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "Il Ritratto di Dorian Gray e l'Estetismo",
+      "incipit": "Nel salotto aristocratico si accende una disputa insolubile tra chi subordina la creazione al rigore morale e chi esige la dedizione esclusiva al canone estetico supremo. Prendi la parola davanti al circolo intellettuale per difendere la tua posizione sul legame tra etica e bellezza.",
+      "parole_proibite": [
+        "Quadro",
+        "Dorian",
+        "Vecchio",
+        "Giovane",
+        "Peccato"
+      ],
+      "parole_da_usare": [
+        "Estetismo",
+        "Decadenza",
+        "Corruzione",
+        "Immortalità",
+        "Coscienza"
+      ]
+    },
+    {
+      "id": "letteratura_b2_02",
+      "mazzo": "letteratura",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Metamorfosi di Gregor Samsa in Kafka",
+      "incipit": "Dietro la porta chiusa della tua stanza i tuoi congiunti esigono spiegazioni per la tua assenza, mentre il tuo aspetto mostruoso suscita ripugnanza. Prendi la parola attraverso la fessura per comunicare la tua angoscia e convincerli a non abbandonarti all'isolamento totale.",
+      "parole_proibite": [
+        "Insetto",
+        "Letto",
+        "Kafka",
+        "Famiglia",
+        "Lavoro"
+      ],
+      "parole_da_usare": [
+        "Alienazione",
+        "Angoscia",
+        "Ripugnanza",
+        "Isolamento",
+        "Incomunicabilità"
+      ]
+    },
+    {
+      "id": "letteratura_b2_03",
+      "mazzo": "letteratura",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "Il Fu Mattia Pascal e la Finta Morte",
+      "incipit": "Riconosciuto erroneamente in una salma sconosciuta, hai l'occasione irripetibile di scomparire e ricominciare da zero senza vincoli. Prendi una decisione irrevocabile e motiva ai tuoi confidenti se abbracciare la nuova libertà o rifiutare lo sradicamento di un'esistenza senza identità.",
+      "parole_proibite": [
+        "Morte",
+        "Pascal",
+        "Falso",
+        "Nome",
+        "Soldi"
+      ],
+      "parole_da_usare": [
+        "Identità",
+        "Sradicamento",
+        "Finzione",
+        "Libertà",
+        "Esistenza"
+      ]
+    },
+    {
+      "id": "letteratura_b2_04",
+      "mazzo": "letteratura",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "Il Rosso e il Nero e l'Ambizione di Julien Sorel",
+      "incipit": "Sei alla sbarra per aver sfidato le convenzioni dell'alta società ottocentesca, che ti offre la clemenza in cambio di una sottomissione pubblica. Prendi la parola davanti ai giurati per motivare la tua condotta e svelare l'ipocrisia di classe o implorare la grazia.",
+      "parole_proibite": [
+        "Francia",
+        "Soldi",
+        "Amore",
+        "Povero",
+        "Re"
+      ],
+      "parole_da_usare": [
+        "Ambizione",
+        "Arrampicatore",
+        "Ipostasi",
+        "Restaurazione",
+        "Ipocrisia"
+      ]
+    },
+    {
+      "id": "letteratura_c1_01",
+      "mazzo": "letteratura",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "La Recherche di Proust e la Madeleine del Ricordo",
+      "incipit": "Un banale sapore del mattino risveglia all'improvviso sensazioni dimenticate: gli amici ti esortano a vivere nel presente invece di inseguire ombre svanite. Prendi la parola per motivare il valore della reminiscenza involontaria e persuaderli sulla verità profonda dell'epifania interiore.",
+      "parole_proibite": [
+        "Tempo",
+        "Dolce",
+        "Memoria",
+        "Tè",
+        "Infanzia"
+      ],
+      "parole_da_usare": [
+        "Epifania",
+        "Involontario",
+        "Sinestesia",
+        "Reminiscenza",
+        "Evocazione"
+      ]
+    },
+    {
+      "id": "letteratura_c1_02",
+      "mazzo": "letteratura",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "L'Ulisse di Joyce e il Flusso di Coscienza",
+      "incipit": "Il cenacolo letterario vuole bandire la narrazione frammentata senza punteggiatura, considerandola puro caos incomprensibile. Prendi la parola davanti ai critici per difendere il valore del monologo interiore e persuadere i presenti sulla ricchezza del libero fluire dell'inconscio.",
+      "parole_proibite": [
+        "Pensiero",
+        "Parole",
+        "Dublino",
+        "Notte",
+        "Mente"
+      ],
+      "parole_da_usare": [
+        "Monologo",
+        "Stream of consciousness",
+        "Polifonia",
+        "Inconscio",
+        "Fluire"
+      ]
+    },
+    {
+      "id": "letteratura_c1_03",
+      "mazzo": "letteratura",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "I Fratelli Karamazov e la Leggenda del Grande Inquisitore",
+      "incipit": "Nella cella buia il cardinale ti accusa di aver condannato i mortali donando loro il peso intollerabile del libero arbitrio. Hai un unico discorso per replicare: difendi la grandezza morale della libertà o giustifica la necessità dell'autorità per proteggere la collettività.",
+      "parole_proibite": [
+        "Gesù",
+        "Chiesa",
+        "Inquisitore",
+        "Prigione",
+        "Dio"
+      ],
+      "parole_da_usare": [
+        "Libero arbitrio",
+        "Teodicea",
+        "Autorità",
+        "Dostoevskij",
+        "Asservimento"
+      ]
+    },
+    {
+      "id": "letteratura_c1_04",
+      "mazzo": "letteratura",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "Cime Tempestose e la Passione Distruttiva di Heathcliff",
+      "incipit": "I tuoi compagni ti chiedono di fermare la rovina che stai scatenando contro chi ti ha disprezzato in gioventù. Prendi la parola di fronte a loro per motivare se portare a compimento la tua furia distruttiva o concedere la tregua.",
+      "parole_proibite": [
+        "Amore",
+        "Vendetta",
+        "Brughiera",
+        "Morte",
+        "Casa"
+      ],
+      "parole_da_usare": [
+        "Viscerale",
+        "Demoniaco",
+        "Distruttivo",
+        "Esasperazione",
+        "Spettrale"
+      ]
+    },
+    {
+      "id": "letteratura_c2_01",
+      "mazzo": "letteratura",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "Il Nichilismo Attivo e la Morte di Dio in Nietzsche",
+      "incipit": "I custodi dei valori tradizionali ti accusano di distruggere ogni certezza etica della comunità. Prendi la parola nella piazza affollata per motivare la necessità del nichilismo attivo e persuadere gli spiriti liberi ad accogliere la trasvalutazione tramite la volontà di potenza.",
+      "parole_proibite": [
+        "Dio",
+        "Uomo",
+        "Fede",
+        "Mondo",
+        "Religione"
+      ],
+      "parole_da_usare": [
+        "Nichilismo",
+        "Trasvalutazione",
+        "Volontà di Potenza",
+        "Metafisica",
+        "Eterno Ritorno"
+      ]
+    },
+    {
+      "id": "letteratura_c2_02",
+      "mazzo": "letteratura",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "La Poopoetica dello Spleen e dell'Ideale in Baudelaire",
+      "incipit": "Il tribunale della censura accusa i tuoi versi di immoralità e corruzione del gusto pubblico. Prendi la parola davanti ai giurati per difendere la lacerazione tra l'ennui quotidiano e l'ideale, persuadendo la corte sulla verità artistica dello spleen e del decadentismo.",
+      "parole_proibite": [
+        "Parigi",
+        "Triste",
+        "Poeta",
+        "Male",
+        "Città"
+      ],
+      "parole_da_usare": [
+        "Spleen",
+        "Corrispondenze",
+        "Ennui",
+        "Sinestesia",
+        "Decadentismo"
+      ]
+    },
+    {
+      "id": "letteratura_c2_03",
+      "mazzo": "letteratura",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "L'Ermeneutica del Frammento nei Quaderni di Malte di Rilke",
+      "incipit": "Il circolo dei letterati tradizionalisti rigetta la scrittura frammentaria definendola sintomo di decadenza e debolezza formale. Prendi la parola per difendere la fenomenologia del frammento e persuadere i critici sul disvelamento dell'inquietudine epistemologica della moderna soggettività.",
+      "parole_proibite": [
+        "Vedere",
+        "Parigi",
+        "Libro",
+        "Io",
+        "Paura"
+      ],
+      "parole_da_usare": [
+        "Epistemologia",
+        "Soggettività",
+        "Disvelamento",
+        "Fenomenologia",
+        "Inquietudine"
+      ]
+    },
+    {
+      "id": "letteratura_c2_04",
+      "mazzo": "letteratura",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "La Carnevalizzazione Letteraria e il Polifonismo in Bachtin",
+      "incipit": "L'accademia di regime esige narrazioni monolitiche che celebrino l'ideologia ufficiale senza incertezze. Prendi la parola davanti alla commissione per difendere il dialogismo polifonico e persuadere gli intellettuali a respingere ogni autoritarismo a favore dell'eteroglossia.",
+      "parole_proibite": [
+        "Voce",
+        "Romanzo",
+        "Autore",
+        "Personaggio",
+        "Scrivere"
+      ],
+      "parole_da_usare": [
+        "Polifonia",
+        "Dialogismo",
+        "Eteroglossia",
+        "Incompiutezza",
+        "Autoritarismo"
+      ]
+    },
+    {
+      "id": "civilta_a1_01",
+      "mazzo": "civilta",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "Le Piramidi d'Egitto e il Gatto Sacro",
+      "incipit": "Lungo le sponde del grande fiume Nilo, guidi un piccolo felino nero dal collare d'oro per sorvegliare l'ingresso del maestoso tempio di pietra prima che scenda il buio.",
+      "parole_proibite": [
+        "Egitto",
+        "Gatto",
+        "Faraone",
+        "Piramide",
+        "Sabbia"
+      ],
+      "parole_da_usare": [
+        "Nilo",
+        "Tempio",
+        "Oro",
+        "Pietre",
+        "Fiume"
+      ]
+    },
+    {
+      "id": "civilta_a1_02",
+      "mazzo": "civilta",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "La Grande Muraglia Cinese e il Dragone",
+      "incipit": "Sei di vedetta su una lunghissima muraglia di pietra che si snoda tra i crinali verdi. In lontananza vedi levarsi segnali di fumo sopra i tetti del villaggio vicino.",
+      "parole_proibite": [
+        "Cina",
+        "Muro",
+        "Montagna",
+        "Soldati",
+        "Cavallo"
+      ],
+      "parole_da_usare": [
+        "Muraglia",
+        "Pietra",
+        "Lontano",
+        "Villaggio",
+        "Lungo"
+      ]
+    },
+    {
+      "id": "civilta_a1_03",
+      "mazzo": "civilta",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "Il Guerriero Spartano e lo Scudo Rotondo",
+      "incipit": "Indossi un mantello rosso brillante e afferri con forza una pesante difesa circolare di bronzo. Insieme ai tuoi fedeli compagni ti prepari a difendere con coraggio la tua città.",
+      "parole_proibite": [
+        "Sparta",
+        "Scudo",
+        "Soldato",
+        "Guerra",
+        "Grecia"
+      ],
+      "parole_da_usare": [
+        "Bronzo",
+        "Città",
+        "Coraggio",
+        "Rosso",
+        "Amici"
+      ]
+    },
+    {
+      "id": "civilta_a1_04",
+      "mazzo": "civilta",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "Il Gladiatore nel Colosseo di Roma",
+      "incipit": "Varchi la pesante cancellata di ferro ed entri nel cerchio dell'arena polverosa. Sollevi la tua spada verso la tribuna di marmo mentre la folla applaude con un boato fragoroso.",
+      "parole_proibite": [
+        "Roma",
+        "Colosseo",
+        "Gladiatore",
+        "Sabbia",
+        "Imperatore"
+      ],
+      "parole_da_usare": [
+        "Arena",
+        "Marmo",
+        "Spada",
+        "Folla",
+        "Saluto"
+      ]
+    },
+    {
+      "id": "civilta_a2_01",
+      "mazzo": "civilta",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "I Segreti dei Geroglifici Egizi",
+      "incipit": "Seduto a gambe incrociate nel cortile del palazzo reale, intingi la cannuccia nell'inchiostro scuro per tracciare ogni sacro geroglifico su un lungo rotolo, tramandando le grandi gesta del sovrano ai posteri.",
+      "parole_proibite": [
+        "Scrivere",
+        "Papiro",
+        "Disegno",
+        "Egitto",
+        "Faraone"
+      ],
+      "parole_da_usare": [
+        "Geroglifico",
+        "Scriba",
+        "Inchiostro",
+        "Simbolo",
+        "Rotolo"
+      ]
+    },
+    {
+      "id": "civilta_a2_02",
+      "mazzo": "civilta",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Le Olimpiadi nell'Antica Grecia",
+      "incipit": "I conflitti tra le città sono sospesi per la tregua sacra. Come atleta scendi sulla sabbia dello stadio a piedi nudi, pronto a disputare la gara per conquistare la gloriosa corona di fronde d'ulivo.",
+      "parole_proibite": [
+        "Olimpiadi",
+        "Corsa",
+        "Grecia",
+        "Vincere",
+        "Guerra"
+      ],
+      "parole_da_usare": [
+        "Pace",
+        "Ulivo",
+        "Atleta",
+        "Stadio",
+        "Gara"
+      ]
+    },
+    {
+      "id": "civilta_a2_03",
+      "mazzo": "civilta",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Le Legioni Romane e la Formazione a Testuggine",
+      "incipit": "Il centurione ordina di serrare i ranghi sotto una pioggia di dardi infuocati. La tua legione unisce i ripari di cuoio e metallo creando un guscio compatto e impenetrabile per avanzare verso le fortificazioni.",
+      "parole_proibite": [
+        "Romani",
+        "Scudo",
+        "Frecce",
+        "Testuggine",
+        "Soldati"
+      ],
+      "parole_da_usare": [
+        "Legione",
+        "Formazione",
+        "Guscio",
+        "Avanzare",
+        "Difesa"
+      ]
+    },
+    {
+      "id": "civilta_a2_04",
+      "mazzo": "civilta",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "I Drakkar dei Vichinghi nei Fiordi del Nord",
+      "incipit": "Guardi la costa allontanarsi mentre i tuoi compagni affondano i lunghi remi nelle acque fredde tra gli imponenti fiordi. Al timone del drakkar guidi l'equipaggio oltre le barriere di ghiaccio per esplorare nuove sponde.",
+      "parole_proibite": [
+        "Vichinghi",
+        "Nave",
+        "Nord",
+        "Mare",
+        "Drago"
+      ],
+      "parole_da_usare": [
+        "Fiordi",
+        "Drakkar",
+        "Remi",
+        "Ghiaccio",
+        "Esplorare"
+      ]
+    },
+    {
+      "id": "civilta_b1_01",
+      "mazzo": "civilta",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "La Democrazia nell'Agorà di Atene",
+      "incipit": "Nel cuore dell'assemblea cittadina, centinaia di sguardi attendono il tuo discorso. Sali alla tribuna per proporre un decreto cruciale per la comunità, difendendo l'uguaglianza e la sovranità decisionale di ogni membro libero.",
+      "parole_proibite": [
+        "Democrazia",
+        "Atene",
+        "Votare",
+        "Legge",
+        "Piazza"
+      ],
+      "parole_da_usare": [
+        "Agorà",
+        "Cittadinanza",
+        "Assemblea",
+        "Egualitarismo",
+        "Sovranità"
+      ]
+    },
+    {
+      "id": "civilta_b1_02",
+      "mazzo": "civilta",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "La Riforma del Senato Romano e le Idi di Marzo",
+      "incipit": "In una sala monumentale avvolta da tensioni sotterranee, stringi un pugnale sotto la toga insieme agli altri cospiratori. Devi prendere la parola per giustificare l'estremo gesto come difesa disperata della libertà repubblicana contro la tirannide.",
+      "parole_proibite": [
+        "Cesare",
+        "Bruto",
+        "Roma",
+        "Uccidere",
+        "Senato"
+      ],
+      "parole_da_usare": [
+        "Repubblica",
+        "Congiura",
+        "Tirannide",
+        "Idi di Marzo",
+        "Tradimento"
+      ]
+    },
+    {
+      "id": "civilta_b1_03",
+      "mazzo": "civilta",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "La Via della Seta e il Viaggio di Marco Polo",
+      "incipit": "Dopo anni trascorsi a guidare una carovana attraverso deserti sconfinati e altipiani remoti, giungi alla maestosa corte imperiale d'Oriente. Devi presentare i tuoi doni e negoziare un patto di reciproco scambio culturale e commerciale.",
+      "parole_proibite": [
+        "Seta",
+        "Marco Polo",
+        "Cina",
+        "Venezia",
+        "Mercante"
+      ],
+      "parole_da_usare": [
+        "Carovana",
+        "Tratta",
+        "Porcellana",
+        "Catai",
+        "Scambio"
+      ]
+    },
+    {
+      "id": "civilta_b1_04",
+      "mazzo": "civilta",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Caduta di Costantinopoli nel 1453",
+      "incipit": "I grandi battaglioni assedianti hanno aperto una breccia decisiva nelle difese dell'antica capitale imperiale. Come ultimo comandante rimasto, raduni i tuoi cittadini superstiti per un discorso disperato che segna la fine di un'epoca.",
+      "parole_proibite": [
+        "Costantinopoli",
+        "Turchi",
+        "Mura",
+        "Imperatore",
+        "Guerra"
+      ],
+      "parole_da_usare": [
+        "Ottomano",
+        "Bisanzio",
+        "Assedio",
+        "Epoca",
+        "Cannone"
+      ]
+    },
+    {
+      "id": "civilta_b2_01",
+      "mazzo": "civilta",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "Il Rinascimento Fiorentino e il Mecenatismo dei Medici",
+      "incipit": "Il consiglio cittadino è diviso sull'impiego delle eccedenze dell'erario, conteso tra il potenziamento delle fortificazioni militari e il finanziamento di botteghe umanistiche e monumenti insigni. Sali alla tribuna per persuadere i magistrati civici sulla priorità fondamentale per garantire la fioritura della comunità.",
+      "parole_proibite": [
+        "Firenze",
+        "Medici",
+        "Arte",
+        "Quadri",
+        "Soldi"
+      ],
+      "parole_da_usare": [
+        "Mecenatismo",
+        "Rinascimento",
+        "Umanesimo",
+        "Fioritura",
+        "Bottega"
+      ]
+    },
+    {
+      "id": "civilta_b2_02",
+      "mazzo": "civilta",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Rivoluzione Francese e la Presa della Bastiglia",
+      "incipit": "Davanti alla fortezza sotto assedio la folla oscilla tra l'assalto armato e la trattativa diplomatica con le autorità dell'Antico Regime. Prendi la parola sulla barricata per guidare gli insorti e motivare la scelta per affermare la sovranità e l'uguaglianza di ogni cittadino.",
+      "parole_proibite": [
+        "Francia",
+        "Re",
+        "Bastiglia",
+        "Ghigliottina",
+        "Parigi"
+      ],
+      "parole_da_usare": [
+        "Antico Regime",
+        "Insurrezione",
+        "Uguaglianza",
+        "Cittadino",
+        "Sovranità"
+      ]
+    },
+    {
+      "id": "civilta_b2_03",
+      "mazzo": "civilta",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "La Conquista dell'Impero Azteco e Cortés",
+      "incipit": "Davanti alla corte monumentale di Tenochtitlán, i consiglieri del sovrano sono divisi tra accogliervi con onori divini o sterminare la vostra spedizione. Prendi la parola davanti al trono per negoziare la convivenza pacifica o preparare l'urto decisivo tra due mondi.",
+      "parole_proibite": [
+        "Oro",
+        "Indiani",
+        "Spagna",
+        "Messico",
+        "Città"
+      ],
+      "parole_da_usare": [
+        "Conquistador",
+        "Tenochtitlán",
+        "Incomprensione",
+        "Sottomissione",
+        "Impero"
+      ]
+    },
+    {
+      "id": "civilta_b2_04",
+      "mazzo": "civilta",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "L'Illuminismo e l'Enciclopedia di Diderot",
+      "incipit": "I decreti della censura ordinano il sequestro e il rogo del grande compendio enciclopedico per preservare l'ortodossia. Prendi la parola davanti al parlamento per difendere la circolazione libera delle idee e persuadere i magistrati sull'importanza della tolleranza per il progresso civile.",
+      "parole_proibite": [
+        "Libro",
+        "Ragione",
+        "Scienza",
+        "Luce",
+        "Sapere"
+      ],
+      "parole_da_usare": [
+        "Illuminismo",
+        "Enciclopedia",
+        "Tolleranza",
+        "Progresso",
+        "Emancipazione"
+      ]
+    },
+    {
+      "id": "civilta_c1_01",
+      "mazzo": "civilta",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "L'Etica Protestante e lo Spirito del Capitalismo",
+      "incipit": "La comunità dei mercanti è divisa: gli anziani condannano l'accumulo dei beni come peccato, i giovani lo considerano segno dell'elezione divina. Prendi la parola all'assemblea per sostenere la tua tesi e persuadere i concittadini sulla legittimità etica dell'ascesi professionale.",
+      "parole_proibite": [
+        "Lutero",
+        "Chiesa",
+        "Soldi",
+        "Lavoro",
+        "Religione"
+      ],
+      "parole_da_usare": [
+        "Calvinismo",
+        "Predestinazione",
+        "Ascesi",
+        "Capitalismo",
+        "Razionalizzazione"
+      ]
+    },
+    {
+      "id": "civilta_c1_02",
+      "mazzo": "civilta",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "Il Trattato di Westfalia e la Nascita dello Stato Sovrano",
+      "incipit": "I plenipotenziari delle nazioni devono scegliere se imporre un unico ordine morale o riconoscere la parità di tutte le entità territoriali. Prendi la parola al tavolo diplomatico per esporre la tua visione e persuadere i delegati sul principio di sovranità condivisa.",
+      "parole_proibite": [
+        "Guerra",
+        "Pace",
+        "Europa",
+        "Re",
+        "Religione"
+      ],
+      "parole_da_usare": [
+        "Westfalia",
+        "Sovranità",
+        "Territorialità",
+        "Equilibrio",
+        "Diplomazia"
+      ]
+    },
+    {
+      "id": "civilta_c1_03",
+      "mazzo": "civilta",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "L'Imperialismo e il Fardello dell'Uomo Bianco",
+      "incipit": "Il parlamento metropolitano è pronto a votare nuovi stanziamenti per la presunta missione civilizzatrice d'oltremare. Sali alla tribuna per denunciare l'ipocrisia dell'egemonia coloniale e persuadere i deputati a respingere lo sfruttamento economico dei popoli assoggettati.",
+      "parole_proibite": [
+        "Africa",
+        "Colonie",
+        "Schiavi",
+        "Oro",
+        "Terra"
+      ],
+      "parole_da_usare": [
+        "Colonialismo",
+        "Egemonia",
+        "Sfruttamento",
+        "Assoggettamento",
+        "Eurocentrismo"
+      ]
+    },
+    {
+      "id": "civilta_c1_04",
+      "mazzo": "civilta",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "La Caduta del Muro di Berlino e la Fine della Guerra Fredda",
+      "incipit": "La barriera confinaria è crollata e i governi oscillano tra un'immediata fusione e una transizione prudente. Prendi la parola davanti alla consulta internazionale per orientare i delegati e persuadere le potenze sulla nuova geopolitica di integrazione.",
+      "parole_proibite": [
+        "Muro",
+        "Berlino",
+        "Russia",
+        "America",
+        "Comunismo"
+      ],
+      "parole_da_usare": [
+        "Cortina di Ferro",
+        "Bipolarismo",
+        "Dissoluzione",
+        "Geopolitica",
+        "Integrazione"
+      ]
+    },
+    {
+      "id": "civilta_c2_01",
+      "mazzo": "civilta",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "La Tesi della Fine della Storia di Francis Fukuyama",
+      "incipit": "Dopo il crollo dei blocchi contrapposti i governi celebrano l'avvento di un ordine globale definitivo e pacificato. Sali alla tribuna del forum internazionale per mettere in guardia i delegati sulle aporie interne all'universalismo e persuaderli sui rischi di una presunta teleologia.",
+      "parole_proibite": [
+        "Fine",
+        "Storia",
+        "Democrazia",
+        "Guerra",
+        "Capitalismo"
+      ],
+      "parole_da_usare": [
+        "Teleologia",
+        "Egemonia",
+        "Globalizzazione",
+        "Aporia",
+        "Universalismo"
+      ]
+    },
+    {
+      "id": "civilta_c2_02",
+      "mazzo": "civilta",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "Lo Scontro delle Civiltà di Samuel Huntington",
+      "incipit": "I trattati di cooperazione internazionale sono in crisi e le potenze si riorganizzano lungo linee culturali contrapposte. Prendi la parola alla consulta diplomatica per motivare la tua posizione sul multipolarismo e persuadere le delegazioni a gestire le faglie dell'identitarismo.",
+      "parole_proibite": [
+        "Guerra",
+        "Religione",
+        "Civiltà",
+        "Scontro",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Identitarismo",
+        "Frattura",
+        "Multipolarismo",
+        "Etnocentrismo",
+        "Faglia"
+      ]
+    },
+    {
+      "id": "civilta_c2_03",
+      "mazzo": "civilta",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Genealogia della Moralità e la Volontà di Potenza",
+      "incipit": "L'assemblea dei cittadini ti accusa di sovvertire i fondamenti sacri della convivenza civile. Sali sui gradini del tempio per svelare l'origine storica dell'assiologia morale imperante e persuadere l'uditorio sul ruolo del risentimento nella genesi dei doveri tradizionali.",
+      "parole_proibite": [
+        "Bene",
+        "Male",
+        "Dio",
+        "Buono",
+        "Cattivo"
+      ],
+      "parole_da_usare": [
+        "Genealogia",
+        "Risentimento",
+        "Assiologia",
+        "Metafisica",
+        "Decostruzione"
+      ]
+    },
+    {
+      "id": "civilta_c2_04",
+      "mazzo": "civilta",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "La Biopolitica e il Potere sulla Vita in Michel Foucault",
+      "incipit": "In nome della sicurezza sanitaria il governo propone il tracciamento biologico permanente e la segregazione dei non conformi. Prendi la parola davanti all'assemblea per denunciare come i dispositivi di normazione trasformino la società in un panopticon di governamentalità assoluta.",
+      "parole_proibite": [
+        "Stato",
+        "Corpo",
+        "Prigione",
+        "Potere",
+        "Controllo"
+      ],
+      "parole_da_usare": [
+        "Biopolitica",
+        "Governamentalità",
+        "Dispositivo",
+        "Normazione",
+        "Panopticon"
+      ]
+    },
+    {
+      "id": "scienza_a1_01",
+      "mazzo": "scienza",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "La Gocciolina d'Acqua e il Ciclo della Pioggia",
+      "incipit": "Sei una minuscola particella limpida che fluttua sulla superficie del mare. Il grande calore del mattino ti fa evaporare e salire leggera verso l'alto prima di ricadere sulla terra fertile.",
+      "parole_proibite": [
+        "Acqua",
+        "Pioggia",
+        "Nuvola",
+        "Sole",
+        "Fiume"
+      ],
+      "parole_da_usare": [
+        "Calore",
+        "Cielo",
+        "Goccia",
+        "Mare",
+        "Terra"
+      ]
+    },
+    {
+      "id": "scienza_a1_02",
+      "mazzo": "scienza",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Il Formicaio Sotto il Grande Prato",
+      "incipit": "Guardi sotto i fili d'erba e vedi una minuscola squadra al lavoro: portano sulle spalle una briciola di pane profumata giù per una stretta galleria fino alla sala della regina.",
+      "parole_proibite": [
+        "Formica",
+        "Terra",
+        "Mangiare",
+        "Buco",
+        "Prato"
+      ],
+      "parole_da_usare": [
+        "Galleria",
+        "Magazzino",
+        "Lavoro",
+        "Briciola",
+        "Regina"
+      ]
+    },
+    {
+      "id": "scienza_a1_03",
+      "mazzo": "scienza",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "I Dinosauri e l'Impronta nella Roccia",
+      "incipit": "Stai scavando nel fango secco quando trovi una gigantesca traccia a tre dita impressa nel terreno. È un incredibile segno del passato lasciato da un'antica creatura mastodontica.",
+      "parole_proibite": [
+        "Dinosauro",
+        "Piede",
+        "Grande",
+        "Sasso",
+        "Tirannosauro"
+      ],
+      "parole_da_usare": [
+        "Fango",
+        "Impronta",
+        "Scoperta",
+        "Passato",
+        "Fossile"
+      ]
+    },
+    {
+      "id": "scienza_a1_04",
+      "mazzo": "scienza",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "L'Arcobaleno dopo il Temporale",
+      "incipit": "La tempesta è appena passata e tra le gocce ancora sospese nell'aria compare un magnifico arco luminoso diviso in sette fasce brillanti che suscita la meraviglia di tutti i passanti.",
+      "parole_proibite": [
+        "Colori",
+        "Arcobaleno",
+        "Cielo",
+        "Sole",
+        "Pioggia"
+      ],
+      "parole_da_usare": [
+        "Ponte",
+        "Sette",
+        "Luce",
+        "Gocce",
+        "Meraviglia"
+      ]
+    },
+    {
+      "id": "scienza_a2_01",
+      "mazzo": "scienza",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "La Metamorfosi del Bruco in Farfalla",
+      "incipit": "Appeso a un rametto verde, un guscio di finissima seta protegge un misterioso sonno. All'interno si compie una prodigiosa metamorfosi che trasforma un piccolo essere strisciante in una splendida creatura variopinta pronta al decollo.",
+      "parole_proibite": [
+        "Farfalla",
+        "Bruco",
+        "Ali",
+        "Volare",
+        "Bozzolo"
+      ],
+      "parole_da_usare": [
+        "Metamorfosi",
+        "Seta",
+        "Foglia",
+        "Trasformare",
+        "Colori"
+      ]
+    },
+    {
+      "id": "scienza_a2_02",
+      "mazzo": "scienza",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Il Magnetismo e la Bussola dei Marinai",
+      "incipit": "In mezzo alla nebbia fitta sull'oceano aperto, appoggi una sottile punta metallica sopra una superficie d'acqua: grazie all'invisibile magnetismo della Terra, ruota dolcemente indicando la direzione perfetta per il tuo orientamento.",
+      "parole_proibite": [
+        "Bussola",
+        "Nord",
+        "Magnete",
+        "Ago",
+        "Nave"
+      ],
+      "parole_da_usare": [
+        "Polo",
+        "Magnetismo",
+        "Ruotare",
+        "Orientamento",
+        "Terra"
+      ]
+    },
+    {
+      "id": "scienza_a2_03",
+      "mazzo": "scienza",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Il Vulcano che Sputa Lava Incandescente",
+      "incipit": "La terra trema sotto i tuoi scarponi mentre una fitta colonna di cenere oscura il cielo. Dal bordo del cratere zampillano fiotti di magma incandescente che scivolano rapidi trasformandosi in fiumi di roccia fluida.",
+      "parole_proibite": [
+        "Vulcano",
+        "Lava",
+        "Fuoco",
+        "Montagna",
+        "Fumo"
+      ],
+      "parole_da_usare": [
+        "Magma",
+        "Cratere",
+        "Eruzione",
+        "Roccia",
+        "Cenere"
+      ]
+    },
+    {
+      "id": "scienza_a2_04",
+      "mazzo": "scienza",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "La Fotosintesi Clorofilliana delle Piante",
+      "incipit": "All'interno di ogni minuscola cellula vegetale la clorofilla cattura i raggi di luce splendente: trasformando ciò che assorbe in dolce nutrimento, restituisce all'ambiente zaffate di puro ossigeno che tutti noi possiamo respirare.",
+      "parole_proibite": [
+        "Pianta",
+        "Foglia",
+        "Sole",
+        "Aria",
+        "Verde"
+      ],
+      "parole_da_usare": [
+        "Ossigeno",
+        "Clorofilla",
+        "Nutrimento",
+        "Luce",
+        "Respirare"
+      ]
+    },
+    {
+      "id": "scienza_b1_01",
+      "mazzo": "scienza",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "Galileo Galilei e il Cannocchiale delle Stelle",
+      "incipit": "Puntando verso la volta celeste un tubo di legno con due lenti levigate, scorgi monti e valli sul corpo celeste creduto perfetto e incorruttibile. Devi esporre la tua scoperta a un consesso di studiosi scettici.",
+      "parole_proibite": [
+        "Galileo",
+        "Telescopio",
+        "Stelle",
+        "Luna",
+        "Pianeta"
+      ],
+      "parole_da_usare": [
+        "Cannocchiale",
+        "Lenti",
+        "Osservazione",
+        "Satelliti",
+        "Rivoluzione"
+      ]
+    },
+    {
+      "id": "scienza_b1_02",
+      "mazzo": "scienza",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "La Mela di Newton e la Legge di Gravità",
+      "incipit": "Mentre riposi in un frutteto, vedi un ramo piegarsi e un frutto piombare al suolo. All'improvviso comprendi che la medesima forza invisibile di attrazione mantiene i corpi celesti stabili nella propria orbita attraverso il cosmo.",
+      "parole_proibite": [
+        "Mela",
+        "Newton",
+        "Cadere",
+        "Albero",
+        "Terra"
+      ],
+      "parole_da_usare": [
+        "Gravità",
+        "Attrazione",
+        "Orbita",
+        "Massa",
+        "Cosmo"
+      ]
+    },
+    {
+      "id": "scienza_b1_03",
+      "mazzo": "scienza",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "La Teoria dell'Evoluzione di Charles Darwin",
+      "incipit": "Esaminando i campioni raccolti su isole remote, noti che la forma dei becchi varia a seconda delle risorse dell'habitat. Il consesso accademico è diviso tra chi crede nella fissità delle specie e chi nell'adattamento: prendi la parola per convincere i naturalisti della tua tesi.",
+      "parole_proibite": [
+        "Darwin",
+        "Animali",
+        "Scimmia",
+        "Uomo",
+        "Evoluzione"
+      ],
+      "parole_da_usare": [
+        "Selezione",
+        "Adattamento",
+        "Specie",
+        "Ambiente",
+        "Mutazione"
+      ]
+    },
+    {
+      "id": "scienza_b1_04",
+      "mazzo": "scienza",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Scoperta della Penicillina di Alexander Fleming",
+      "incipit": "Rientrando nel tuo laboratorio dopo giorni di assenza, noti che un alone trasparente ha distrutto una colonia di microbi nocivi su un vetrino contaminato. Devi convincere i colleghi scettici del potenziale rivoluzionario di questo principio curativo.",
+      "parole_proibite": [
+        "Penicillina",
+        "Muffa",
+        "Batteri",
+        "Medicina",
+        "Malattia"
+      ],
+      "parole_da_usare": [
+        "Antibiotico",
+        "Contaminazione",
+        "Microbi",
+        "Laboratorio",
+        "Guarigione"
+      ]
+    },
+    {
+      "id": "scienza_b2_01",
+      "mazzo": "scienza",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "La Relatività Ristretta di Albert Einstein",
+      "incipit": "La società scientifica è spaccata: i fisici tradizionalisti difendono l'assolutezza delle leggi newtoniane, i progressisti accolgono la rivoluzione relativistica. Sali alla cattedra per motivare la tua posizione sullo stato di moto dell'osservatore e persuadere i colleghi indecisi della sala.",
+      "parole_proibite": [
+        "Einstein",
+        "Tempo",
+        "Luce",
+        "Velocità",
+        "Spazio"
+      ],
+      "parole_da_usare": [
+        "Relatività",
+        "Osservatore",
+        "Costante",
+        "Massa",
+        "Contrazione"
+      ]
+    },
+    {
+      "id": "scienza_b2_02",
+      "mazzo": "scienza",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Struttura a Doppia Elica del DNA",
+      "incipit": "Due gruppi di ricerca rivendicano la paternità della scoperta che decifra il segreto molecolare della vita biologica. Di fronte alla commissione accademica esponi le tue prove e convinci i revisori sulla validità del meccanismo a spirale di trasmissione del genoma.",
+      "parole_proibite": [
+        "DNA",
+        "Geni",
+        "Cellula",
+        "Elica",
+        "Genitori"
+      ],
+      "parole_da_usare": [
+        "Doppia elica",
+        "Basi azotate",
+        "Ereditarietà",
+        "Molecola",
+        "Genoma"
+      ]
+    },
+    {
+      "id": "scienza_b2_03",
+      "mazzo": "scienza",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "Il Big Bang e l'Origine dell'Universo",
+      "incipit": "Gli astronomi sono divisi tra il modello dello stato stazionario perenne e l'ipotesi di una primordiale singolarità in espansione continua. Prendi la parola al consesso cosmologico per presentare le tue prove e persuadere la platea sulla vera origine della materia cosmica.",
+      "parole_proibite": [
+        "Big Bang",
+        "Esplosione",
+        "Spazio",
+        "Universo",
+        "Stelle"
+      ],
+      "parole_da_usare": [
+        "Singolarità",
+        "Espansione",
+        "Radiazione",
+        "Cosmologia",
+        "Materia"
+      ]
+    },
+    {
+      "id": "scienza_b2_04",
+      "mazzo": "scienza",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "Marie Curie e la Scoperta della Radioattività",
+      "incipit": "L'opinione pubblica è allarmata dalle misteriose emissioni della pechblenda, mentre l'industria ne intravede un profitto immediato. Prendi la parola davanti alla commissione per difendere il valore etico della ricerca disinteressata e stabilire come impiegare questa nuova e potente sorgente energetica.",
+      "parole_proibite": [
+        "Curie",
+        "Radio",
+        "Atomo",
+        "Radiazioni",
+        "Nobel"
+      ],
+      "parole_da_usare": [
+        "Radioattività",
+        "Pechblenda",
+        "Emissione",
+        "Laboratorio",
+        "Isotopo"
+      ]
+    },
+    {
+      "id": "scienza_c1_01",
+      "mazzo": "scienza",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "La Meccanica Quantistica e l'Indeterminazione di Heisenberg",
+      "incipit": "Il dipartimento accademico è diviso tra chi difende la certezza deterministica dei fenomeni e chi accoglie il principio di indeterminazione. Sali alla cattedra per sostenere la tua interpretazione sui sistemi probabilistici e persuadere i colleghi sulla nuova visione della realtà submicroscopica.",
+      "parole_proibite": [
+        "Atomo",
+        "Particella",
+        "Misura",
+        "Sapere",
+        "Fisica"
+      ],
+      "parole_da_usare": [
+        "Indeterminazione",
+        "Probabilità",
+        "Collasso",
+        "Dualismo",
+        "Sovrapposizione"
+      ]
+    },
+    {
+      "id": "scienza_c1_02",
+      "mazzo": "scienza",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "Il Paradosso del Gatto di Schrödinger",
+      "incipit": "Due scuole di pensiero si scontrano: una sostiene che la realtà esista indipendentemente dalla coscienza, l'altra che l'osservatore determini il collasso degli stati quantistici. Prendi la parola davanti ai fisici per difendere la tua posizione sul paradosso della sovrapposizione.",
+      "parole_proibite": [
+        "Gatto",
+        "Scatola",
+        "Vivo",
+        "Morto",
+        "Guardare"
+      ],
+      "parole_da_usare": [
+        "Sovrapposizione",
+        "Decoerenza",
+        "Osservatore",
+        "Funzione d'onda",
+        "Entanglement"
+      ]
+    },
+    {
+      "id": "scienza_c1_03",
+      "mazzo": "scienza",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "I Buchi Neri e l'Orizzonte degli Eventi",
+      "incipit": "La comunità scientifica dibatte se l'informazione inghiottita da una singolarità venga distrutta per sempre o conservata sull'orizzonte degli eventi. Sali alla tribuna per esporre le tue prove teoriche e persuadere i ricercatori sulla validità del tuo modello geometrico.",
+      "parole_proibite": [
+        "Buco nero",
+        "Luce",
+        "Stella",
+        "Spazio",
+        "Gravità"
+      ],
+      "parole_da_usare": [
+        "Orizzonte degli eventi",
+        "Singolarità",
+        "Spazio-tempo",
+        "Collasso",
+        "Curvatura"
+      ]
+    },
+    {
+      "id": "scienza_c1_04",
+      "mazzo": "scienza",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "L'Epigenetica e la Plasticità del Genoma",
+      "incipit": "La commissione medica deve stabilire se finanziare unicamente le terapie ereditarie fisse o puntare sui meccanismi di plasticità molecolare e metilazione. Prendi la parola davanti ai biologi per orientare la scelta e persuadere i revisori sull'importanza della trascrizione epigenetica.",
+      "parole_proibite": [
+        "DNA",
+        "Geni",
+        "Ambiente",
+        "Modificare",
+        "Corpo"
+      ],
+      "parole_da_usare": [
+        "Epigenetica",
+        "Metilazione",
+        "Espressione",
+        "Plasticità",
+        "Trascrizione"
+      ]
+    },
+    {
+      "id": "scienza_c2_01",
+      "mazzo": "scienza",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "L'Entanglement Quantistico e l'Azione a Distanza",
+      "incipit": "I fisici accademici rifiutano l'ipotesi di connessioni istantanee tra sistemi fisici remoti, definendola pura speculazione assurda. Prendi la parola davanti al consesso per difendere il principio di non-località quantistica e persuadere i colleghi sulla realtà dell'inseparabilità dell'entanglement.",
+      "parole_proibite": [
+        "Particelle",
+        "Luce",
+        "Spazio",
+        "Comunicare",
+        "Due"
+      ],
+      "parole_da_usare": [
+        "Entanglement",
+        "Non-località",
+        "EPR",
+        "Inseparabilità",
+        "Teletrasporto"
+      ]
+    },
+    {
+      "id": "scienza_c2_02",
+      "mazzo": "scienza",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "La Teoria del Caos e l'Effetto Farfalla",
+      "incipit": "Gli ingegneri governativi pretendono di prevedere l'evoluzione climatica ed economica con modelli lineari rigidi. Sali alla tribuna per motivare la dinamica dei sistemi complessi e persuadere i decisori politici sull'impredicibilità intrinseca dell'attrattore deterministico.",
+      "parole_proibite": [
+        "Farfalla",
+        "Tempo",
+        "Meteo",
+        "Piccolo",
+        "Grande"
+      ],
+      "parole_da_usare": [
+        "Sensibilità",
+        "Non linearità",
+        "Attrattore",
+        "Impredicibilità",
+        "Deterministico"
+      ]
+    },
+    {
+      "id": "scienza_c2_03",
+      "mazzo": "scienza",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Teoria delle Stringhe e le Dimensioni Nascoste",
+      "incipit": "La comunità accademica dibatte se continuare a finanziare la ricerca sui modelli supersimmetrici o abbandonarli per mancanza di riscontri immediati. Prendi la parola per difendere la bellezza teorica delle stringhe nelle geometrie di Calabi-Yau e persuadere i revisori.",
+      "parole_proibite": [
+        "Corde",
+        "Spazio",
+        "Dimensioni",
+        "Atomo",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Stringhe",
+        "Calabi-Yau",
+        "Supersimmetria",
+        "Vibrazione",
+        "Unificazione"
+      ]
+    },
+    {
+      "id": "scienza_c2_04",
+      "mazzo": "scienza",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "Il Teorema di Incompletezza di Gödel",
+      "incipit": "Il congresso dei logici persegue l'illusione di un sistema formale perfetto e privo di contraddizioni. Sali alla cattedra per annunciare la tua scoperta sull'autoreferenzialità metamatematica e persuadere i colleghi sui limiti invalicabili di qualsiasi apparato di assiomi.",
+      "parole_proibite": [
+        "Matematica",
+        "Vero",
+        "Falso",
+        "Dimostrare",
+        "Numeri"
+      ],
+      "parole_da_usare": [
+        "Incompletezza",
+        "Assioma",
+        "Autoreferenzialità",
+        "Decidibilità",
+        "Metamatematica"
+      ]
+    },
+    {
+      "id": "party_a1_01",
+      "mazzo": "party",
+      "livello": "a1",
+      "slot": 1,
+      "titolo": "L'Invenzione del Gelato che non Si Scioglie",
+      "incipit": "Tieni in mano una coppetta speciale con una morbida crema golosa che sfida la calura dell'estate rimanendo perfettamente solida e vellutata senza gocciolare sulle tue dita!",
+      "parole_proibite": [
+        "Gelato",
+        "Freddo",
+        "Sciogliere",
+        "Sole",
+        "Mangiare"
+      ],
+      "parole_da_usare": [
+        "Gusto",
+        "Estate",
+        "Coppetta",
+        "Sorpresa",
+        "Buono"
+      ]
+    },
+    {
+      "id": "party_a1_02",
+      "mazzo": "party",
+      "livello": "a1",
+      "slot": 2,
+      "titolo": "Il Cane Parlante che Vuole Fare il Cuoco",
+      "incipit": "Entri in cucina e trovi il tuo fido amico a quattro zampe con un alto cappello bianco in testa che gira il sugo con un mestolo e ti porge una forchetta con un allegro bau!",
+      "parole_proibite": [
+        "Cane",
+        "Cucinare",
+        "Parlare",
+        "Pasta",
+        "Mangiare"
+      ],
+      "parole_da_usare": [
+        "Cappello",
+        "Cucina",
+        "Piatto",
+        "Forchetta",
+        "Bau"
+      ]
+    },
+    {
+      "id": "party_a1_03",
+      "mazzo": "party",
+      "livello": "a1",
+      "slot": 3,
+      "titolo": "La Giornata al Contrario dove Tutto Si Fa al Rovescio",
+      "incipit": "Scendi dal letto e scopri che nel mondo tutto funziona al rovescio: le persone camminano con le scarpe sulle mani, indossano il pigiama a mezzogiorno e salutano dicendo buonanotte!",
+      "parole_proibite": [
+        "Contrario",
+        "Indietro",
+        "Giorno",
+        "Notte",
+        "Ridere"
+      ],
+      "parole_da_usare": [
+        "Rovescio",
+        "Strano",
+        "Pigiama",
+        "Piedi",
+        "Mondo"
+      ]
+    },
+    {
+      "id": "party_a1_04",
+      "mazzo": "party",
+      "livello": "a1",
+      "slot": 4,
+      "titolo": "Il Telefono che Sente i Pensieri dei Gatti",
+      "incipit": "Punti uno strano congegno con lo schermo luminoso verso un micio addormentato sul divano e dalle tue cuffie comincia a uscire una buffa canzone che rivela ogni suo segreto!",
+      "parole_proibite": [
+        "Gatto",
+        "Telefono",
+        "Pensare",
+        "Miao",
+        "Parlare"
+      ],
+      "parole_da_usare": [
+        "Schermo",
+        "Canzone",
+        "Segreto",
+        "Orecchie",
+        "Buffo"
+      ]
+    },
+    {
+      "id": "party_a2_01",
+      "mazzo": "party",
+      "livello": "a2",
+      "slot": 1,
+      "titolo": "L'Isola dei Mostri Simpatici e Pasticcioni",
+      "incipit": "Ti risvegli su una spiaggia esotica dopo un bizzarro naufragio e ti trovi circondato da giganti ricoperti di morbida pelliccia fluo: invece di attaccarti, accendono la musica e ti coinvolgono in un ballo sfrenato.",
+      "parole_proibite": [
+        "Mostri",
+        "Isola",
+        "Festa",
+        "Paura",
+        "Ridere"
+      ],
+      "parole_da_usare": [
+        "Pelliccia",
+        "Musica",
+        "Ballo",
+        "Naufragio",
+        "Simpatico"
+      ]
+    },
+    {
+      "id": "party_a2_02",
+      "mazzo": "party",
+      "livello": "a2",
+      "slot": 2,
+      "titolo": "Il Detective degli Oggetti Scomparsi sotto il Divano",
+      "incipit": "Impugni la tua torcia tascabile e ti infili carponi nel buio tra batuffoli di polvere. Come abile investigatore devi raccogliere ogni indizio per svelare il mistero degli oggetti misteriosamente scomparsi nel nulla.",
+      "parole_proibite": [
+        "Divano",
+        "Perdere",
+        "Cercare",
+        "Polizia",
+        "Casa"
+      ],
+      "parole_da_usare": [
+        "Investigatore",
+        "Indizio",
+        "Polvere",
+        "Scomparire",
+        "Mistero"
+      ]
+    },
+    {
+      "id": "party_a2_03",
+      "mazzo": "party",
+      "livello": "a2",
+      "slot": 3,
+      "titolo": "Il Campionato Mondiale di Smorfie allo Specchio",
+      "incipit": "Sei sul palco davanti a una severa giuria di esperti e hai solo dieci secondi per deformare i muscoli del viso mostrando la lingua: se convinci il pubblico, sarai incoronato nuovo campione tra gli applausi.",
+      "parole_proibite": [
+        "Faccia",
+        "Specchio",
+        "Ridere",
+        "Gara",
+        "Coppa"
+      ],
+      "parole_da_usare": [
+        "Smorfia",
+        "Giuria",
+        "Lingua",
+        "Campione",
+        "Applausi"
+      ]
+    },
+    {
+      "id": "party_a2_04",
+      "mazzo": "party",
+      "livello": "a2",
+      "slot": 4,
+      "titolo": "La Macchina che Scambia le Voci delle Persone",
+      "incipit": "Premi per sbaglio l'interruttore di un congegno bizzarro e si genera il caos: tuo padre si esprime con il verso squillante di un pennuto mentre il neonato ruggisce con il tono cavernoso di un feroce animale!",
+      "parole_proibite": [
+        "Voce",
+        "Parlare",
+        "Microfono",
+        "Cambiare",
+        "Ridere"
+      ],
+      "parole_da_usare": [
+        "Bizzarro",
+        "Tono",
+        "Confusione",
+        "Animale",
+        "Sorpresa"
+      ]
+    },
+    {
+      "id": "party_b1_01",
+      "mazzo": "party",
+      "livello": "b1",
+      "slot": 1,
+      "titolo": "La Vendita della Fontana di Trevi al Turista",
+      "incipit": "Ti trovi davanti a un celebre monumento monumentale gremito di visitatori e stringi una finta pergamena di proprietà. Hai tre minuti per condurre una trattativa con un ingenuo passante e convincerlo a concludere l'affare del secolo.",
+      "parole_proibite": [
+        "Roma",
+        "Fontana",
+        "Soldi",
+        "Vendere",
+        "Acqua"
+      ],
+      "parole_da_usare": [
+        "Monumento",
+        "Proprietà",
+        "Contratto",
+        "Trattativa",
+        "Affare"
+      ]
+    },
+    {
+      "id": "party_b1_02",
+      "mazzo": "party",
+      "livello": "b1",
+      "slot": 2,
+      "titolo": "Il Dibattito Impossibile: Meglio la Pizza o il Cioccolato?",
+      "incipit": "Sei chiamato a difendere la tua pietanza preferita in un agguerrito dibattito culinario. Costruisci un'argomentazione appassionata e convincente per deliziare il palato dei giudici e strappare il verdetto finale per un trionfo indiscusso.",
+      "parole_proibite": [
+        "Pizza",
+        "Cioccolato",
+        "Mangiare",
+        "Buono",
+        "Gusto"
+      ],
+      "parole_da_usare": [
+        "Squisito",
+        "Argomentazione",
+        "Verdetto",
+        "Trionfo",
+        "Palato"
+      ]
+    },
+    {
+      "id": "party_b1_03",
+      "mazzo": "party",
+      "livello": "b1",
+      "slot": 3,
+      "titolo": "Il Colloquio di Lavoro del Supereroe in Incognito",
+      "incipit": "Sei seduto all'ufficio assunzioni per un modesto impiego da magazziniere. Devi presentare il tuo curriculum e trovare una valida giustificazione per le tue continue assenze improvvise senza rivelare le tue missioni segrete.",
+      "parole_proibite": [
+        "Eroe",
+        "Lavoro",
+        "Maschera",
+        "Salvare",
+        "Poteri"
+      ],
+      "parole_da_usare": [
+        "Curriculum",
+        "Disponibilità",
+        "Giustificazione",
+        "Colloquio",
+        "Puntualità"
+      ]
+    },
+    {
+      "id": "party_b1_04",
+      "mazzo": "party",
+      "livello": "b1",
+      "slot": 4,
+      "titolo": "La Giustificazione Assurda per il Compito Dimenticato",
+      "incipit": "Il docente più inflessibile dell'aula ti fissa severamente esigendo i fogli attesi per oggi. Devi improvvisare un alibi stravagante ma esposto con tale serietà e rigore di dettagli da convincerlo della tua assoluta buona fede.",
+      "parole_proibite": [
+        "Compito",
+        "Dimenticare",
+        "Professore",
+        "Scuola",
+        "Quaderno"
+      ],
+      "parole_da_usare": [
+        "Inverosimile",
+        "Circostanza",
+        "Delegazione",
+        "Giustizia",
+        "Alibi"
+      ]
+    },
+    {
+      "id": "party_b2_01",
+      "mazzo": "party",
+      "livello": "b2",
+      "slot": 1,
+      "titolo": "L'Elogio Paradossale della Pigrizia e del Sonno",
+      "incipit": "Una conferenza di dirigenti iperattivi propone di abolire i fine settimana per raddoppiare la produttività aziendale. Sali sul palco per tenere un contro-discorso brillante: difendi l'ozio e convinci la platea che procrastinare sia la forma più saggia di efficienza mentale.",
+      "parole_proibite": [
+        "Pigro",
+        "Dormire",
+        "Lavorare",
+        "Letto",
+        "Fatichiamo"
+      ],
+      "parole_da_usare": [
+        "Ozio",
+        "Paradigma",
+        "Efficienza",
+        "Meditazione",
+        "Procrastinare"
+      ]
+    },
+    {
+      "id": "party_b2_02",
+      "mazzo": "party",
+      "livello": "b2",
+      "slot": 2,
+      "titolo": "La Difesa Legale del Lupo Cattivo di Cappuccetto",
+      "incipit": "La giuria popolare del regno delle fiabe è pronta a emettere una condanna esemplare contro un predatore accusato senza prove certe. Prendi la parola come difensore per chiedere l'assoluzione con formula piena e persuadere i giudici a respingere ogni diffamazione.",
+      "parole_proibite": [
+        "Lupo",
+        "Bambina",
+        "Mangiare",
+        "Bosco",
+        "Cattivo"
+      ],
+      "parole_da_usare": [
+        "Presunzione",
+        "Diffamazione",
+        "Sentenza",
+        "Ecosistema",
+        "Assoluzione"
+      ]
+    },
+    {
+      "id": "party_b2_03",
+      "mazzo": "party",
+      "livello": "b2",
+      "slot": 3,
+      "titolo": "La Vendita di un Condizionatore al Polo Nord",
+      "incipit": "Gli abitanti del villaggio artico sono scettici e non vedono alcuna utilità negli impianti moderni di ventilazione termica. Hai solo due minuti per usare tutta la tua persuasione e convincere la comunità che questo investimento costituisce un'innovazione irrinunciabile di salute.",
+      "parole_proibite": [
+        "Freddo",
+        "Ghiaccio",
+        "Aria",
+        "Comprare",
+        "Polo"
+      ],
+      "parole_da_usare": [
+        "Opportunità",
+        "Persuasione",
+        "Innovazione",
+        "Investimento",
+        "Climatizzazione"
+      ]
+    },
+    {
+      "id": "party_b2_04",
+      "mazzo": "party",
+      "livello": "b2",
+      "slot": 4,
+      "titolo": "Il Corso Motivazionale per Formiche Indolenti",
+      "incipit": "Un intero battaglione di piccoli insetti operai è sull'orlo dello sciopero generale per sfinimento da routine quotidiana. Sali su un sasso per tenere un discorso di leadership e persuaderli a riscoprire la resilienza e il proprio autentico potenziale.",
+      "parole_proibite": [
+        "Lavoro",
+        "Formica",
+        "Regina",
+        "Stanco",
+        "Forte"
+      ],
+      "parole_da_usare": [
+        "Leadership",
+        "Autostima",
+        "Resilienza",
+        "Potenziale",
+        "Mentalità"
+      ]
+    },
+    {
+      "id": "party_c1_01",
+      "mazzo": "party",
+      "livello": "c1",
+      "slot": 1,
+      "titolo": "L'Elogio della Follia di Erasmo da Rotterdam",
+      "incipit": "Il consiglio dei dotti vuole bandire ogni forma di svago e passione per imporre una rigida e austera disciplina razionale. Sali sul pulpito impersonando la voce dell'eccentricità per difendere l'illusione vitale e persuadere i saggi sui benefici della follia.",
+      "parole_proibite": [
+        "Pazzo",
+        "Ragione",
+        "Mondo",
+        "Uomo",
+        "Sciocco"
+      ],
+      "parole_da_usare": [
+        "Follia",
+        "Illusione",
+        "Saggezza",
+        "Paradosso",
+        "Vitalità"
+      ]
+    },
+    {
+      "id": "party_c1_02",
+      "mazzo": "party",
+      "livello": "c1",
+      "slot": 2,
+      "titolo": "La Retorica Sofistica: Difendere l'Indifendibile",
+      "incipit": "I maestri dell'oratoria ti sfidano a ribaltare un verdetto unanime difendendo una causa data per persa in partenza. Prendi la parola davanti ai giudici: usa l'arte dell'antitesi e della verosimiglianza per scuotere le loro certezze e strappare il consenso dell'aula.",
+      "parole_proibite": [
+        "Sole",
+        "Notte",
+        "Vero",
+        "Falso",
+        "Luce"
+      ],
+      "parole_da_usare": [
+        "Sofisma",
+        "Persuasione",
+        "Ermeneutica",
+        "Antitesi",
+        "Verosimiglianza"
+      ]
+    },
+    {
+      "id": "party_c1_03",
+      "mazzo": "party",
+      "livello": "c1",
+      "slot": 3,
+      "titolo": "La Satira sulla Burocrazia Kafkiana del XXI Secolo",
+      "incipit": "Il comitato dei cittadini chiede l'azzeramento di tutti i passaggi burocratici, mentre l'amministrazione ne esige la moltiplicazione per sicurezza. Prendi la parola davanti all'assemblea per sostenere la tua posizione e persuadere le parti sulla gestione del protocollo pubblico.",
+      "parole_proibite": [
+        "Ufficio",
+        "Modulo",
+        "Carta",
+        "Tasse",
+        "Fila"
+      ],
+      "parole_da_usare": [
+        "Circolare",
+        "Iter",
+        "Labirinto",
+        "Alienazione",
+        "Protocollo"
+      ]
+    },
+    {
+      "id": "party_c1_04",
+      "mazzo": "party",
+      "livello": "c1",
+      "slot": 4,
+      "titolo": "Il Manifesto dell'Ironia come Suprema Forma di Libertà",
+      "incipit": "In un clima di crescente fanatismo ideologico, i tuoi colleghi pretendono l'adesione incondizionata a una causa dogmatica. Prendi la parola nel circolo culturale per motivare il valore del distacco critico e persuadere i presenti sull'importanza del disincanto per l'autonomia intellettuale.",
+      "parole_proibite": [
+        "Ridere",
+        "Scherzo",
+        "Serio",
+        "Libero",
+        "Gente"
+      ],
+      "parole_da_usare": [
+        "Ironia",
+        "Sarcasmo",
+        "Conformismo",
+        "Disincanto",
+        "Autonomia"
+      ]
+    },
+    {
+      "id": "party_c2_01",
+      "mazzo": "party",
+      "livello": "c2",
+      "slot": 1,
+      "titolo": "L'Assurdità dell'Esistenza nel Mito di Sisifo di Camus",
+      "incipit": "Davanti a una comunità tentata dalla disperazione nichilista o dalla cieca sottomissione dogmatica, prendi la parola per offrire una terza via. Persuadi l'assemblea che la cosciente rivolta contro l'assurdo e la lucidità conferiscano la suprema dignità all'agire umano.",
+      "parole_proibite": [
+        "Pietra",
+        "Montagna",
+        "Fatica",
+        "Triste",
+        "Morte"
+      ],
+      "parole_da_usare": [
+        "Assurdo",
+        "Rivolta",
+        "Lucidità",
+        "Inutilità",
+        "Dignità"
+      ]
+    },
+    {
+      "id": "party_c2_02",
+      "mazzo": "party",
+      "livello": "c2",
+      "slot": 2,
+      "titolo": "La Critica Decostruzionista del Linguaggio Pubblicitario",
+      "incipit": "L'autorità per le comunicazioni deve decidere se consentire la diffusione di algoritmi persuasivi subliminali su scala di massa. Prendi la parola davanti alla commissione per smascherare i meccanismi di feticismo e alienazione del simulacro e persuadere i giudici a vietarli.",
+      "parole_proibite": [
+        "Comprare",
+        "Pubblicità",
+        "Soldi",
+        "Spot",
+        "Prodotto"
+      ],
+      "parole_da_usare": [
+        "Semiotica",
+        "Feticismo",
+        "Alienazione",
+        "Simulacro",
+        "Decondizionamento"
+      ]
+    },
+    {
+      "id": "party_c2_03",
+      "mazzo": "party",
+      "livello": "c2",
+      "slot": 3,
+      "titolo": "La Dialettica dell'Umorismo tra Umorismo e Comico in Pirandello",
+      "incipit": "La giuria del festival teatrale intende premiare esclusivamente la farsa leggera e disimpegnata che distrae il pubblico. Sali sul palco per difendere il valore del sentimento del contrario e persuadere i critici sulla profondità della dissonanza tragicomica e della pietas.",
+      "parole_proibite": [
+        "Ridere",
+        "Pirandello",
+        "Donna",
+        "Battuta",
+        "Buffo"
+      ],
+      "parole_da_usare": [
+        "Sentimento del contrario",
+        "Riflessione",
+        "Tragicomico",
+        "Dissonanza",
+        "Pietas"
+      ]
+    },
+    {
+      "id": "party_c2_04",
+      "mazzo": "party",
+      "livello": "c2",
+      "slot": 4,
+      "titolo": "L'Orazione Fisiognomica sulla Maschera Sociale",
+      "incipit": "Al gran galà delle apparenze mondane i convitati celebrano la perfezione delle convenzioni sociali e del successo esteriore. Prendi la parola davanti al salone per svelare l'universale impostura della recitazione pubblica e persuadere i presenti all'atto liberatorio dello svelamento interiore.",
+      "parole_proibite": [
+        "Gente",
+        "Finto",
+        "Ruolo",
+        "Vivere",
+        "Mondo"
+      ],
+      "parole_da_usare": [
+        "Impostura",
+        "Recitazione",
+        "Convenzione",
+        "Svelamento",
+        "Sovversione"
+      ]
+    }
+  ]
+}

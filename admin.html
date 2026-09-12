@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Oratore - Pannello Gestione 192 Slot & Bulk Importer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body style="background:#000000; color:#fff; min-height:100vh; padding:20px;">
+
+  <div style="max-width: 1200px; margin: 0 auto;">
+    
+    <!-- Top Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d4af37; padding-bottom: 15px; margin-bottom: 25px;">
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="assets/branding/oratore-header.png" alt="Logo L'Oratore" style="height: 48px;">
+        <div>
+          <h1 style="font-size: 1.5rem; color: #d4af37; margin: 0;">Pannello Riservato • Matrice 192 Slot</h1>
+          <p style="font-size: 0.82rem; color: #94a3b8; margin: 2px 0 0 0;">Gestione e smistamento incipit per L'Oratore</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="if(window.LiveEditor) LiveEditor.openAddIncipitModal();" style="background:#d4af37; color:#000; padding:8px 16px; border-radius:20px; font-weight:800; border:none; cursor:pointer;">
+          <i class="fa-solid fa-plus-circle"></i> ➕ Aggiungi Incipit
+        </button>
+        <a href="index.html" class="btn btn-primary" style="background:#0d1220; border:1.5px solid #d4af37; color:#d4af37; padding:8px 18px; border-radius:20px; text-decoration:none; font-weight:700;">
+          <i class="fa-solid fa-gamepad"></i> Torna al Gioco
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. Matrice a 192 Slot -->
+    <div id="oratore-matrix-container">
+      <!-- Popolato da OratoreAdmin.renderMatrix() -->
+    </div>
+
+    <!-- 2. Bulk Importer da Testo / Word -->
+    <div class="glass-card" style="border: 2px solid #d4af37; border-radius: 16px; padding: 25px; margin-top: 25px;">
+      <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 1.3rem;">
+        <i class="fa-solid fa-file-import"></i> Caricamento Massivo da Testo Word (Smistamento Automatico)
+      </h3>
+      <p style="color: #cbd5e1; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.5;">
+        Incolla qui direttamente l'elenco numerato dal tuo foglio Word. Il parser riconosce automaticamente la struttura e smista gli incipit negli slot liberi della matrice.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Livello Predefinito (se non specificato nel testo):</label>
+          <select id="oratore-bulk-level-select" style="width:100%; padding:10px; background:#070a13; border:1px solid #d4af37; border-radius:8px; color:#fff; font-size:0.9rem;">
+            <option value="a1">🐣 A1 • Il Narratore in Erba (Primaria 1ª-3ª)</option>
+            <option value="a2">🌿 A2 • L'Apprendista Cantastorie (Primaria 4ª-5ª)</option>
+            <option value="b1" selected>🎙️ B1 • L'Oratore della Piazza (Scuola Media)</option>
+            <option value="b2">📜 B2 • Il Maestro di Retorica (Biennio Sup.)</option>
+            <option value="c1">🏛️ C1 • Il Filosofo dell'Areopago (Triennio Sup.)</option>
+            <option value="c2">👑 C2 • Il Sommo Accademico (Debate & Maturità)</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Mazzo Predefinito (se non specificato nel testo):</label>
+          <select id="oratore-bulk-deck-select" style="width:100%; padding:10px; background:#070a13; border:1px solid #d4af37; border-radius:8px; color:#fff; font-size:0.9rem;">
+            <option value="epica" selected>🏺 Mito & Epica Classica</option>
+            <option value="medioevo">👑 Medioevo & Cavalieri</option>
+            <option value="fantascienza">🚀 Fantascienza & Futuro</option>
+            <option value="teatro">🎭 Teatro & Spettacolo</option>
+            <option value="letteratura">📜 Letteratura & Poesia</option>
+            <option value="civilta">🌍 Mondo, Storia & Civiltà</option>
+            <option value="scienza">🧪 Scienza, Natura & Misteri</option>
+            <option value="party">🧩 Party & Creatività Libera</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Testo da Word (Incolla qui):</label>
+        <textarea id="oratore-bulk-textarea" rows="9" style="width:100%; padding:12px; background:#070a13; border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; line-height:1.4;" placeholder="1. L'Inganno del Cavallo&#10;Incipit: Le navi achee sono salpate all'improvviso lasciando sulla riva una gigantesca scultura cava...&#10;Parole Proibite: Cavallo, Legno, Soldati, Greco, Spiaggia&#10;Parole da Usare: Stratagemma, Ingannevole, Presagio, Baluardo, Diffidenza&#10;&#10;2. Il Canto delle Sirene..."></textarea>
+      </div>
+
+      <button class="btn btn-primary" onclick="OratoreAdmin.executeBulkImport()" style="background: #d4af37; color: #000; font-weight: 800; padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer;">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Analizza & Mostra Anteprima Incipit
+      </button>
+
+      <div id="oratore-bulk-preview"></div>
+    </div>
+
+  </div>
+
+  <!-- Slot Edit Modal -->
+  <div id="slot-edit-modal" class="legal-modal hidden">
+    <div class="legal-modal-content" style="max-width: 580px;">
+      <span class="close-legal" onclick="document.getElementById('slot-edit-modal').classList.add('hidden')">&times;</span>
+      <h3 id="slot-modal-title" style="color: var(--accent-gold); margin-bottom: 15px;">Modifica Slot</h3>
+      <div id="slot-modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/firebase-init.js?v=20260910b"></script>
+  <script src="js/cards-data.js?v=20260910b"></script>
+  <script src="js/live-editor.js?v=20260910b"></script>
+  <script src="js/admin.js?v=20260910b"></script>
+</body>
+</html>

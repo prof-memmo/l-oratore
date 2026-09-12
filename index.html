@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>L'Oratore - L'Arte del Racconto e della Retorica</title>
+  
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheet di Progetto (Pure Black Base & Gold Accents) -->
+  <link rel="stylesheet" href="css/style.css?v=20260910b">
+  
+  <!-- Firebase SDKs Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  
+  <!-- Configurazione Hub & Protezione Abbonamenti -->
+  <script>window.HUB_GAME_ID = "l-oratore";</script>
+  <script src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/hub-subscription-guard.js?v=20260909_oratore"></script>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <!-- ==========================================
+       HEADER DELL'ECOSISTEMA (BRAND UNIFORME)
+       ========================================== -->
+  <header class="app-header" id="main-app-header">
+    <!-- Logo Gioco Sinistra -->
+    <div class="header-left">
+      <img src="assets/branding/oratore-header.png" alt="Logo L'Oratore" class="header-game-logo" onclick="App.showView('view-welcome')">
+    </div>
+
+    <!-- Logo Avatar Centrale Prof. Memmo -->
+    <div class="header-center-logo">
+      <div class="header-prof-logo-wrapper" onclick="App.showView('view-welcome')">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-avatar.png" class="header-prof-logo" alt="Prof. Memmo Logo">
+      </div>
+    </div>
+
+    <!-- User Menu & Dropdown Integrato (Destra) -->
+    <div class="header-right">
+      <div class="user-menu-container">
+        <!-- Trigger Pill -->
+        <div class="user-menu-trigger" id="user-menu-trigger" onclick="App.toggleUserDropdown(event)">
+          <div class="user-avatar-circle">
+            <img id="header-user-avatar" src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png" alt="Avatar" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-avatar.png'">
+          </div>
+          <div class="user-trigger-text">
+            <span class="user-trigger-name" id="header-user-name">PROF. MEMMO</span>
+            <span class="user-trigger-role" id="header-user-role">AMMINISTRATORE</span>
+          </div>
+          <span class="user-trigger-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <!-- Dropdown Card -->
+        <div class="user-dropdown hidden" id="user-dropdown">
+          
+          <div class="dropdown-user-header">
+            <div class="dropdown-user-title" id="dropdown-user-name">PROF. MEMMO</div>
+            <div class="dropdown-user-subtitle" id="dropdown-user-role-sub">AMMINISTRATORE</div>
+          </div>
+
+          <!-- Sottofondo Music Player Widget -->
+          <div class="dropdown-music-box">
+            <div class="music-header">
+              <span class="music-label"><i class="fa-solid fa-music"></i> SOTTOFONDO</span>
+              <a href="https://freetouse.com/music" target="_blank" class="music-link">FREETOUSE.COM/MUSIC</a>
+            </div>
+            <div class="music-capsule">
+              <span class="music-track-title" id="music-track-title">Aventure - Close Friends</span>
+              <div class="music-btns">
+                <button class="music-btn-icon" onclick="AudioEngine.prevTrack()" title="Precedente"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="music-play-btn" id="music-play-btn" onclick="AudioEngine.togglePlay()" title="Play/Pausa"><i class="fa-solid fa-play"></i></button>
+                <button class="music-btn-icon" onclick="AudioEngine.nextTrack()" title="Successiva"><i class="fa-solid fa-forward-step"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Golden Pill Action Buttons -->
+          <button class="dropdown-pill-btn" onclick="Modals.openProfileModal()">
+            <i class="fa-solid fa-user-gear"></i> Modifica Profilo
+          </button>
+
+          <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('invita'); else if(window.Modals) Modals.openLegalModal('invita');">
+            <i class="fa-solid fa-paper-plane"></i> Invita un Collega
+          </button>
+
+          <div class="dropdown-split-row">
+            <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('privacy'); else if(window.Modals) Modals.openLegalModal('privacy');">
+              <i class="fa-solid fa-shield"></i> Privacy
+            </button>
+            <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('termini'); else if(window.Modals) Modals.openLegalModal('termini');">
+              <i class="fa-solid fa-scroll"></i> Termini
+            </button>
+          </div>
+
+          <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('contatti'); else if(window.Modals) Modals.openLegalModal('contatti');">
+            <i class="fa-solid fa-envelope"></i> Contatti
+          </button>
+
+          <div class="dropdown-bottom-row">
+            <button class="dropdown-pill-btn btn-disattiva-musica" id="music-mute-toggle-btn" onclick="AudioEngine.toggleMute()">
+              <i class="fa-solid fa-volume-high"></i> Disattiva Musica
+            </button>
+            <button class="dropdown-pill-btn btn-esci-red" onclick="App.confirmLogout()">
+              <i class="fa-solid fa-power-off"></i> Esci
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MAIN CONTAINER DELLE VISTE
+       ========================================== -->
+  <main class="main-container">
+
+    <!-- 1. VIEW: WELCOME HOME -->
+    <section id="view-welcome" class="view active">
+      <div class="glass-card welcome-hero">
+        <img src="assets/branding/oratore-hero-black.png" alt="Logo L'Oratore" class="welcome-hero-logo">
+        <h1 class="welcome-title">L'Arte del Racconto e della Retorica</h1>
+        <p class="welcome-subtitle">Due minuti di pura oratoria per conquistare la giuria: sfida le altre squadre a round tematici,<br>evita i tranelli del discorso e porta la tua pedina al traguardo.</p>
+
+        <div class="mode-pills-row">
+          <div class="mode-pill"><i class="fa-solid fa-users" style="color: var(--team-blue);"></i> Sfida a Squadre (2-4)</div>
+          <div class="mode-pill"><i class="fa-solid fa-stopwatch" style="color: var(--accent-gold);"></i> 2 Minuti di Discorso</div>
+          <div class="mode-pill"><i class="fa-solid fa-layer-group" style="color: #a855f7;"></i> 6 Livelli di Difficoltà (A1-C2)</div>
+          <div class="mode-pill"><i class="fa-solid fa-dice" style="color: var(--team-red);"></i> Round a Categorie Condivise</div>
+        </div>
+
+        <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()" style="margin-top: 15px;">
+          <i class="fa-solid fa-play"></i> Inizia Sfida Oratoria
+        </button>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy" id="footer-copyright-text">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 2. VIEW: STEP 1 - SCELTA NUMERO SQUADRE -->
+    <section id="view-setup-teams" class="view">
+      <div class="setup-header-box">
+        <span class="setup-step-badge">Passo 1 di 4</span>
+        <h2 class="setup-title">Quante Squadre Partecipano?</h2>
+        <p class="setup-subtitle">Seleziona il numero di squadre che si sfideranno nella sessione di retorica.</p>
+      </div>
+
+      <div class="teams-choice-grid">
+        <div class="team-choice-card" onclick="App.selectTeamsCount(2)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-user-group"></i></div>
+          <h3 class="team-choice-title">2 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu</p>
+        </div>
+
+        <div class="team-choice-card" onclick="App.selectTeamsCount(3)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-users"></i></div>
+          <h3 class="team-choice-title">3 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde</p>
+        </div>
+
+        <div class="team-choice-card" onclick="App.selectTeamsCount(4)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-people-group"></i></div>
+          <h3 class="team-choice-title">4 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde &bull; 🟡 Gialla</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button class="btn btn-secondary" onclick="App.showView('view-welcome')"><i class="fa-solid fa-arrow-left"></i> Annulla</button>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 3. VIEW: STEP 2 - SCELTA PEDINE PERSONAGGIO (GRANDI) -->
+    <section id="view-setup-pawns" class="view">
+      <div class="setup-header-box" id="pawn-team-picker-header">
+        <!-- Popolato dinamicamente da App.renderPawnPicker() -->
+      </div>
+
+      <div class="pawns-choice-grid-giant" id="pawns-choice-grid">
+        <!-- 10 Pedine popolate dinamicamente -->
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button class="btn btn-secondary" onclick="App.showView('view-setup-teams')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 4. VIEW: STEP 3 - SCELTA MODALITÀ -->
+    <section id="view-setup-mode" class="view">
+      <div class="setup-header-box">
+        <span class="setup-step-badge">Passo 3 di 4</span>
+        <h2 class="setup-title">Scegli la Modalità di Sfida Oratoria</h2>
+        <p class="setup-subtitle">Seleziona la meccanica di punteggio e il tipo di prova per i 2 minuti di discorso.</p>
+      </div>
+
+      <div class="modes-choice-grid">
+        <div class="mode-choice-card" onclick="App.selectMode('PROIBITE')">
+          <div class="mode-choice-header">
+            <span class="mode-choice-emoji">🚫</span>
+            <div>
+              <h3 class="mode-choice-title">Parole Proibite</h3>
+              <span class="mode-choice-badge badge-proibite">Buzzer & Vietate</span>
+            </div>
+          </div>
+          <p class="mode-choice-desc">L'oratore racconta la storia per 2 minuti senza pronunciare le <strong>5 parole vietate</strong>. La giuria avversaria preme il Buzzer a ogni errore per infliggere penalità.</p>
+        </div>
+
+        <div class="mode-choice-card" onclick="App.selectMode('USARE')">
+          <div class="mode-choice-header">
+            <span class="mode-choice-emoji">🎯</span>
+            <div>
+              <h3 class="mode-choice-title">Parole da Usare</h3>
+              <span class="mode-choice-badge badge-study">Studio & Lessico</span>
+            </div>
+          </div>
+          <p class="mode-choice-desc">L'oratore studia i <strong>5 vocaboli chiave</strong>, poi deve tessere un discorso narrativo inserendoli tutti in modo coerente (+1 punto per ogni parola usata con successo).</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button class="btn btn-secondary" onclick="App.showView('view-setup-pawns')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 5. VIEW: STEP 4 - SCELTA LIVELLO DI DIFFICOLTÀ (6 LIVELLI A1-C2) -->
+    <section id="view-setup-level" class="view">
+      <div class="setup-header-box">
+        <span class="setup-step-badge">Passo 4 di 4</span>
+        <h2 class="setup-title">Scegli il Livello di Difficoltà</h2>
+        <p class="setup-subtitle">Seleziona il grado di complessità: clicca sul livello per passare direttamente alla scelta della categoria.</p>
+      </div>
+
+      <!-- 6 Level Cards Grid -->
+      <div class="levels-six-grid" id="levels-six-grid">
+        <!-- Popolato dinamicamente da App.renderLevelGrid() -->
+      </div>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <button class="btn btn-secondary" onclick="App.showView('view-setup-mode')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 6. VIEW: SELEZIONE CATEGORIA INIZIO ROUND -->
+    <section id="view-round-select-category" class="view">
+      <div class="setup-header-box" id="round-category-header">
+        <!-- Popolato da GameEngine.renderRoundCategorySelection() -->
+      </div>
+
+      <div class="decks-choice-grid" id="round-decks-grid">
+        <!-- 8 Mazzi Tematici popolate dinamicamente -->
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 7. VIEW: SCHERMATA SFIDA ORATORE (FULL FOCUS) -->
+    <section id="view-game" class="view">
+      
+      <!-- Top Turn HUD Bar -->
+      <div class="game-hud-bar">
+        <div class="active-team-pill" id="active-team-hud-pill">
+          <img id="turn-team-avatar" src="assets/pedine/1.png" alt="Avatar Squadra" class="active-team-avatar">
+          <div>
+            <div class="active-team-name" id="turn-team-name">Squadra 1</div>
+            <div class="active-team-sub" id="turn-team-sub">È il turno del vostro Oratore</div>
+          </div>
+        </div>
+
+        <!-- Center 2-Minute Circular Timer -->
+        <div class="circular-timer-container">
+          <svg class="timer-svg" viewBox="0 0 36 36">
+            <path class="timer-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path id="timer-progress" class="timer-circle-progress" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          </svg>
+          <div class="timer-controls-wrap">
+            <div class="timer-display-digits" id="timer-digits">02:00</div>
+            <button class="btn btn-secondary" id="timer-toggle-btn" onclick="GameEngine.toggleTimer()">
+              <i class="fa-solid fa-play"></i> Avvia Discorso
+            </button>
+          </div>
+        </div>
+
+        <!-- Round Badge Info -->
+        <div class="round-info-pill" id="round-info-pill">
+          <span class="round-number-tag" id="hud-round-label">Round 1</span>
+        </div>
+      </div>
+
+      <!-- Full-Focus Orator Card Container -->
+      <div class="orator-full-screen-wrap">
+        <div class="orator-main-card">
+          
+          <div class="card-meta-row">
+            <span class="card-deck-tag" id="card-deck-tag">🏺 Categoria</span>
+            <span class="card-level-badge" id="card-level-badge">🎙️ Livello</span>
+            <button type="button" id="btn-live-edit-card" class="btn-live-edit-active" onclick="if (window.GameEngine && window.GameEngine.gameState && window.GameEngine.gameState.currentCard) LiveEditor.openCardEditorModal(window.GameEngine.gameState.currentCard);"><i class="fa-solid fa-pen-to-square"></i> ✏️ Modifica Carta</button>
+          </div>
+
+          <h2 class="card-main-title" id="card-title">Caricamento Traccia...</h2>
+
+          <div class="card-incipit-box">
+            <div class="card-incipit-label"><i class="fa-solid fa-feather-pointed"></i> INCIPIT NARRATIVO D'AUTORE:</div>
+            <p class="card-incipit-text" id="card-incipit">Preparati a iniziare il tuo discorso oratorio...</p>
+          </div>
+
+          <!-- 5 Words Box -->
+          <div class="card-words-section">
+            <div class="card-words-header" id="card-words-header">
+              <i class="fa-solid fa-ban" style="color: var(--danger-color);"></i> 5 PAROLE PROIBITE (DA NON PRONUNCIARE):
+            </div>
+            <div class="card-words-grid" id="card-words-grid">
+              <!-- Popolate dinamicamente -->
+            </div>
+          </div>
+
+          <!-- Bottom Actions Bar: Buzzer & Next Turn -->
+          <div class="card-actions-bar">
+            <button class="btn btn-buzzer-giant" id="btn-buzzer-penalty" onclick="GameEngine.triggerBuzzer()">
+              <i class="fa-solid fa-bell"></i> <span>OPS! BUZZER PENALITÀ</span> <span class="buzzer-counter" id="buzzer-count-badge">0</span>
+            </button>
+
+            <button class="btn btn-primary btn-advance-giant" onclick="GameEngine.finishTurn()">
+              <i class="fa-solid fa-circle-check"></i> <span>Valuta & Concludi Turno</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 8. VIEW: RIEPILOGO TURNO (SUMMARY STILE OPS! STORIA) -->
+    <section id="view-summary" class="view">
+      <div class="summary-container" id="turn-summary-box">
+        <!-- Popolato dinamicamente da GameEngine.renderSummaryUI() -->
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 9. VIEW: TABELLONE A SCHERMO INTERO (BOARD STILE OPS! STORIA) -->
+    <section id="view-game-board" class="view">
+      
+      <div class="board-view-header">
+        <div>
+          <h2 class="board-view-title"><i class="fa-solid fa-chess-board" style="color: var(--accent-gold);"></i> Tabellone di Gioco</h2>
+          <p class="board-view-sub" id="board-status-sub">Avanzamento pedine lungo il tracciato a 24 caselle.</p>
+        </div>
+        <div id="board-action-btn-wrap">
+          <button class="btn btn-primary btn-giant" id="btn-board-next-action" onclick="GameEngine.proceedAfterBoard()">
+            <i class="fa-solid fa-forward"></i> <span>Passa al Turno Successivo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dedicated Full-Width Board Wrap -->
+      <div class="board-full-view-container">
+        <div class="board-image-wrap" id="board-image-container">
+          <img src="assets/tabellone/1.png" alt="Tabellone a 24 Caselle" class="board-bg-img" id="board-img-element">
+          <div class="pawns-layer" id="pawns-layer">
+            <!-- Pedine posizionate dinamicamente da BoardEngine -->
+          </div>
+        </div>
+
+        <!-- Live Scoreboard & Standings Strip -->
+        <div class="teams-scoreboard-strip" id="teams-scoreboard-strip">
+          <!-- Popolato da GameEngine.renderScoreboard() -->
+        </div>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 10. VIEW: REGOLAMENTO -->
+    <section id="view-regolamento" class="view">
+      <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 30px;">
+        <div style="border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 15px; margin-bottom: 20px;">
+          <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;"><i class="fa-solid fa-scale-balanced"></i> Regolamento Ufficiale de L'Oratore</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Il gioco di retorica, narrazione e improvvisazione per la scuola e il gioco in famiglia.</p>
+        </div>
+
+        <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main);">
+          <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">1. Obiettivo del Gioco</h3>
+          <p>Lo scopo di ogni squadra è portare la propria pedina per prima al <strong>Traguardo (Casella 24)</strong>, sostenendo discorsi oratori da 2 minuti su incipit narrativi estratti casualmente.</p>
+
+          <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">2. I 6 Livelli di Difficoltà (QCER)</h3>
+          <p>Nel setup iniziale si seleziona il livello calibrato sul gruppo: da <strong>A1 (Narratore in Erba)</strong> fino a <strong>C2 (Sommo Accademico / Debate)</strong>.</p>
+
+          <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">3. Round a Categorie Condivise</h3>
+          <p>All'inizio di ogni Round, la squadra di turno sceglie la <strong>Categoria Tematica</strong>. Tutte le squadre affrontano una traccia inedita della stessa categoria per quel round!</p>
+
+          <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">4. Modalità di Sfida</h3>
+          <p><strong>Parole Proibite</strong>: L'oratore parla per 2 minuti senza pronunciare le 5 parole vietate. 0 penalità = 3 passi, 1 penalità = 2 passi, 2 penalità = 1 passo, 3+ = 0 passi.<br>
+          <strong>Parole da Usare</strong>: L'oratore deve inserire nel discorso i 5 vocaboli chiave in modo coerente (+1 punto a parola).</p>
+
+          <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">5. Caselle Speciali sul Tabellone</h3>
+          <p>
+            • <strong>Casella 5 (Tempo x2)</strong>: La squadra guadagna +30 secondi bonus nel turno successivo.<br>
+            • <strong>Casella 11 (Imprevisto -2)</strong>: La pedina arretra di 2 caselle.<br>
+            • <strong>Casella 18 (Parola Jolly)</strong>: La squadra ottiene un bonus jolly.<br>
+            • <strong>Casella 25 (Traguardo)</strong>: Vittoria finale della partita!
+          </p>
+        </div>
+      </div>
+
+      <!-- Standard View Footer Copyright (identico alla home) -->
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       BOTTOM DOCK NAVIGATION BAR
+       ========================================== -->
+  <nav class="bottom-bar">
+    <a href="#" class="tab-item active" data-view="view-welcome" onclick="App.showView('view-welcome'); return false;">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <span>Regolamento</span>
+    </a>
+    <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;">
+      <i class="fa-solid fa-circle-question"></i>
+      <span>Miniguida</span>
+    </a>
+    <a href="admin.html" class="tab-item" id="nav-tab-admin" target="_self">
+      <i class="fa-solid fa-lock"></i>
+      <span>Pannello Admin</span>
+    </a>
+  </nav>
+
+  <!-- ==========================================
+       MODALI (MINIGUIDA, PROFILO, LEGALE)
+       ========================================== -->
+  
+  <!-- Miniguida Modal -->
+  <div id="miniguida-modal" class="legal-modal hidden">
+    <div class="legal-modal-content">
+      <span class="close-legal" onclick="Modals.closeMiniguidaModal()">&times;</span>
+      <h3 style="color: var(--accent-gold); margin-bottom: 15px;"><i class="fa-solid fa-chalkboard-user"></i> Miniguida Didattica per la LIM</h3>
+      <div style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; max-height: 60vh; overflow-y: auto; text-align: left;">
+        <p><strong>1. Preparazione dell'Aula:</strong> Proietta L'Oratore sulla LIM e dividi la classe in 2, 3 o 4 squadre.</p>
+        <p><strong>2. Scelta del Livello:</strong> Seleziona il livello scolastico adeguato (A1..C2) in modo da tarare la complessità del lessico.</p>
+        <p><strong>3. L'Oratore al Centro:</strong> Per ogni turno, l'oratore della squadra si posiziona al centro della classe. Quando è pronto, clicca "Avvia Discorso".</p>
+        <p><strong>4. La Giuria col Buzzer:</strong> Le squadre avversarie ascoltano attentamente. Se viene pronunciata una parola proibita, premono il pulsante Buzzer.</p>
+        <p><strong>5. Valutazione e Tabellone:</strong> A fine discorso, il sistema mostra il riepilogo punti e anima la pedina sul tabellone a 25 caselle!</p>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="Modals.closeMiniguidaModal()">Ho Capito</button>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal (Identico a La Rotta degli Eroi) -->
+  <div id="edit-profile-modal" class="legal-modal hidden">
+    <div class="legal-modal-content" style="max-width: 480px; text-align: left;">
+      <span class="close-legal" onclick="Modals.closeProfileModal()">&times;</span>
+      <h2 style="color: var(--accent-gold); margin-bottom: 20px; font-size: 1.35rem; display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-user-gear"></i> Modifica Profilo
+      </h2>
+      <form id="form-edit-profile" onsubmit="event.preventDefault(); Modals.saveProfileData();">
+        <!-- Selettore Avatar Ufficiale -->
+        <div style="margin-bottom: 1.2rem;">
+          <label style="display: block; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem; font-size: 0.85rem;">Scegli il tuo Avatar:</label>
+          <div id="oratore-edit-avatar-grid" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-height:140px; overflow-y:auto; padding:8px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <!-- Popolato dinamicamente da Modals.openProfileModal() -->
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.2rem;">
+          <label style="display: block; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem; font-size: 0.85rem;">Nome e Cognome / Nickname:</label>
+          <input type="text" id="edit-profile-name" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.3); background: #070a13; color: white; font-size: 0.9rem;">
+        </div>
+
+        <div style="margin-bottom: 1.5rem;" id="edit-profile-school-group">
+          <label style="display: block; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem; font-size: 0.85rem;">Scuola / Istituto:</label>
+          <input type="text" id="edit-profile-school" placeholder="Es. I.C. Dante Alighieri" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.3); background: #070a13; color: white; font-size: 0.9rem;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; border-radius: 25px; font-weight: 800; margin-bottom: 15px;">
+          <i class="fa-solid fa-floppy-disk"></i> Salva Modifiche
+        </button>
+      </form>
+
+      <!-- Box Profilo Globale Ecosistema integrato -->
+      <div style="margin-top: 10px; padding: 14px; border-radius: 12px; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3);">
+        <div style="font-weight: 800; font-size: 0.85rem; color: #818cf8; margin-bottom: 4px;">
+          <i class="fa-solid fa-globe"></i> Profilo Globale Ecosistema
+        </div>
+        <p style="font-size: 0.75rem; color: #cbd5e1; margin: 0 0 10px 0;">Il tuo account è sincronizzato con l'Ecosistema Prof. Memmo. Gestisci abbonamenti e impostazioni generali dall'Hub.</p>
+        <a href="https://prof-memmo.github.io/games/profilo.html" target="_blank" class="btn" style="width: 100%; border-radius: 20px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 8px 12px; background: #6366f1; color: white;">
+          Gestisci Profilo Globale <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Modal (Privacy, Termini, Contatti) -->
+  <div id="legal-modal" class="legal-modal hidden">
+    <div class="legal-modal-content">
+      <span class="close-legal" onclick="Modals.closeLegalModal()">&times;</span>
+      <h3 id="legal-modal-title" style="color: var(--accent-gold); margin-bottom: 15px;">Informativa</h3>
+      <div id="legal-modal-body" style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; max-height: 55vh; overflow-y: auto; margin-bottom: 20px;">
+        Testo legale...
+      </div>
+      <button class="btn btn-primary" style="width: 100%;" onclick="Modals.closeLegalModal()">✅ Ho Capito</button>
+    </div>
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/legal-modal.js?v=20260819a"></script>
+  <script src="js/firebase-init.js?v=20260910b"></script>
+  <script src="js/music.js?v=20260910b"></script>
+  <script src="js/board.js?v=20260910b"></script>
+  <script src="js/cards-data.js?v=20260910b"></script>
+  <script src="js/live-editor.js?v=20260910b"></script>
+  <script src="js/gameEngine.js?v=20260910b"></script>
+  <script src="js/components/modals.js?v=20260910b"></script>
+  <script src="js/app.js?v=20260910b"></script>
+</body>
+</html>
