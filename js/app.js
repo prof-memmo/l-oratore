@@ -287,14 +287,24 @@ const App = {
     );
   },
 
-  confirmLevelAndStart() {
-    this.selectLevel(this.selectedSetup.level || 'b1');
+  async confirmLogout() {
+    if (confirm("Vuoi davvero uscire dalla sessione di gioco?")) {
+      if (window.Auth && window.Auth.logout) {
+        await window.Auth.logout();
+      }
+      const isPreview = window.location.pathname.includes('/preview');
+      window.location.href = isPreview 
+        ? "https://prof-memmo.github.io/games/preview/"
+        : "https://prof-memmo.github.io/games/";
+    }
   },
 
-  confirmLogout() {
-    if (confirm("Vuoi davvero uscire dalla sessione di gioco?")) {
-      window.location.href = "https://prof-memmo.github.io/games/";
-    }
+  goToUnifiedLogin() {
+    const isPreview = window.location.pathname.includes('/preview');
+    const portalUrl = isPreview
+      ? "https://prof-memmo.github.io/prof-memmo-gestione-siti/preview/portal.html?redirect=l_oratore"
+      : "https://prof-memmo.github.io/prof-memmo-gestione-siti/portal.html?redirect=l_oratore";
+    window.location.href = portalUrl;
   }
 };
 
