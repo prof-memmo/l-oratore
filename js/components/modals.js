@@ -96,10 +96,12 @@ const Modals = {
     const grid = document.getElementById('oratore-edit-avatar-grid');
     if (!modal) return;
 
-    // Carica profilo salvato o default
-    const savedName = localStorage.getItem('loratore_user_name') || 'Prof. Memmo';
+    // Carica profilo salvato o default da Auth / localStorage
+    const currentAuthName = (window.Auth && window.Auth.name && window.Auth.name !== 'Ospite') ? window.Auth.name : '';
+    const savedName = localStorage.getItem('loratore_user_name') || currentAuthName || 'Prof. Memmo';
     const savedSchool = localStorage.getItem('loratore_user_school') || '';
-    const savedAvatar = localStorage.getItem('loratore_user_avatar') || 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png';
+    const currentAuthAvatar = (window.Auth && window.Auth.avatar) ? window.Auth.avatar : '';
+    const savedAvatar = currentAuthAvatar || localStorage.getItem('loratore_user_avatar') || 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png';
     this.selectedAvatar = savedAvatar;
 
     if (nameInput) nameInput.value = savedName;
@@ -112,7 +114,7 @@ const Modals = {
         const isSelected = this.selectedAvatar.includes(`${num}.png`);
         return `
           <div class="avatar-option ${isSelected ? 'active' : ''}" 
-               onclick="Modals.selectAvatar(this, '${url}')"
+               onclick="Modals.selectAvatar(this, '${cdnUrl}')"
                style="width: 46px; height: 46px; border-radius: 50%; border: 3px solid ${isSelected ? 'var(--accent-gold)' : 'transparent'}; cursor: pointer; overflow: hidden; transition: transform 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.4); background: #ffffff; display: flex; align-items: center; justify-content: center; transform: ${isSelected ? 'scale(1.1)' : 'scale(1)'};">
             <img src="${url}" onerror="this.src='${cdnUrl}'" alt="Avatar ${num}" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
@@ -139,7 +141,7 @@ const Modals = {
     }
   },
 
-  saveProfileData() {
+  async saveProfileData() {
     const nameInput = document.getElementById('edit-profile-name');
     const schoolInput = document.getElementById('edit-profile-school');
     const newName = nameInput ? nameInput.value.trim() : 'Prof. Memmo';
@@ -149,17 +151,52 @@ const Modals = {
     localStorage.setItem('loratore_user_school', newSchool);
     localStorage.setItem('loratore_user_avatar', this.selectedAvatar);
 
-    // Aggiorna interfaccia Header e Dropdown
-    const headerName = document.getElementById('header-user-name');
-    const dropdownName = document.getElementById('dropdown-user-name');
-    const headerAvatar = document.getElementById('header-user-avatar');
+    if (window.Auth) {
+      window.Auth.name = newName;
+      window.Auth.avatar = this.selectedAvatar;
+      window.Auth.saveSession();
+      window.Auth.updateUI();
+    } else {
+      // Aggiorna interfaccia Header e Dropdown direttamente
+      const headerName = document.getElementById('header-user-name');
+      const dropdownName = document.getElementById('dropdown-user-name');
+      const headerAvatar = document.getElementById('header-user-avatar');
 
-    if (headerName) headerName.textContent = newName.toUpperCase();
-    if (dropdownName) dropdownName.textContent = newName.toUpperCase();
-    if (headerAvatar) headerAvatar.src = this.selectedAvatar;
+      if (headerName) headerName.textContent = newName.toUpperCase();
+      if (dropdownName) dropdownName.textContent = newName.toUpperCase();
+      if (headerAvatar) headerAvatar.src = this.selectedAvatar;
+    }
+
+    // Sync con Firestore globale se autenticato
+    const user = (window.fbAuth && window.fbAuth.currentUser) || (window.Auth && window.Auth.user);
+    if (user && window.fbDb) {
+      try {
+        const uid = user.uid;
+        const avatarUrl = this.selectedAvatar;
+        const updateData = {
+          avatar: avatarUrl,
+          'anagrafica.avatar': avatarUrl,
+          nome: newName,
+          name: newName,
+          'anagrafica.nome': newName
+        };
+        if (newSchool) {
+          updateData.scuola = newSchool;
+          updateData.school = newSchool;
+          updateData['anagrafica.scuola'] = newSchool;
+        }
+        await window.fbDb.collection('hub_users').doc(uid).set(updateData, { merge: true });
+        await window.fbDb.collection('users').doc(uid).set({ avatar: avatarUrl, name: newName }, { merge: true }).catch(() => {});
+        if (user.updateProfile) {
+          await user.updateProfile({ photoURL: avatarUrl, displayName: newName }).catch(() => {});
+        }
+      } catch (err) {
+        console.warn("Sync Firestore hub_users durante salvataggio profilo:", err);
+      }
+    }
 
     this.closeProfileModal();
-    alert("✅ Profilo salvato con successo!");
+    alert("✅ Profilo salvato e sincronizzato con l'Ecosistema!");
   },
 
   closeProfileModal() {
