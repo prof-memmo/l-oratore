@@ -534,12 +534,12 @@ const GameEngine = {
       if (btnAction) {
         if (isRoundFinished) {
           btnAction.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> <span>Concludi Round ${this.gameState.currentRound}</span>`;
-          btnAction.onclick = () => GameEngine.finishRound();
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
         } else {
           const nextTeamIdx = (this.gameState.currentTeamIdx + 1) % this.gameState.teams.length;
           const nextTeam = this.gameState.teams[nextTeamIdx];
           btnAction.innerHTML = `<i class="fa-solid fa-arrow-right"></i> <span>Turno Prossimo: ${nextTeam ? nextTeam.name : 'Squadra'}</span>`;
-          btnAction.onclick = () => GameEngine.proceedNextTurnInRound();
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
         }
       }
     });
