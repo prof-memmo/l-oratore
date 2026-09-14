@@ -30,7 +30,7 @@ const GameEngine = {
     usedCardIds: new Set(),
     penaltiesThisTurn: 0,
     wordsHitThisTurn: [false, false, false, false, false],
-    selectedOratorLevel: 2,
+    selectedOratorLevel: null,
     stepsGainedThisTurn: 0,
     bonusTimeNextTurn: 0,
     specialTileTriggered: null,
@@ -397,7 +397,10 @@ const GameEngine = {
 
   // 3. Conclusione Turno -> Calcolo Passi & Mostra SUMMARY (Stile Ops! Storia)
   calculateFinalSteps() {
-    const level = (typeof this.gameState.selectedOratorLevel === 'number') ? this.gameState.selectedOratorLevel : 2;
+    const level = this.gameState.selectedOratorLevel;
+    if (level === null || level === undefined) {
+      return null;
+    }
     if (level === 0) {
       return 0;
     }
@@ -417,7 +420,8 @@ const GameEngine = {
 
   selectOratorLevel(level) {
     this.gameState.selectedOratorLevel = level;
-    this.gameState.stepsGainedThisTurn = this.calculateFinalSteps();
+    const finalSteps = this.calculateFinalSteps();
+    this.gameState.stepsGainedThisTurn = (finalSteps !== null) ? finalSteps : 0;
     if (window.AudioEngine && window.AudioEngine.playChime) {
       window.AudioEngine.playChime();
     }
@@ -426,8 +430,8 @@ const GameEngine = {
 
   finishTurn() {
     this.stopTimer();
-    this.gameState.selectedOratorLevel = 2; // Default a 'Buon Narratore' (+2)
-    this.gameState.stepsGainedThisTurn = this.calculateFinalSteps();
+    this.gameState.selectedOratorLevel = null; // Nessuna preselezione automatica (stato neutro)
+    this.gameState.stepsGainedThisTurn = 0;
     this.renderSummaryUI();
     App.showView('view-summary');
   },
@@ -439,8 +443,9 @@ const GameEngine = {
 
     const isProibite = this.gameState.mode === 'PROIBITE';
     const countUsed = this.gameState.wordsHitThisTurn.filter(Boolean).length;
-    const currentLevel = (typeof this.gameState.selectedOratorLevel === 'number') ? this.gameState.selectedOratorLevel : 2;
-    const steps = this.gameState.stepsGainedThisTurn;
+    const currentLevel = this.gameState.selectedOratorLevel;
+    const isLevelSelected = (currentLevel !== null && currentLevel !== undefined);
+    const steps = isLevelSelected ? this.gameState.stepsGainedThisTurn : null;
 
     box.innerHTML = `
       <div class="summary-card">
@@ -506,13 +511,13 @@ const GameEngine = {
           `}
         </div>
 
-        <div class="summary-steps-highlight">
+        <div class="summary-steps-highlight ${!isLevelSelected ? 'pending' : ''}">
           <i class="fa-solid fa-shoe-prints"></i>
-          <span>Avanzamento Finale: <strong>+${steps} ${steps === 1 ? 'Casella' : 'Caselle'}</strong></span>
+          <span>Avanzamento Finale: <strong>${isLevelSelected ? `+${steps} ${steps === 1 ? 'Casella' : 'Caselle'}` : `<span style="color: #94a3b8; font-weight: 500; font-size: 0.95rem;">(In attesa della valutazione...)</span>`}</strong></span>
         </div>
 
-        <button class="btn btn-primary btn-giant" style="width: 100%; padding: 16px;" onclick="GameEngine.goToBoard()">
-          <i class="fa-solid fa-chess-board"></i> Vai al Tabellone & Muovi Pedina
+        <button class="btn btn-primary btn-giant" style="width: 100%; padding: 16px;" ${!isLevelSelected ? 'disabled' : ''} onclick="GameEngine.goToBoard()">
+          <i class="fa-solid ${isLevelSelected ? 'fa-chess-board' : 'fa-hand-pointer'}"></i> ${isLevelSelected ? 'Vai al Tabellone & Muovi Pedina' : 'Seleziona un Livello per Procedere'}
         </button>
       </div>
     `;
@@ -520,6 +525,10 @@ const GameEngine = {
 
   // 4. Mostra Tabellone & Anima Pedina (Stile Ops! Storia)
   goToBoard() {
+    if (this.gameState.selectedOratorLevel === null || this.gameState.selectedOratorLevel === undefined) {
+      alert("Seleziona prima il Livello dell'Oratore per convalidare il turno!");
+      return;
+    }
     const currentTeam = this.gameState.teams[this.gameState.currentTeamIdx];
     if (!currentTeam) return;
 
