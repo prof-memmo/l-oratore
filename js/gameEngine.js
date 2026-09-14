@@ -30,6 +30,7 @@ const GameEngine = {
     usedCardIds: new Set(),
     penaltiesThisTurn: 0,
     wordsHitThisTurn: [false, false, false, false, false],
+    selectedOratorLevel: null,
     stepsGainedThisTurn: 0,
     bonusTimeNextTurn: 0,
     specialTileTriggered: null,
@@ -395,24 +396,42 @@ const GameEngine = {
   },
 
   // 3. Conclusione Turno -> Calcolo Passi & Mostra SUMMARY (Stile Ops! Storia)
-  finishTurn() {
-    this.stopTimer();
-    const currentTeam = this.gameState.teams[this.gameState.currentTeamIdx];
-    let steps = 0;
-
-    if (this.gameState.mode === 'PROIBITE') {
-      // 0 penalità = 3 passi, 1 penalità = 2 passi, 2 penalità = 1 passo, >= 3 = 0 passi
-      steps = Math.max(0, 3 - this.gameState.penaltiesThisTurn);
-    } else {
-      // Modalità Lessico: 1-2 parole = 1 passo, 3-4 parole = 2 passi, 5 parole = 4 passi
-      const countUsed = this.gameState.wordsHitThisTurn.filter(Boolean).length;
-      if (countUsed === 5) steps = 4;
-      else if (countUsed >= 3) steps = 2;
-      else if (countUsed >= 1) steps = 1;
-      else steps = 0;
+  calculateFinalSteps() {
+    const level = this.gameState.selectedOratorLevel;
+    if (level === null || level === undefined) {
+      return null;
+    }
+    if (level === 0) {
+      return 0;
     }
 
-    this.gameState.stepsGainedThisTurn = steps;
+    if (this.gameState.mode === 'PROIBITE') {
+      // Livello Oratore - Penalità Buzzer
+      return Math.max(0, level - this.gameState.penaltiesThisTurn);
+    } else {
+      // Modalità Lessico (Parole da Usare)
+      const countUsed = this.gameState.wordsHitThisTurn.filter(Boolean).length;
+      let vocabMod = 0;
+      if (countUsed === 5) vocabMod = 1;
+      else if (countUsed <= 1) vocabMod = -1;
+      return Math.min(4, Math.max(0, level + vocabMod));
+    }
+  },
+
+  selectOratorLevel(level) {
+    this.gameState.selectedOratorLevel = level;
+    const finalSteps = this.calculateFinalSteps();
+    this.gameState.stepsGainedThisTurn = (finalSteps !== null) ? finalSteps : 0;
+    if (window.AudioEngine && window.AudioEngine.playChime) {
+      window.AudioEngine.playChime();
+    }
+    this.renderSummaryUI();
+  },
+
+  finishTurn() {
+    this.stopTimer();
+    this.gameState.selectedOratorLevel = null; // Nessuna preselezione automatica (stato neutro)
+    this.gameState.stepsGainedThisTurn = 0;
     this.renderSummaryUI();
     App.showView('view-summary');
   },
@@ -424,7 +443,9 @@ const GameEngine = {
 
     const isProibite = this.gameState.mode === 'PROIBITE';
     const countUsed = this.gameState.wordsHitThisTurn.filter(Boolean).length;
-    const steps = this.gameState.stepsGainedThisTurn;
+    const currentLevel = this.gameState.selectedOratorLevel;
+    const isLevelSelected = (currentLevel !== null && currentLevel !== undefined);
+    const steps = isLevelSelected ? this.gameState.stepsGainedThisTurn : null;
 
     box.innerHTML = `
       <div class="summary-card">
@@ -436,29 +457,67 @@ const GameEngine = {
           </div>
         </div>
 
+        <!-- Valutazione Docente: Livelli dell'Oratore -->
+        <div class="orator-levels-box">
+          <div class="orator-levels-title">
+            <i class="fa-solid fa-gavel" style="color: var(--accent-gold);"></i> Valutazione Docente: Livello dell'Oratore
+          </div>
+          <div class="orator-levels-grid">
+            <div class="orator-level-btn ${currentLevel === 3 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(3)">
+              <div class="orator-level-badge">🥇</div>
+              <div class="orator-level-info">
+                <div class="orator-level-name">Grande Oratore</div>
+                <div class="orator-level-pts">+3 Passi Base</div>
+              </div>
+            </div>
+            <div class="orator-level-btn ${currentLevel === 2 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(2)">
+              <div class="orator-level-badge">🥈</div>
+              <div class="orator-level-info">
+                <div class="orator-level-name">Buon Narratore</div>
+                <div class="orator-level-pts">+2 Passi Base</div>
+              </div>
+            </div>
+            <div class="orator-level-btn ${currentLevel === 1 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(1)">
+              <div class="orator-level-badge">🥉</div>
+              <div class="orator-level-info">
+                <div class="orator-level-name">Apprendista</div>
+                <div class="orator-level-pts">+1 Passo Base</div>
+              </div>
+            </div>
+            <div class="orator-level-btn ${currentLevel === 0 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(0)">
+              <div class="orator-level-badge">⚪</div>
+              <div class="orator-level-info">
+                <div class="orator-level-name">Passo / Rinuncia</div>
+                <div class="orator-level-pts">0 Passi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dettaglio Vincoli e Statistiche -->
         <div class="summary-stats-box">
           ${isProibite ? `
             <div class="summary-stat-row">
               <span><i class="fa-solid fa-bell" style="color: var(--danger-color);"></i> Penalità / Errori Buzzer:</span>
               <span class="summary-stat-val" style="color: ${this.gameState.penaltiesThisTurn === 0 ? 'var(--success-color)' : 'var(--danger-color)'};">
-                ${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 0 ? '🎉 (Discorso Impeccabile!)' : ''}
+                ${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 0 ? '🎉 (Nessun errore buzzer!)' : `(-${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 1 ? 'passo' : 'passi'})`}
               </span>
             </div>
           ` : `
             <div class="summary-stat-row">
               <span><i class="fa-solid fa-bullseye" style="color: var(--success-color);"></i> Vocaboli Chiave Inseriti:</span>
-              <span class="summary-stat-val" style="color: var(--success-color);">${countUsed} / 5</span>
+              <span class="summary-stat-val" style="color: var(--success-color);">${countUsed} / 5 ${countUsed === 5 ? '🌟 (+1 Bonus!)' : (countUsed <= 1 ? '⚠️ (-1)' : '')}</span>
             </div>
           `}
         </div>
 
-        <div class="summary-steps-highlight">
+        <div class="summary-steps-highlight ${!isLevelSelected ? 'pending' : ''}">
           <i class="fa-solid fa-shoe-prints"></i>
-          <span>Avanzamento Conquistato: <strong>+${steps} ${steps === 1 ? 'Casella' : 'Caselle'}</strong></span>
+          <span>Avanzamento Finale: <strong>${isLevelSelected ? `+${steps} ${steps === 1 ? 'Casella' : 'Caselle'}` : `<span style="color: #94a3b8; font-weight: 500; font-size: 0.95rem;">(In attesa della valutazione...)</span>`}</strong></span>
         </div>
 
-        <button class="btn btn-primary btn-giant" style="width: 100%; padding: 16px;" onclick="GameEngine.goToBoard()">
-          <i class="fa-solid fa-chess-board"></i> Vai al Tabellone & Muovi Pedina
+        <button class="btn btn-primary btn-giant" style="width: 100%; padding: 16px;" ${!isLevelSelected ? 'disabled' : ''} onclick="GameEngine.goToBoard()">
+          <i class="fa-solid ${isLevelSelected ? 'fa-chess-board' : 'fa-hand-pointer'}"></i> ${isLevelSelected ? 'Vai al Tabellone & Muovi Pedina' : 'Seleziona un Livello per Procedere'}
         </button>
       </div>
     `;
@@ -466,6 +525,10 @@ const GameEngine = {
 
   // 4. Mostra Tabellone & Anima Pedina (Stile Ops! Storia)
   goToBoard() {
+    if (this.gameState.selectedOratorLevel === null || this.gameState.selectedOratorLevel === undefined) {
+      alert("Seleziona prima il Livello dell'Oratore per convalidare il turno!");
+      return;
+    }
     const currentTeam = this.gameState.teams[this.gameState.currentTeamIdx];
     if (!currentTeam) return;
 
@@ -534,12 +597,12 @@ const GameEngine = {
       if (btnAction) {
         if (isRoundFinished) {
           btnAction.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> <span>Concludi Round ${this.gameState.currentRound}</span>`;
-          btnAction.onclick = () => GameEngine.finishRound();
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
         } else {
           const nextTeamIdx = (this.gameState.currentTeamIdx + 1) % this.gameState.teams.length;
           const nextTeam = this.gameState.teams[nextTeamIdx];
           btnAction.innerHTML = `<i class="fa-solid fa-arrow-right"></i> <span>Turno Prossimo: ${nextTeam ? nextTeam.name : 'Squadra'}</span>`;
-          btnAction.onclick = () => GameEngine.proceedNextTurnInRound();
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
         }
       }
     });
