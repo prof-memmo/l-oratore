@@ -136,10 +136,14 @@
           <div class="mode-pill"><i class="fa-solid fa-layer-group" style="color: #a855f7;"></i> 6 Livelli di Difficoltà (A1-C2)</div>
           <div class="mode-pill"><i class="fa-solid fa-dice" style="color: var(--team-red);"></i> Round a Categorie Condivise</div>
         </div>
-
-        <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()" style="margin-top: 15px;">
-          <i class="fa-solid fa-play"></i> Inizia Sfida Oratoria
-        </button>
+        <div class="welcome-actions-wrap" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+          <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()">
+            <i class="fa-solid fa-play"></i> Inizia Nuova Sfida
+          </button>
+          <button class="btn btn-secondary btn-giant" onclick="GameEngine.openSavedGamesModal()">
+            <i class="fa-solid fa-folder-open"></i> Riprendi Partita
+          </button>
+        </div>
       </div>
 
       <footer class="view-footer-copyright">
@@ -158,27 +162,27 @@
         <p class="setup-subtitle">Seleziona il numero di squadre che si sfideranno nella sessione di retorica.</p>
       </div>
 
-      <div class="teams-choice-grid">
-        <div class="team-choice-card" onclick="App.selectTeamsCount(2)">
-          <div class="team-choice-icon-wrap"><i class="fa-solid fa-user-group"></i></div>
-          <h3 class="team-choice-title">2 Squadre</h3>
-          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu</p>
-        </div>
-
-        <div class="team-choice-card" onclick="App.selectTeamsCount(3)">
-          <div class="team-choice-icon-wrap"><i class="fa-solid fa-users"></i></div>
-          <h3 class="team-choice-title">3 Squadre</h3>
-          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde</p>
-        </div>
-
-        <div class="team-choice-card" onclick="App.selectTeamsCount(4)">
-          <div class="team-choice-icon-wrap"><i class="fa-solid fa-people-group"></i></div>
-          <h3 class="team-choice-title">4 Squadre</h3>
-          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde &bull; 🟡 Gialla</p>
+      <div class="setup-card-container">
+        <div class="teams-count-grid">
+          <div class="setup-option-card" onclick="App.selectTeamsCount(2)">
+            <div class="option-icon"><i class="fa-solid fa-user-group"></i></div>
+            <div class="option-title">2 Squadre</div>
+            <div class="option-desc">Ideale per il duello testa a testa</div>
+          </div>
+          <div class="setup-option-card" onclick="App.selectTeamsCount(3)">
+            <div class="option-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="option-title">3 Squadre</div>
+            <div class="option-desc">Perfetto per gruppi medi</div>
+          </div>
+          <div class="setup-option-card" onclick="App.selectTeamsCount(4)">
+            <div class="option-icon"><i class="fa-solid fa-people-group"></i></div>
+            <div class="option-title">4 Squadre</div>
+            <div class="option-desc">Massima partecipazione e sfida a 4</div>
+          </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 25px;">
+      <div class="setup-footer-bar">
         <button class="btn btn-secondary" onclick="App.showView('view-welcome')"><i class="fa-solid fa-arrow-left"></i> Annulla</button>
       </div>
 
@@ -190,17 +194,27 @@
       </footer>
     </section>
 
-    <!-- 3. VIEW: STEP 2 - SCELTA PEDINE PERSONAGGIO (GRANDI) -->
+    <!-- 3. VIEW: STEP 2 - SCELTA PEDINE E NOMI SQUADRE -->
     <section id="view-setup-pawns" class="view">
-      <div class="setup-header-box" id="pawn-team-picker-header">
-        <!-- Popolato dinamicamente da App.renderPawnPicker() -->
+      <div class="setup-header-box">
+        <span class="setup-step-badge">Passo 2 di 4</span>
+        <h2 class="setup-title" id="pawn-selection-title">Scegli la Pedina per la Squadra 1</h2>
+        <p class="setup-subtitle">Personalizza il nome e l'avatar della pedina sul tabellone.</p>
       </div>
 
-      <div class="pawns-choice-grid-giant" id="pawns-choice-grid">
-        <!-- 10 Pedine popolate dinamicamente -->
+      <div class="setup-card-container">
+        <!-- Input Nome Squadra Corrente -->
+        <div class="team-name-input-row">
+          <label for="input-team-name"><i class="fa-solid fa-signature"></i> Nome Squadra:</label>
+          <input type="text" id="input-team-name" class="input-modern" placeholder="Inserisci nome squadra...">
+        </div>
+
+        <div class="pawns-grid-10" id="pawns-grid-container">
+          <!-- Popolato dinamicamente da App.renderPawnPicker() -->
+        </div>
       </div>
 
-      <div style="text-align: center; margin-top: 25px;">
+      <div class="setup-footer-bar">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-teams')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -212,39 +226,38 @@
       </footer>
     </section>
 
-    <!-- 4. VIEW: STEP 3 - SCELTA MODALITÀ -->
+    <!-- 4. VIEW: STEP 3 - MODALITÀ DI GIOCO -->
     <section id="view-setup-mode" class="view">
       <div class="setup-header-box">
         <span class="setup-step-badge">Passo 3 di 4</span>
-        <h2 class="setup-title">Scegli la Modalità di Sfida Oratoria</h2>
-        <p class="setup-subtitle">Seleziona la meccanica di punteggio e il tipo di prova per i 2 minuti di discorso.</p>
+        <h2 class="setup-title">Scegli la Modalità di Sfida</h2>
+        <p class="setup-subtitle">Come dovranno confrontarsi gli oratori con le parole chiave?</p>
       </div>
 
-      <div class="modes-choice-grid">
-        <div class="mode-choice-card" onclick="App.selectMode('PROIBITE')">
-          <div class="mode-choice-header">
-            <span class="mode-choice-emoji">🚫</span>
-            <div>
-              <h3 class="mode-choice-title">Parole Proibite</h3>
-              <span class="mode-choice-badge badge-proibite">Buzzer & Vietate</span>
+      <div class="setup-card-container">
+        <div class="mode-selection-grid">
+          <div class="setup-option-card mode-card" onclick="App.selectMode('PROIBITE')">
+            <div class="option-icon" style="color: var(--danger-color);"><i class="fa-solid fa-ban"></i></div>
+            <div class="option-title">Parole Proibite</div>
+            <div class="option-desc">
+              L'Oratore parla per 2 minuti <strong>senza mai pronunciare</strong> le 5 parole vietate.<br>
+              Se le pronuncia, la giuria preme il Buzzer Penalità!
             </div>
+            <div class="mode-tag mode-tag-red">Modalità Classica Taboo</div>
           </div>
-          <p class="mode-choice-desc">L'oratore racconta la storia per 2 minuti senza pronunciare le <strong>5 parole vietate</strong>. La giuria avversaria preme il Buzzer a ogni errore per infliggere penalità.</p>
-        </div>
 
-        <div class="mode-choice-card" onclick="App.selectMode('USARE')">
-          <div class="mode-choice-header">
-            <span class="mode-choice-emoji">🎯</span>
-            <div>
-              <h3 class="mode-choice-title">Parole da Usare</h3>
-              <span class="mode-choice-badge badge-study">Studio & Lessico</span>
+          <div class="setup-option-card mode-card" onclick="App.selectMode('USARE')">
+            <div class="option-icon" style="color: var(--success-color);"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="option-title">Parole da Usare</div>
+            <div class="option-desc">
+              L'Oratore deve <strong>inserire e contestualizzare</strong> tutti e 5 i vocaboli d'autore nel suo discorso continuo da 2 minuti.
             </div>
+            <div class="mode-tag mode-tag-green">Modalità Lessico & Creatività</div>
           </div>
-          <p class="mode-choice-desc">L'oratore studia i <strong>5 vocaboli chiave</strong>, poi deve tessere un discorso narrativo inserendoli tutti in modo coerente (+1 punto per ogni parola usata con successo).</p>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 25px;">
+      <div class="setup-footer-bar">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-pawns')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -256,20 +269,21 @@
       </footer>
     </section>
 
-    <!-- 5. VIEW: STEP 4 - SCELTA LIVELLO DI DIFFICOLTÀ (6 LIVELLI A1-C2) -->
+    <!-- 5. VIEW: STEP 4 - LIVELLO DI DIFFICOLTÀ (QCER A1-C2) -->
     <section id="view-setup-level" class="view">
       <div class="setup-header-box">
         <span class="setup-step-badge">Passo 4 di 4</span>
-        <h2 class="setup-title">Scegli il Livello di Difficoltà</h2>
-        <p class="setup-subtitle">Seleziona il grado di complessità: clicca sul livello per passare direttamente alla scelta della categoria.</p>
+        <h2 class="setup-title">Scegli il Livello di Retorica</h2>
+        <p class="setup-subtitle">Tarato sui livelli QCER per adattarsi a scuole primarie, secondarie o dibattiti avanzati.</p>
       </div>
 
-      <!-- 6 Level Cards Grid -->
-      <div class="levels-six-grid" id="levels-six-grid">
-        <!-- Popolato dinamicamente da App.renderLevelGrid() -->
+      <div class="setup-card-container">
+        <div class="levels-grid-6" id="levels-grid-container">
+          <!-- Popolato dinamicamente da App.renderLevelGrid() -->
+        </div>
       </div>
 
-      <div style="text-align: center; margin-top: 25px;">
+      <div class="setup-footer-bar">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-mode')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -342,6 +356,9 @@
             <button type="button" id="btn-live-edit-card" class="btn-live-edit-active" onclick="if (window.GameEngine && window.GameEngine.gameState && window.GameEngine.gameState.currentCard) LiveEditor.openCardEditorModal(window.GameEngine.gameState.currentCard);"><i class="fa-solid fa-pen-to-square"></i> ✏️ Modifica Carta</button>
           </div>
 
+          <!-- Banner Bonus Casella Attivo -->
+          <div id="turn-active-bonus-banner" class="turn-bonus-banner hidden"></div>
+
           <h2 class="card-main-title" id="card-title">Caricamento Traccia...</h2>
 
           <div class="card-incipit-box">
@@ -403,7 +420,10 @@
           <h2 class="board-view-title"><i class="fa-solid fa-chess-board" style="color: var(--accent-gold);"></i> Tabellone di Gioco</h2>
           <p class="board-view-sub" id="board-status-sub">Avanzamento pedine lungo il tracciato a 24 caselle.</p>
         </div>
-        <div id="board-action-btn-wrap">
+        <div id="board-action-btn-wrap" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-secondary" onclick="GameEngine.showLeaderboard(false)" title="Visualizza la classifica provvisoria e opzioni sessione">
+            <i class="fa-solid fa-pause"></i> <span>Sospendi / Classifica</span>
+          </button>
           <button class="btn btn-primary btn-giant" id="btn-board-next-action" onclick="GameEngine.proceedAfterBoard()">
             <i class="fa-solid fa-forward"></i> <span>Passa al Turno Successivo</span>
           </button>
@@ -433,7 +453,53 @@
       </footer>
     </section>
 
-    <!-- 10. VIEW: REGOLAMENTO -->
+    <!-- 10. VIEW: CLASSIFICA (PROVVISORIA E FINALE) -->
+    <section id="view-leaderboard" class="view">
+      <div class="glass-card leaderboard-card-container">
+        <div class="leaderboard-header">
+          <span class="leaderboard-badge interim-badge" id="leaderboard-badge"><i class="fa-solid fa-pause"></i> CLASSIFICA PROVVISORIA</span>
+          <h2 class="leaderboard-title" id="leaderboard-title">Stato della Partita</h2>
+          <p class="leaderboard-subtitle" id="leaderboard-subtitle">Avanzamento verso il Traguardo Finale (Casella 24)</p>
+        </div>
+
+        <!-- Podio Top 3 -->
+        <div class="leaderboard-podium" id="leaderboard-podium">
+          <!-- Popolato dinamicamente da GameEngine.showLeaderboard() -->
+        </div>
+
+        <!-- Tabella Completa Avanzamento -->
+        <div class="leaderboard-table-wrap">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th style="width: 70px; text-align: center;">Pos.</th>
+                <th>Squadra</th>
+                <th style="text-align: center;">Casella</th>
+                <th style="text-align: center;">Distanza Traguardo</th>
+                <th style="text-align: center;">Bonus Attivi</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-table-body">
+              <!-- Popolato dinamicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pulsanti Azione -->
+        <div class="leaderboard-actions-row" id="leaderboard-actions-row">
+          <!-- Popolato dinamicamente -->
+        </div>
+      </div>
+
+      <footer class="view-footer-copyright">
+        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
+        <p class="footer-copy">
+          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+        </p>
+      </footer>
+    </section>
+
+    <!-- 11. VIEW: REGOLAMENTO -->
     <section id="view-regolamento" class="view">
       <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 30px;">
         <div style="border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 15px; margin-bottom: 20px;">
@@ -457,10 +523,11 @@
 
           <h3 style="color: var(--accent-gold); margin-top: 20px; font-size: 1.15rem;">5. Caselle Speciali sul Tabellone</h3>
           <p>
-            • <strong>Casella 5 (Tempo x2)</strong>: La squadra guadagna +30 secondi bonus nel turno successivo.<br>
-            • <strong>Casella 11 (Imprevisto -2)</strong>: La pedina arretra di 2 caselle.<br>
-            • <strong>Casella 18 (Parola Jolly)</strong>: La squadra ottiene un bonus jolly.<br>
-            • <strong>Casella 25 (Traguardo)</strong>: Vittoria finale della partita!
+            • <strong>Casella 6 (🎣 Canna da Pesca)</strong>: La squadra che vi atterra guadagna <strong>+30 secondi extra</strong> nel suo turno di discorso successivo (150s totali).<br>
+            • <strong>Casella 12 (📍 Punto di Controllo)</strong>: Traguardo intermedio a metà percorso che sancisce l'ingresso nella seconda metà del tabellone.<br>
+            • <strong>Casella 18 (♟️ Mossa del Cavallo)</strong>: Balzo immediato! La pedina avanza subito alla <strong>Casella 19</strong>.<br>
+            • <strong>Casella 21 (✖️2 Super Raddoppio)</strong>: I passi ottenuti con il discorso del turno successivo varranno <strong>doppio</strong> per una volata finale verso il traguardo.<br>
+            • <strong>Casella 24 (🏆 Traguardo Finale)</strong>: Conquista il tabellone e proclama la vittoria finale della partita!
           </p>
         </div>
       </div>
@@ -486,7 +553,7 @@
     </a>
     <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;">
       <i class="fa-solid fa-scale-balanced"></i>
-      <span>Regolamento</span>
+      <span>Regole</span>
     </a>
     <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;">
       <i class="fa-solid fa-circle-question"></i>
@@ -502,6 +569,46 @@
        MODALI (MINIGUIDA, PROFILO, LEGALE)
        ========================================== -->
   
+  <!-- Saved Games Modal -->
+  <div id="saved-games-modal" class="legal-modal hidden">
+    <div class="legal-modal-content" style="max-width: 600px; text-align: left;">
+      <span class="close-legal" onclick="GameEngine.closeSavedGamesModal()">&times;</span>
+      <h2 style="color: var(--accent-gold); margin-bottom: 8px; font-size: 1.35rem; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-folder-open"></i> Partite Salvate
+      </h2>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 18px;">Seleziona una sessione precedente per riprendere la partita dal punto esatto in cui l'hai lasciata.</p>
+      
+      <div id="saved-games-list" class="saved-games-list">
+        <!-- Popolato dinamicamente da GameEngine.renderSavedGamesList() -->
+      </div>
+
+      <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+        <button class="btn btn-secondary" onclick="GameEngine.closeSavedGamesModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save Game Dialog Modal -->
+  <div id="save-game-dialog-modal" class="legal-modal hidden">
+    <div class="legal-modal-content" style="max-width: 480px; text-align: left;">
+      <span class="close-legal" onclick="GameEngine.closeSaveDialog()">&times;</span>
+      <h2 style="color: var(--accent-gold); margin-bottom: 10px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> Salva Sessione di Gioco
+      </h2>
+      <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 16px;">Dai un nome alla sessione per ritrovarla facilmente alla prossima lezione o sessione.</p>
+      
+      <div style="margin-bottom: 1.2rem;">
+        <label for="save-session-name-input" style="display: block; font-weight: 700; color: var(--accent-gold); margin-bottom: 6px; font-size: 0.85rem;">Nome Sessione / Classe:</label>
+        <input type="text" id="save-session-name-input" placeholder="Es. Classe 2ª A - Retorica Epica" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.3); background: #070a13; color: white; font-size: 0.95rem;">
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="GameEngine.closeSaveDialog()">Annulla</button>
+        <button class="btn btn-primary" onclick="GameEngine.confirmSaveGame()"><i class="fa-solid fa-floppy-disk"></i> Salva ed Esci</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Miniguida Modal -->
   <div id="miniguida-modal" class="legal-modal hidden">
     <div class="legal-modal-content">
@@ -512,7 +619,7 @@
         <p><strong>2. Scelta del Livello:</strong> Seleziona il livello scolastico adeguato (A1..C2) in modo da tarare la complessità del lessico.</p>
         <p><strong>3. L'Oratore al Centro:</strong> Per ogni turno, l'oratore della squadra si posiziona al centro della classe. Quando è pronto, clicca "Avvia Discorso".</p>
         <p><strong>4. La Giuria col Buzzer:</strong> Le squadre avversarie ascoltano attentamente. Se viene pronunciata una parola proibita, premono il pulsante Buzzer.</p>
-        <p><strong>5. Valutazione e Tabellone:</strong> A fine discorso, il sistema mostra il riepilogo punti e anima la pedina sul tabellone a 25 caselle!</p>
+        <p><strong>5. Valutazione e Tabellone:</strong> A fine discorso, il sistema mostra il riepilogo punti e anima la pedina sul tabellone a 24 caselle!</p>
       </div>
       <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="Modals.closeMiniguidaModal()">Ho Capito</button>
     </div>

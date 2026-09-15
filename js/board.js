@@ -6,10 +6,10 @@
 const BoardEngine = {
   totalCells: 24,
   specialTiles: {
-    6: { type: "PESCA_CARTA", label: "Canna da Pesca", icon: "🎣", desc: "Hai pescato un bonus: +30s nel prossimo discorso!" },
-    12: { type: "CHECKPOINT", label: "Punto di Controllo", icon: "📍", desc: "Traguardo intermedio: la squadra è salva da penalità!" },
-    18: { type: "PEDINA_BONUS", label: "Mossa del Cavallo", icon: "♟️", desc: "Scacco al tabellone: avanzi subito di +1 casella bonus!" },
-    21: { type: "TEMPO_X2", label: "Bonus x2", icon: "✖️2", desc: "Doppio bonus: il prossimo turno vale passi doppi!" },
+    6: { type: "PESCA_CARTA", label: "Canna da Pesca", icon: "🎣", desc: "Hai pescato un bonus: +30s nel tuo prossimo discorso!" },
+    12: { type: "CHECKPOINT", label: "Punto di Controllo", icon: "📍", desc: "Traguardo intermedio: la squadra ha superato la prima metà del percorso!" },
+    18: { type: "PEDINA_BONUS", label: "Mossa del Cavallo", icon: "♟️", desc: "Scacco al tabellone: balzo immediato alla casella 19!" },
+    21: { type: "TEMPO_X2", label: "Super Raddoppio", icon: "✖️2", desc: "Super Raddoppio: i passi del tuo prossimo discorso valgono doppio!" },
     24: { type: "TRAGUARDO", label: "Traguardo 24", icon: "🏆", desc: "Vittoria Finale della Partita!" }
   },
 
