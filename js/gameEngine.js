@@ -32,7 +32,8 @@ const GameEngine = {
     wordsHitThisTurn: [false, false, false, false, false],
     selectedOratorLevel: null,
     stepsGainedThisTurn: 0,
-    bonusTimeNextTurn: 0,
+    activeExtraTimeThisTurn: 0,
+    activeDoubleStepsThisTurn: false,
     specialTileTriggered: null,
     isGameFinished: false
   },
@@ -105,7 +106,13 @@ const GameEngine = {
       ...t,
       id: t.id || `team_${idx + 1}`,
       position: 1,
-      score: 0
+      score: 0,
+      speechesCompleted: 0,
+      totalPenalties: 0,
+      pendingBonus: {
+        extraTime: 0,
+        doubleSteps: false
+      }
     }));
     this.gameState.teamsCount = teamsList.length;
     this.gameState.mode = mode || 'PROIBITE';
@@ -117,8 +124,12 @@ const GameEngine = {
     this.gameState.currentTeamIdx = 0;
     
     this.gameState.usedCardIds.clear();
-    this.gameState.bonusTimeNextTurn = 0;
+    this.gameState.activeExtraTimeThisTurn = 0;
+    this.gameState.activeDoubleStepsThisTurn = false;
     this.gameState.isGameFinished = false;
+
+    // Salva automaticamente lo stato iniziale
+    this.autoSave();
 
     // Avvia la scelta della Categoria per il Round 1
     this.startRoundCategorySelection();
@@ -184,19 +195,36 @@ const GameEngine = {
   // 2. Avvio del Turno di Discorso (2 Minuti)
   startTurn() {
     this.stopTimer();
+    const currentTeam = this.gameState.teams[this.gameState.currentTeamIdx];
+    if (!currentTeam) return;
+
+    if (!currentTeam.pendingBonus) {
+      currentTeam.pendingBonus = { extraTime: 0, doubleSteps: false };
+    }
+
     this.gameState.penaltiesThisTurn = 0;
     this.gameState.wordsHitThisTurn = [false, false, false, false, false];
     this.gameState.specialTileTriggered = null;
 
+    // Consumo e attivazione bonus per QUESTA specifica squadra
+    let duration = this.gameState.turnTimer;
+    if (currentTeam.pendingBonus.extraTime > 0) {
+      duration += currentTeam.pendingBonus.extraTime;
+      this.gameState.activeExtraTimeThisTurn = currentTeam.pendingBonus.extraTime;
+      currentTeam.pendingBonus.extraTime = 0; // consumato
+    } else {
+      this.gameState.activeExtraTimeThisTurn = 0;
+    }
+
+    if (currentTeam.pendingBonus.doubleSteps) {
+      this.gameState.activeDoubleStepsThisTurn = true;
+      currentTeam.pendingBonus.doubleSteps = false; // consumato
+    } else {
+      this.gameState.activeDoubleStepsThisTurn = false;
+    }
+
     // Estrai carta della categoria del round e del livello scelto
     this.pickNextCard();
-
-    // Calcola durata timer (120s base + eventuale bonus)
-    let duration = this.gameState.turnTimer;
-    if (this.gameState.bonusTimeNextTurn > 0) {
-      duration += this.gameState.bonusTimeNextTurn;
-      this.gameState.bonusTimeNextTurn = 0;
-    }
 
     this.gameState.timeRemaining = duration;
     this.updateTimerUI();
@@ -263,6 +291,26 @@ const GameEngine = {
     const roundLabel = document.getElementById('hud-round-label');
     if (roundLabel) roundLabel.textContent = `Round ${this.gameState.currentRound}`;
 
+    // Banner Bonus Attivi per questo turno
+    const bonusBanner = document.getElementById('turn-active-bonus-banner');
+    if (bonusBanner) {
+      const activeBonuses = [];
+      if (this.gameState.activeExtraTimeThisTurn > 0) {
+        activeBonuses.push(`<span class="bonus-tag bonus-time"><i class="fa-solid fa-clock"></i> +${this.gameState.activeExtraTimeThisTurn}s Bonus Tempo</span>`);
+      }
+      if (this.gameState.activeDoubleStepsThisTurn) {
+        activeBonuses.push(`<span class="bonus-tag bonus-multiplier"><i class="fa-solid fa-bolt"></i> ✖️2 Passi Doppi</span>`);
+      }
+
+      if (activeBonuses.length > 0) {
+        bonusBanner.innerHTML = `<div class="bonus-banner-inner"><i class="fa-solid fa-gift"></i> <strong>Bonus Casella Attivo:</strong> ${activeBonuses.join(' ')}</div>`;
+        bonusBanner.classList.remove('hidden');
+      } else {
+        bonusBanner.innerHTML = '';
+        bonusBanner.classList.add('hidden');
+      }
+    }
+
     // Info Carta
     const deckTag = document.getElementById('card-deck-tag');
     const levelBadge = document.getElementById('card-level-badge');
@@ -277,7 +325,7 @@ const GameEngine = {
     if (cardTitle) cardTitle.textContent = card.titolo || "Titolo Traccia";
     if (cardIncipit) cardIncipit.textContent = card.incipit || "Incipit narrativo...";
 
-    // Parole Proibite vs Parole da Usare (Estrae in modo difensivo con fallback sicuri)
+    // Parole Proibite vs Parole da Usare
     const wordsHeader = document.getElementById('card-words-header');
     const wordsGrid = document.getElementById('card-words-grid');
 
@@ -390,12 +438,13 @@ const GameEngine = {
 
     const progressCircle = document.getElementById('timer-progress');
     if (progressCircle) {
-      const percentage = (this.gameState.timeRemaining / this.gameState.turnTimer) * 100;
+      const baseTotal = this.gameState.turnTimer + (this.gameState.activeExtraTimeThisTurn || 0);
+      const percentage = (this.gameState.timeRemaining / baseTotal) * 100;
       progressCircle.style.strokeDashoffset = 100 - percentage;
     }
   },
 
-  // 3. Conclusione Turno -> Calcolo Passi & Mostra SUMMARY (Stile Ops! Storia)
+  // 3. Conclusione Turno -> Calcolo Passi & Mostra SUMMARY
   calculateFinalSteps() {
     const level = this.gameState.selectedOratorLevel;
     if (level === null || level === undefined) {
@@ -405,17 +454,25 @@ const GameEngine = {
       return 0;
     }
 
+    let baseSteps = 0;
     if (this.gameState.mode === 'PROIBITE') {
       // Livello Oratore - Penalità Buzzer
-      return Math.max(0, level - this.gameState.penaltiesThisTurn);
+      baseSteps = Math.max(0, level - this.gameState.penaltiesThisTurn);
     } else {
       // Modalità Lessico (Parole da Usare)
       const countUsed = this.gameState.wordsHitThisTurn.filter(Boolean).length;
       let vocabMod = 0;
       if (countUsed === 5) vocabMod = 1;
       else if (countUsed <= 1) vocabMod = -1;
-      return Math.min(4, Math.max(0, level + vocabMod));
+      baseSteps = Math.min(4, Math.max(0, level + vocabMod));
     }
+
+    // Applicazione Moltiplicatore Raddoppio Passi (Casella 21)
+    if (this.gameState.activeDoubleStepsThisTurn) {
+      baseSteps = baseSteps * 2;
+    }
+
+    return baseSteps;
   },
 
   selectOratorLevel(level) {
@@ -430,7 +487,12 @@ const GameEngine = {
 
   finishTurn() {
     this.stopTimer();
-    this.gameState.selectedOratorLevel = null; // Nessuna preselezione automatica (stato neutro)
+    const currentTeam = this.gameState.teams[this.gameState.currentTeamIdx];
+    if (currentTeam) {
+      currentTeam.speechesCompleted = (currentTeam.speechesCompleted || 0) + 1;
+      currentTeam.totalPenalties = (currentTeam.totalPenalties || 0) + this.gameState.penaltiesThisTurn;
+    }
+    this.gameState.selectedOratorLevel = null; // Stato neutro in attesa del docente
     this.gameState.stepsGainedThisTurn = 0;
     this.renderSummaryUI();
     App.showView('view-summary');
@@ -509,6 +571,12 @@ const GameEngine = {
               <span class="summary-stat-val" style="color: var(--success-color);">${countUsed} / 5 ${countUsed === 5 ? '🌟 (+1 Bonus!)' : (countUsed <= 1 ? '⚠️ (-1)' : '')}</span>
             </div>
           `}
+          ${this.gameState.activeDoubleStepsThisTurn ? `
+            <div class="summary-stat-row" style="background: rgba(241, 196, 15, 0.15); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(241, 196, 15, 0.4);">
+              <span style="color: #f1c40f; font-weight: 700;"><i class="fa-solid fa-bolt"></i> Bonus Raddoppio x2:</span>
+              <span class="summary-stat-val" style="color: #f1c40f; font-weight: 800;">Passi Raddoppiati!</span>
+            </div>
+          ` : ''}
         </div>
 
         <div class="summary-steps-highlight ${!isLevelSelected ? 'pending' : ''}">
@@ -523,7 +591,7 @@ const GameEngine = {
     `;
   },
 
-  // 4. Mostra Tabellone & Anima Pedina (Stile Ops! Storia)
+  // 4. Mostra Tabellone & Anima Pedina
   goToBoard() {
     if (this.gameState.selectedOratorLevel === null || this.gameState.selectedOratorLevel === undefined) {
       alert("Seleziona prima il Livello dell'Oratore per convalidare il turno!");
@@ -550,23 +618,28 @@ const GameEngine = {
     BoardEngine.animatePawnStepByStep(currentTeam.id, oldPos, newPos, () => {
       currentTeam.position = newPos;
 
-      // Controllo Caselle Speciali
+      // Inizializza pendingBonus per sicurezza
+      if (!currentTeam.pendingBonus) {
+        currentTeam.pendingBonus = { extraTime: 0, doubleSteps: false };
+      }
+
+      // Controllo Caselle Speciali (Applicate alla specifica squadra che vi atterra)
       let specialMsg = '';
       if (BoardEngine.specialTiles && BoardEngine.specialTiles[newPos]) {
         const special = BoardEngine.specialTiles[newPos];
         if (special.type === 'TEMPO_X2') {
-          this.gameState.bonusTimeNextTurn = 30;
-          specialMsg = ` • <span style="color:#f1c40f">✖️2 <strong>${special.label}!</strong> ${special.desc}</span>`;
+          currentTeam.pendingBonus.doubleSteps = true;
+          specialMsg = ` • <span style="color:#f1c40f">✖️2 <strong>${special.label}!</strong> I passi del tuo prossimo discorso varranno doppio!</span>`;
         } else if (special.type === 'PESCA_CARTA') {
-          this.gameState.bonusTimeNextTurn = 30;
-          specialMsg = ` • <span style="color:#38bdf8">🎣 <strong>${special.label}!</strong> ${special.desc}</span>`;
+          currentTeam.pendingBonus.extraTime = 30;
+          specialMsg = ` • <span style="color:#38bdf8">🎣 <strong>${special.label}!</strong> +30s nel tuo prossimo discorso!</span>`;
         } else if (special.type === 'PEDINA_BONUS') {
           const forwardPos = Math.min(24, newPos + 1);
           currentTeam.position = forwardPos;
-          specialMsg = ` • <span style="color:#a855f7">♟️ <strong>${special.label}!</strong> Avanza a casella ${forwardPos}</span>`;
+          specialMsg = ` • <span style="color:#a855f7">♟️ <strong>${special.label}!</strong> Balzo immediato alla Casella ${forwardPos}!</span>`;
           BoardEngine.renderPawns(this.gameState.teams);
         } else if (special.type === 'CHECKPOINT') {
-          specialMsg = ` • <span style="color:#4ade80">📍 <strong>${special.label}!</strong> Punto di controllo raggiunto</span>`;
+          specialMsg = ` • <span style="color:#4ade80">📍 <strong>${special.label}!</strong> Punto di controllo raggiunto (metà percorso)!</span>`;
         }
       }
 
@@ -575,22 +648,19 @@ const GameEngine = {
       }
 
       this.renderScoreboard();
+      this.autoSave();
 
       // Controllo Vittoria Finale
       if (currentTeam.position >= 24) {
         this.gameState.isGameFinished = true;
         if (window.AudioEngine && window.AudioEngine.playFanfare) window.AudioEngine.playFanfare();
-        alert(`🏆 VITTORIA FINALE!\n\n${currentTeam.name} ha raggiunto il Traguardo 24 e trionfa nella sfida dell'Oratore!`);
-        
-        const btnAction = document.getElementById('btn-board-next-action');
-        if (btnAction) {
-          btnAction.innerHTML = `<i class="fa-solid fa-trophy"></i> Nuova Partita`;
-          btnAction.onclick = () => App.showView('view-welcome');
-        }
+        setTimeout(() => {
+          this.showLeaderboard(true);
+        }, 1200);
         return;
       }
 
-      // Aggiorna pulsante di azione successivo
+      // Aggiorna pulsante di azione successivo sul tabellone
       const btnAction = document.getElementById('btn-board-next-action');
       const isRoundFinished = (this.gameState.turnInCurrentRound >= this.gameState.teams.length - 1);
 
@@ -611,7 +681,7 @@ const GameEngine = {
   // 5. Passaggio al turno o round successivo
   proceedAfterBoard() {
     if (this.gameState.isGameFinished) {
-      App.showView('view-welcome');
+      this.showLeaderboard(true);
       return;
     }
 
@@ -621,11 +691,13 @@ const GameEngine = {
       // Round Concluso -> Passa la scelta della categoria alla squadra successiva
       this.gameState.currentRound++;
       this.gameState.roundChoosingTeamIdx = (this.gameState.roundChoosingTeamIdx + 1) % this.gameState.teams.length;
+      this.autoSave();
       this.startRoundCategorySelection();
     } else {
       // Prossimo Turno nello stesso Round (stessa categoria)
       this.gameState.turnInCurrentRound++;
       this.gameState.currentTeamIdx = (this.gameState.currentTeamIdx + 1) % this.gameState.teams.length;
+      this.autoSave();
       this.startTurn();
     }
   },
@@ -634,16 +706,372 @@ const GameEngine = {
     const strip = document.getElementById('teams-scoreboard-strip');
     if (!strip) return;
 
-    strip.innerHTML = this.gameState.teams.map((t, idx) => `
-      <div class="team-score-card ${idx === this.gameState.currentTeamIdx ? 'current' : ''}" style="border-color: ${t.color}">
-        <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:4px;">
-          <img src="${t.avatar}" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border: 1.5px solid ${t.color};">
-          <span class="team-score-name" style="color: ${t.color}">${t.name}</span>
+    strip.innerHTML = this.gameState.teams.map((t, idx) => {
+      const bonusIcons = [];
+      if (t.pendingBonus && t.pendingBonus.extraTime > 0) bonusIcons.push('🎣 +30s');
+      if (t.pendingBonus && t.pendingBonus.doubleSteps) bonusIcons.push('✖️2');
+
+      return `
+        <div class="team-score-card ${idx === this.gameState.currentTeamIdx ? 'current' : ''}" style="border-color: ${t.color}">
+          <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:4px;">
+            <img src="${t.avatar}" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border: 1.5px solid ${t.color};">
+            <span class="team-score-name" style="color: ${t.color}">${t.name}</span>
+          </div>
+          <div class="team-score-pos">Casella ${t.position || 1} / 24</div>
+          ${bonusIcons.length > 0 ? `<div style="font-size:0.75rem; color:#f1c40f; margin-top:2px;">${bonusIcons.join(' • ')}</div>` : ''}
         </div>
-        <div class="team-score-pos">Casella ${t.position || 1} / 24</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
+  },
+
+  // ==========================================
+  // CLASSIFICA (PROVVISORIA E FINALE)
+  // ==========================================
+
+  showLeaderboard(isFinal = false) {
+    if (!this.gameState.teams || this.gameState.teams.length === 0) return;
+
+    // Ordina squadre per posizione decrescente (e penalità totali crescenti come spareggio)
+    const sortedTeams = [...this.gameState.teams].sort((a, b) => {
+      const posA = a.position || 1;
+      const posB = b.position || 1;
+      if (posB !== posA) return posB - posA;
+      return (a.totalPenalties || 0) - (b.totalPenalties || 0);
+    });
+
+    const badgeEl = document.getElementById('leaderboard-badge');
+    const titleEl = document.getElementById('leaderboard-title');
+    const subEl = document.getElementById('leaderboard-subtitle');
+    const podiumEl = document.getElementById('leaderboard-podium');
+    const tbodyEl = document.getElementById('leaderboard-table-body');
+    const actionsEl = document.getElementById('leaderboard-actions-row');
+
+    if (badgeEl) {
+      badgeEl.innerHTML = isFinal ? `<i class="fa-solid fa-trophy"></i> PODIO DEI CAMPIONI` : `<i class="fa-solid fa-pause"></i> CLASSIFICA PROVVISORIA`;
+      badgeEl.className = `leaderboard-badge ${isFinal ? 'final-badge' : 'interim-badge'}`;
+    }
+
+    if (titleEl) {
+      titleEl.innerHTML = isFinal 
+        ? `🏆 <strong>${sortedTeams[0].name}</strong> trionfa ne L'Oratore!`
+        : `Stato della Sfida • Fine Round ${this.gameState.currentRound}`;
+    }
+
+    if (subEl) {
+      subEl.innerHTML = isFinal
+        ? `Partita conclusa con successo! Complimenti a tutti gli oratori.`
+        : `Visualizzazione del tabellone in pausa. Puoi riprendere subito o salvare la sessione per la prossima lezione.`;
+    }
+
+    // Render Podio (Top 3)
+    if (podiumEl) {
+      const p1 = sortedTeams[0];
+      const p2 = sortedTeams[1];
+      const p3 = sortedTeams[2];
+
+      podiumEl.innerHTML = `
+        <div class="podium-display">
+          ${p2 ? `
+            <div class="podium-step step-2" style="border-top-color: ${p2.color}">
+              <div class="podium-medal">🥈 2°</div>
+              <img src="${p2.avatar}" class="podium-avatar" style="border-color: ${p2.color}">
+              <div class="podium-name" style="color: ${p2.color}">${p2.name}</div>
+              <div class="podium-score">Casella ${p2.position || 1} / 24</div>
+            </div>
+          ` : ''}
+
+          ${p1 ? `
+            <div class="podium-step step-1" style="border-top-color: ${p1.color}">
+              <div class="podium-crown">👑</div>
+              <div class="podium-medal">🥇 1°</div>
+              <img src="${p1.avatar}" class="podium-avatar winner" style="border-color: ${p1.color}">
+              <div class="podium-name" style="color: ${p1.color}; font-weight:900;">${p1.name}</div>
+              <div class="podium-score">Casella ${p1.position || 1} / 24</div>
+            </div>
+          ` : ''}
+
+          ${p3 ? `
+            <div class="podium-step step-3" style="border-top-color: ${p3.color}">
+              <div class="podium-medal">🥉 3°</div>
+              <img src="${p3.avatar}" class="podium-avatar" style="border-color: ${p3.color}">
+              <div class="podium-name" style="color: ${p3.color}">${p3.name}</div>
+              <div class="podium-score">Casella ${p3.position || 1} / 24</div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // Render Tabella Completa
+    if (tbodyEl) {
+      tbodyEl.innerHTML = sortedTeams.map((t, idx) => {
+        const dist = 24 - (t.position || 1);
+        const distLabel = dist <= 0 ? '🏆 TRAGUARDO' : `${dist} ${dist === 1 ? 'casella' : 'caselle'}`;
+        const activeBonuses = [];
+        if (t.pendingBonus && t.pendingBonus.extraTime > 0) activeBonuses.push('🎣 +30s');
+        if (t.pendingBonus && t.pendingBonus.doubleSteps) activeBonuses.push('✖️2');
+
+        const medals = ['🥇 1°', '🥈 2°', '🥉 3°', '4°'];
+
+        return `
+          <tr class="${idx === 0 ? 'leader-row' : ''}">
+            <td style="text-align: center; font-weight: 800; font-size: 1rem;">${medals[idx] || `${idx + 1}°`}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="${t.avatar}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid ${t.color}; object-fit: cover;">
+                <strong style="color: ${t.color}; font-size: 0.95rem;">${t.name}</strong>
+              </div>
+            </td>
+            <td style="text-align: center; font-weight: 800; color: #f8fafc;">Casella ${t.position || 1}</td>
+            <td style="text-align: center; color: ${dist <= 0 ? '#10b981' : '#94a3b8'};">${distLabel}</td>
+            <td style="text-align: center; color: #f1c40f; font-weight: 600;">${activeBonuses.length > 0 ? activeBonuses.join(' • ') : '<span style="color:#64748b;">-</span>'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Render Azioni
+    if (actionsEl) {
+      if (isFinal) {
+        actionsEl.innerHTML = `
+          <button class="btn btn-secondary btn-giant" onclick="App.showView('view-welcome')">
+            <i class="fa-solid fa-house"></i> Torna alla Home
+          </button>
+          <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()">
+            <i class="fa-solid fa-rotate-right"></i> Nuova Partita
+          </button>
+        `;
+      } else {
+        actionsEl.innerHTML = `
+          <button class="btn btn-secondary btn-giant" onclick="GameEngine.promptSaveSession()">
+            <i class="fa-solid fa-floppy-disk"></i> Salva Sessione ed Esci
+          </button>
+          <button class="btn btn-primary btn-giant" onclick="GameEngine.resumeFromLeaderboard()">
+            <i class="fa-solid fa-play"></i> Continua la Partita
+          </button>
+          <button class="btn btn-danger" style="margin-left:auto; padding: 12px 18px; border-radius: 12px; font-weight: 700;" onclick="GameEngine.finishGameEarly()">
+            <i class="fa-solid fa-flag-checkered"></i> Termina Ora & Proclama Vincitore
+          </button>
+        `;
+      }
+    }
+
+    App.showView('view-leaderboard');
+  },
+
+  resumeFromLeaderboard() {
+    App.showView('view-game-board');
+  },
+
+  finishGameEarly() {
+    if (confirm("Vuoi concludere la partita adesso e proclamare la classifica finale dei vincitori?")) {
+      this.gameState.isGameFinished = true;
+      if (window.AudioEngine && window.AudioEngine.playFanfare) window.AudioEngine.playFanfare();
+      this.showLeaderboard(true);
+    }
+  },
+
+  // ==========================================
+  // SALVATAGGIO & RIPRESA PARTITE (LOCALSTORAGE)
+  // ==========================================
+
+  getSavedGames() {
+    try {
+      const raw = localStorage.getItem('loratore_saved_games');
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      console.warn("Errore lettura saved games:", e);
+      return [];
+    }
+  },
+
+  saveGame(sessionName) {
+    if (!this.gameState.teams || this.gameState.teams.length === 0) return false;
+
+    const savedGames = this.getSavedGames();
+    const now = new Date();
+    const dateFormatted = now.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+    const saveId = `save_${Date.now()}`;
+    const cleanName = sessionName && sessionName.trim() ? sessionName.trim() : `Sessione del ${dateFormatted}`;
+
+    const serializedState = {
+      ...this.gameState,
+      usedCardIds: Array.from(this.gameState.usedCardIds),
+      timerInterval: null,
+      isTimerRunning: false
+    };
+
+    const newSave = {
+      id: saveId,
+      name: cleanName,
+      date: dateFormatted,
+      timestamp: Date.now(),
+      teamsSummary: this.gameState.teams.map(t => ({ name: t.name, avatar: t.avatar, color: t.color, position: t.position || 1 })),
+      round: this.gameState.currentRound,
+      level: this.gameState.selectedLevel,
+      mode: this.gameState.mode,
+      gameState: serializedState
+    };
+
+    savedGames.unshift(newSave);
+    localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames.slice(0, 15))); // Max 15 salvataggi
+    return true;
+  },
+
+  autoSave() {
+    if (!this.gameState.teams || this.gameState.teams.length === 0) return;
+    try {
+      const serializedState = {
+        ...this.gameState,
+        usedCardIds: Array.from(this.gameState.usedCardIds),
+        timerInterval: null,
+        isTimerRunning: false
+      };
+      localStorage.setItem('loratore_autosave', JSON.stringify({
+        timestamp: Date.now(),
+        gameState: serializedState
+      }));
+    } catch (e) {}
+  },
+
+  deleteSavedGame(saveId) {
+    let savedGames = this.getSavedGames();
+    savedGames = savedGames.filter(s => s.id !== saveId);
+    localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames));
+    this.renderSavedGamesList();
+  },
+
+  loadGame(saveId) {
+    const savedGames = this.getSavedGames();
+    const target = savedGames.find(s => s.id === saveId);
+    if (!target || !target.gameState) {
+      alert("Impossibile caricare la sessione selezionata.");
+      return;
+    }
+
+    const state = target.gameState;
+    this.gameState = {
+      ...state,
+      usedCardIds: new Set(state.usedCardIds || []),
+      timerInterval: null,
+      isTimerRunning: false
+    };
+
+    // Assicura proprietà pendingBonus su tutte le squadre
+    this.gameState.teams.forEach(t => {
+      if (!t.pendingBonus) {
+        t.pendingBonus = { extraTime: 0, doubleSteps: false };
+      }
+    });
+
+    this.closeSavedGamesModal();
+    App.showView('view-game-board');
+    BoardEngine.renderPawns(this.gameState.teams);
+    this.renderScoreboard();
+
+    const statusSub = document.getElementById('board-status-sub');
+    if (statusSub) {
+      statusSub.innerHTML = `<span>Sessione <strong>"${target.name}"</strong> ripristinata • Round ${this.gameState.currentRound}</span>`;
+    }
+
+    const btnAction = document.getElementById('btn-board-next-action');
+    if (btnAction) {
+      const isRoundFinished = (this.gameState.turnInCurrentRound >= this.gameState.teams.length - 1);
+      if (isRoundFinished) {
+        btnAction.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> <span>Concludi Round ${this.gameState.currentRound}</span>`;
+        btnAction.onclick = () => GameEngine.proceedAfterBoard();
+      } else {
+        const nextTeam = this.gameState.teams[this.gameState.currentTeamIdx];
+        btnAction.innerHTML = `<i class="fa-solid fa-arrow-right"></i> <span>Continua Turno: ${nextTeam ? nextTeam.name : 'Squadra'}</span>`;
+        btnAction.onclick = () => GameEngine.startTurn();
+      }
+    }
+  },
+
+  openSavedGamesModal() {
+    this.renderSavedGamesList();
+    const modal = document.getElementById('saved-games-modal');
+    if (modal) modal.classList.remove('hidden');
+  },
+
+  closeSavedGamesModal() {
+    const modal = document.getElementById('saved-games-modal');
+    if (modal) modal.classList.add('hidden');
+  },
+
+  renderSavedGamesList() {
+    const listEl = document.getElementById('saved-games-list');
+    if (!listEl) return;
+
+    const savedGames = this.getSavedGames();
+    if (savedGames.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 30px; color: #94a3b8;">
+          <i class="fa-regular fa-folder-open" style="font-size: 2.5rem; margin-bottom: 12px; color: #64748b; display: block;"></i>
+          <p style="margin: 0; font-size: 0.95rem;">Nessuna sessione di gioco salvata.</p>
+          <p style="margin: 6px 0 0 0; font-size: 0.8rem; color: #64748b;">Le partite salvate durante le lezioni compariranno qui.</p>
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = savedGames.map(s => {
+      const teamsHtml = (s.teamsSummary || []).map(t => `
+        <div style="display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.06); padding:3px 8px; border-radius:12px; border:1px solid ${t.color}66;">
+          <img src="${t.avatar}" style="width:18px; height:18px; border-radius:50%; object-fit:cover;">
+          <span style="font-size:0.75rem; color:${t.color}; font-weight:700;">${t.name} (c.${t.position || 1})</span>
+        </div>
+      `).join(' ');
+
+      return `
+        <div class="saved-game-item">
+          <div class="saved-game-info">
+            <h4 class="saved-game-title">${s.name}</h4>
+            <div class="saved-game-meta">
+              <span><i class="fa-solid fa-calendar"></i> ${s.date}</span> • 
+              <span><i class="fa-solid fa-flag"></i> Round ${s.round}</span> • 
+              <span style="text-transform:uppercase;">Liv. ${s.level}</span>
+            </div>
+            <div class="saved-game-teams">${teamsHtml}</div>
+          </div>
+          <div class="saved-game-actions">
+            <button class="btn btn-primary" onclick="GameEngine.loadGame('${s.id}')" style="padding: 8px 16px; font-size: 0.85rem;">
+              <i class="fa-solid fa-play"></i> Riprendi
+            </button>
+            <button class="btn-icon-delete" title="Elimina Salvataggio" onclick="GameEngine.deleteSavedGame('${s.id}')">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  promptSaveSession() {
+    const dialog = document.getElementById('save-game-dialog-modal');
+    const input = document.getElementById('save-session-name-input');
+    if (input) {
+      const now = new Date();
+      input.value = `Classe - ${now.toLocaleDateString('it-IT')}`;
+    }
+    if (dialog) dialog.classList.remove('hidden');
+  },
+
+  closeSaveDialog() {
+    const dialog = document.getElementById('save-game-dialog-modal');
+    if (dialog) dialog.classList.add('hidden');
+  },
+
+  confirmSaveGame() {
+    const input = document.getElementById('save-session-name-input');
+    const name = input ? input.value : '';
+    this.saveGame(name);
+    this.closeSaveDialog();
+    alert("Partita salvata con successo! Potrai riprenderla in qualsiasi momento.");
+    App.showView('view-welcome');
   }
 };
 
 window.GameEngine = GameEngine;
+

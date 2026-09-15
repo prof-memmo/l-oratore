@@ -124,9 +124,19 @@ const App = {
   // Step 2: Scelta Pedine Giganti (10 Personaggi con selezione cromatica dinamica)
   renderPawnPicker() {
     const currentTeam = this.selectedSetup.teams[this.selectedSetup.currentPawnTeamIdx];
-    const teamHeader = document.getElementById('pawn-team-picker-header');
-    const pawnGrid = document.getElementById('pawns-choice-grid');
-    if (!teamHeader || !pawnGrid || !currentTeam) return;
+    const teamHeader = document.getElementById('pawn-team-picker-header') || document.getElementById('pawn-selection-title');
+    const pawnGrid = document.getElementById('pawns-choice-grid') || document.getElementById('pawns-grid-container');
+    const nameInput = document.getElementById('input-team-name');
+    if (!pawnGrid || !currentTeam) return;
+
+    if (nameInput) {
+      nameInput.value = currentTeam.name;
+    }
+
+    if (teamHeader) {
+      teamHeader.innerHTML = `<i class="fa-solid fa-chess-pawn"></i> Scegli la Pedina per ${currentTeam.name}`;
+      teamHeader.style.color = currentTeam.color;
+    }
 
     // Pedine già scelte dalle squadre precedenti
     const chosenByPrevTeams = {};
@@ -137,28 +147,16 @@ const App = {
       }
     }
 
-    teamHeader.innerHTML = `
-      <span class="setup-step-badge">Passo 2 di 4</span>
-      <h2 class="setup-title" style="color:${currentTeam.color}">
-        <i class="fa-solid fa-chess-pawn"></i> Scegli la Pedina per ${currentTeam.name}
-      </h2>
-      <p class="setup-subtitle">Squadra ${this.selectedSetup.currentPawnTeamIdx + 1} di ${this.selectedSetup.teamsCount}: clicca su un personaggio per sceglierlo e procedere.</p>
-    `;
-
-    // Rimuovi eventuale vecchio wrapper conferma se presente
-    const oldConfirm = document.getElementById('pawn-confirm-wrap');
-    if (oldConfirm) oldConfirm.remove();
-
     pawnGrid.innerHTML = this.availablePawns.map((pawnSrc, idx) => {
       const isTakenByPrev = chosenByPrevTeams[pawnSrc];
       const isSelectedByCurrent = (currentTeam.avatar === pawnSrc);
 
       if (isTakenByPrev) {
         return `
-          <div class="pawn-choice-card-giant taken" style="border: 2px solid ${isTakenByPrev.color}; opacity: 0.45; cursor: not-allowed; position: relative;">
+          <div class="pawn-choice-card-giant taken" style="border: 2px solid ${isTakenByPrev.color}; opacity: 0.45; cursor: not-allowed; position: relative; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.3); text-align: center;">
             <div style="position: absolute; top: 6px; right: 6px; background: ${isTakenByPrev.color}; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 6px;">${isTakenByPrev.name}</div>
-            <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" class="pawn-choice-img" style="filter: grayscale(60%);">
-            <span class="pawn-choice-label" style="color: ${isTakenByPrev.color}; font-weight: 700;">${isTakenByPrev.name}</span>
+            <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" style="width: 80px; height: 80px; object-fit: contain; filter: grayscale(60%); margin-bottom: 6px;">
+            <div style="color: ${isTakenByPrev.color}; font-weight: 700; font-size: 0.8rem;">${isTakenByPrev.name}</div>
           </div>
         `;
       }
@@ -166,11 +164,11 @@ const App = {
       return `
         <div class="pawn-choice-card-giant ${isSelectedByCurrent ? 'selected' : ''}" 
              onclick="App.selectPawnCandidate('${pawnSrc}')" 
-             style="border: 2px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s;"
+             style="border: 2px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.4); text-align: center;"
              onmouseover="this.style.borderColor='${currentTeam.color}'; this.style.transform='scale(1.05)';"
              onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.transform='scale(1)';">
-          <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" class="pawn-choice-img">
-          <span class="pawn-choice-label">Personaggio ${idx + 1}</span>
+          <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 6px;">
+          <div style="color: #cbd5e1; font-weight: 700; font-size: 0.8rem;">Personaggio ${idx + 1}</div>
         </div>
       `;
     }).join('');
@@ -179,6 +177,12 @@ const App = {
   selectPawnCandidate(pawnSrc) {
     const currentTeam = this.selectedSetup.teams[this.selectedSetup.currentPawnTeamIdx];
     if (!currentTeam) return;
+
+    const nameInput = document.getElementById('input-team-name');
+    if (nameInput && nameInput.value.trim()) {
+      currentTeam.name = nameInput.value.trim();
+    }
+
     currentTeam.avatar = pawnSrc;
 
     if (window.AudioEngine && window.AudioEngine.playChime) {
@@ -191,8 +195,6 @@ const App = {
       this.selectedSetup.currentPawnTeamIdx++;
       this.renderPawnPicker();
     } else {
-      const confirmWrap = document.getElementById('pawn-confirm-wrap');
-      if (confirmWrap) confirmWrap.remove();
       this.showView('view-setup-mode');
     }
   },
@@ -251,7 +253,7 @@ const App = {
 
   // Step 4: Scelta Livello di Difficoltà (6 Livelli QCER)
   renderLevelGrid() {
-    const grid = document.getElementById('levels-six-grid');
+    const grid = document.getElementById('levels-six-grid') || document.getElementById('levels-grid-container');
     if (!grid) return;
 
     const livelli = (GameEngine.data && GameEngine.data.livelli && GameEngine.data.livelli.length > 0)
