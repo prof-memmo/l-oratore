@@ -48,13 +48,13 @@ const App = {
       if (e.state && e.state.view) {
         this.showView(e.state.view, false);
       } else {
-        this.showView('view-home', false);
+        this.showView('view-welcome', false);
       }
     });
 
     // Imposta stato iniziale cronologia
     if (!window.history.state) {
-      window.history.replaceState({ view: 'view-home' }, '', '#home');
+      window.history.replaceState({ view: 'view-welcome' }, '', '#welcome');
     }
 
     console.log("L'Oratore v3.0 initialized with 6 QCER levels, shared round categories, and Ops! Storia turn flow.");
