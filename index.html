@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Stylesheet di Progetto (Pure Black Base & Gold Accents) -->
-  <link rel="stylesheet" href="css/style.css?v=20260916_fix3">
+  <link rel="stylesheet" href="css/style.css?v=20260916_fix4">
   
   <!-- Firebase SDKs Compat -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -162,27 +162,27 @@
         <p class="setup-subtitle">Seleziona il numero di squadre che si sfideranno nella sessione di retorica.</p>
       </div>
 
-      <div class="setup-card-container">
-        <div class="teams-count-grid">
-          <div class="setup-option-card" onclick="App.selectTeamsCount(2)">
-            <div class="option-icon"><i class="fa-solid fa-user-group"></i></div>
-            <div class="option-title">2 Squadre</div>
-            <div class="option-desc">Ideale per il duello testa a testa</div>
-          </div>
-          <div class="setup-option-card" onclick="App.selectTeamsCount(3)">
-            <div class="option-icon"><i class="fa-solid fa-users"></i></div>
-            <div class="option-title">3 Squadre</div>
-            <div class="option-desc">Perfetto per gruppi medi</div>
-          </div>
-          <div class="setup-option-card" onclick="App.selectTeamsCount(4)">
-            <div class="option-icon"><i class="fa-solid fa-people-group"></i></div>
-            <div class="option-title">4 Squadre</div>
-            <div class="option-desc">Massima partecipazione e sfida a 4</div>
-          </div>
+      <div class="teams-choice-grid">
+        <div class="team-choice-card" onclick="App.selectTeamsCount(2)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-user-group"></i></div>
+          <h3 class="team-choice-title">2 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu</p>
+        </div>
+
+        <div class="team-choice-card" onclick="App.selectTeamsCount(3)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-users"></i></div>
+          <h3 class="team-choice-title">3 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde</p>
+        </div>
+
+        <div class="team-choice-card" onclick="App.selectTeamsCount(4)">
+          <div class="team-choice-icon-wrap"><i class="fa-solid fa-people-group"></i></div>
+          <h3 class="team-choice-title">4 Squadre</h3>
+          <p class="team-choice-desc" style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">🔴 Rossa &bull; 🔵 Blu &bull; 🟢 Verde &bull; 🟡 Gialla</p>
         </div>
       </div>
 
-      <div class="setup-footer-bar">
+      <div style="text-align: center; margin-top: 25px;">
         <button class="btn btn-secondary" onclick="App.showView('view-welcome')"><i class="fa-solid fa-arrow-left"></i> Annulla</button>
       </div>
 
@@ -194,27 +194,17 @@
       </footer>
     </section>
 
-    <!-- 3. VIEW: STEP 2 - SCELTA PEDINE E NOMI SQUADRE -->
+    <!-- 3. VIEW: STEP 2 - SCELTA PEDINE PERSONAGGIO (GRANDI) -->
     <section id="view-setup-pawns" class="view">
-      <div class="setup-header-box">
-        <span class="setup-step-badge">Passo 2 di 4</span>
-        <h2 class="setup-title" id="pawn-selection-title">Scegli la Pedina per la Squadra 1</h2>
-        <p class="setup-subtitle">Personalizza il nome e l'avatar della pedina sul tabellone.</p>
+      <div class="setup-header-box" id="pawn-team-picker-header">
+        <!-- Popolato dinamicamente da App.renderPawnPicker() -->
       </div>
 
-      <div class="setup-card-container">
-        <!-- Input Nome Squadra Corrente -->
-        <div class="team-name-input-row">
-          <label for="input-team-name"><i class="fa-solid fa-signature"></i> Nome Squadra:</label>
-          <input type="text" id="input-team-name" class="input-modern" placeholder="Inserisci nome squadra...">
-        </div>
-
-        <div class="pawns-grid-10" id="pawns-grid-container">
-          <!-- Popolato dinamicamente da App.renderPawnPicker() -->
-        </div>
+      <div class="pawns-choice-grid-giant" id="pawns-choice-grid">
+        <!-- 10 Pedine popolate dinamicamente -->
       </div>
 
-      <div class="setup-footer-bar">
+      <div style="text-align: center; margin-top: 25px;">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-teams')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -226,38 +216,39 @@
       </footer>
     </section>
 
-    <!-- 4. VIEW: STEP 3 - MODALITÀ DI GIOCO -->
+    <!-- 4. VIEW: STEP 3 - SCELTA MODALITÀ -->
     <section id="view-setup-mode" class="view">
       <div class="setup-header-box">
         <span class="setup-step-badge">Passo 3 di 4</span>
-        <h2 class="setup-title">Scegli la Modalità di Sfida</h2>
-        <p class="setup-subtitle">Come dovranno confrontarsi gli oratori con le parole chiave?</p>
+        <h2 class="setup-title">Scegli la Modalità di Sfida Oratoria</h2>
+        <p class="setup-subtitle">Seleziona la meccanica di punteggio e il tipo di prova per i 2 minuti di discorso.</p>
       </div>
 
-      <div class="setup-card-container">
-        <div class="mode-selection-grid">
-          <div class="setup-option-card mode-card" onclick="App.selectMode('PROIBITE')">
-            <div class="option-icon" style="color: var(--danger-color);"><i class="fa-solid fa-ban"></i></div>
-            <div class="option-title">Parole Proibite</div>
-            <div class="option-desc">
-              L'Oratore parla per 2 minuti <strong>senza mai pronunciare</strong> le 5 parole vietate.<br>
-              Se le pronuncia, la giuria preme il Buzzer Penalità!
+      <div class="modes-choice-grid">
+        <div class="mode-choice-card" onclick="App.selectMode('PROIBITE')">
+          <div class="mode-choice-header">
+            <span class="mode-choice-emoji">🚫</span>
+            <div>
+              <h3 class="mode-choice-title">Parole Proibite</h3>
+              <span class="mode-choice-badge badge-proibite">Buzzer & Vietate</span>
             </div>
-            <div class="mode-tag mode-tag-red">Modalità Classica Taboo</div>
           </div>
+          <p class="mode-choice-desc">L'oratore racconta la storia per 2 minuti senza pronunciare le <strong>5 parole vietate</strong>. La giuria avversaria preme il Buzzer a ogni errore per infliggere penalità.</p>
+        </div>
 
-          <div class="setup-option-card mode-card" onclick="App.selectMode('USARE')">
-            <div class="option-icon" style="color: var(--success-color);"><i class="fa-solid fa-bullseye"></i></div>
-            <div class="option-title">Parole da Usare</div>
-            <div class="option-desc">
-              L'Oratore deve <strong>inserire e contestualizzare</strong> tutti e 5 i vocaboli d'autore nel suo discorso continuo da 2 minuti.
+        <div class="mode-choice-card" onclick="App.selectMode('USARE')">
+          <div class="mode-choice-header">
+            <span class="mode-choice-emoji">🎯</span>
+            <div>
+              <h3 class="mode-choice-title">Parole da Usare</h3>
+              <span class="mode-choice-badge badge-study">Studio & Lessico</span>
             </div>
-            <div class="mode-tag mode-tag-green">Modalità Lessico & Creatività</div>
           </div>
+          <p class="mode-choice-desc">L'oratore studia i <strong>5 vocaboli chiave</strong>, poi deve tessere un discorso narrativo inserendoli tutti in modo coerente (+1 punto per ogni parola usata con successo).</p>
         </div>
       </div>
 
-      <div class="setup-footer-bar">
+      <div style="text-align: center; margin-top: 25px;">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-pawns')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -269,21 +260,20 @@
       </footer>
     </section>
 
-    <!-- 5. VIEW: STEP 4 - LIVELLO DI DIFFICOLTÀ (QCER A1-C2) -->
+    <!-- 5. VIEW: STEP 4 - SCELTA LIVELLO DI DIFFICOLTÀ (6 LIVELLI A1-C2) -->
     <section id="view-setup-level" class="view">
       <div class="setup-header-box">
         <span class="setup-step-badge">Passo 4 di 4</span>
-        <h2 class="setup-title">Scegli il Livello di Retorica</h2>
-        <p class="setup-subtitle">Tarato sui livelli QCER per adattarsi a scuole primarie, secondarie o dibattiti avanzati.</p>
+        <h2 class="setup-title">Scegli il Livello di Difficoltà</h2>
+        <p class="setup-subtitle">Seleziona il grado di complessità: clicca sul livello per passare direttamente alla scelta della categoria.</p>
       </div>
 
-      <div class="setup-card-container">
-        <div class="levels-grid-6" id="levels-grid-container">
-          <!-- Popolato dinamicamente da App.renderLevelGrid() -->
-        </div>
+      <!-- 6 Level Cards Grid -->
+      <div class="levels-six-grid" id="levels-six-grid">
+        <!-- Popolato dinamicamente da App.renderLevelGrid() -->
       </div>
 
-      <div class="setup-footer-bar">
+      <div style="text-align: center; margin-top: 25px;">
         <button class="btn btn-secondary" onclick="App.showView('view-setup-mode')"><i class="fa-solid fa-arrow-left"></i> Indietro</button>
       </div>
 
@@ -693,6 +683,6 @@
   <script src="js/live-editor.js?v=20260913a"></script>
   <script src="js/gameEngine.js?v=20260913a"></script>
   <script src="js/components/modals.js?v=20260913b"></script>
-  <script src="js/app.js?v=20260916_fix2"></script>
+  <script src="js/app.js?v=20260916_fix4"></script>
 </body>
 </html>

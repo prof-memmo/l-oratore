@@ -637,18 +637,21 @@ a:hover {
 }
 
 .team-choice-icon,
+.team-choice-icon-wrap,
 .option-icon {
   font-size: 2.6rem;
   color: var(--accent-gold);
 }
 
 .team-choice-num,
+.team-choice-title,
 .option-title {
   font-size: 1.35rem;
   font-weight: 800;
   color: #fff;
 }
 
+.team-choice-desc,
 .option-desc {
   font-size: 0.88rem;
   color: var(--text-muted);
