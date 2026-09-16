@@ -1,5 +1,6 @@
 /**
- * L'ORATORE - Standalone Admin Matrix & Bulk Text Parser (192 Slots)
+ * L'ORATORE - Standalone Admin Matrix & Bulk Text Parser (1.440 Slots)
+ * 12 Mazzi Tematici × 6 Livelli QCER × 20 Slot per combinazione = 1.440 Carte Didattiche
  */
 
 const OratoreAdmin = {
@@ -13,19 +14,37 @@ const OratoreAdmin = {
   ],
 
   decks: [
+    { id: 'accoglienza', emoji: '🎒', nome: 'Accoglienza & Primi Giorni' },
+    { id: 'emozioni', emoji: '🎭', nome: 'Emozioni, Relazioni & Empatia' },
+    { id: 'diritti', emoji: '🏛️', nome: 'Diritti, Legalità & Costituzione' },
+    { id: 'digitale', emoji: '🤖', nome: 'Digitale, IA & Futuro' },
+    { id: 'clima', emoji: '🌍', nome: 'Clima, Natura & Terra' },
+    { id: 'dilemmi', emoji: '⚖️', nome: 'Dilemmi Etici & Scelte Morali' },
+    { id: 'mistero', emoji: '🕵️', nome: 'Mistero, Indagini & Giallo' },
     { id: 'epica', emoji: '🏺', nome: 'Mito & Epica Classica' },
-    { id: 'medioevo', emoji: '👑', nome: 'Medioevo & Cavalieri' },
-    { id: 'fantascienza', emoji: '🚀', nome: 'Fantascienza & Futuro' },
-    { id: 'teatro', emoji: '🎭', nome: 'Teatro & Spettacolo' },
-    { id: 'letteratura', emoji: '📜', nome: 'Letteratura & Poesia' },
-    { id: 'civilta', emoji: '🌍', nome: 'Mondo, Storia & Civiltà' },
-    { id: 'scienza', emoji: '🧪', nome: 'Scienza, Natura & Misteri' },
-    { id: 'party', emoji: '🧩', nome: 'Party & Creatività Libera' }
+    { id: 'favole', emoji: '🐉', nome: 'Favole, Fiabe & Simboli' },
+    { id: 'storia', emoji: '⏳', nome: 'Grandi Figure & Storia' },
+    { id: 'avventura', emoji: '🧭', nome: 'Viaggi, Esplorazioni & Avventura' },
+    { id: 'filosofia', emoji: '💡', nome: 'Filosofia, Idee & Debate' }
   ],
+
+  maxSlotsPerCombination: 20,
+  activeLevelFilter: 'all',
+  activeDeckFilter: 'all',
 
   cardsMap: {}, // Key: `${level}_${deck}_${slot}` -> Card Object
 
   async init() {
+    // 0. Sincronizza metadata se presenti globalmente
+    if (window.L_ORATORE_DEFAULT_CARDS) {
+      if (window.L_ORATORE_DEFAULT_CARDS.livelli && window.L_ORATORE_DEFAULT_CARDS.livelli.length > 0) {
+        this.levels = window.L_ORATORE_DEFAULT_CARDS.livelli;
+      }
+      if (window.L_ORATORE_DEFAULT_CARDS.mazzi && window.L_ORATORE_DEFAULT_CARDS.mazzi.length > 0) {
+        this.decks = window.L_ORATORE_DEFAULT_CARDS.mazzi;
+      }
+    }
+
     await this.loadAllCards();
     this.renderMatrix();
   },
@@ -46,6 +65,8 @@ const OratoreAdmin = {
       const res = await fetch('data/consegne.json');
       if (res.ok) {
         const json = await res.json();
+        if (json.livelli) this.levels = json.livelli;
+        if (json.mazzi) this.decks = json.mazzi;
         (json.carte || []).forEach(c => {
           const key = `${c.livello || 'b1'}_${c.mazzo}_${c.slot || 1}`;
           this.cardsMap[key] = c;
@@ -55,7 +76,7 @@ const OratoreAdmin = {
       console.warn("Base JSON load:", e);
     }
 
-    // 3. Carica anche eventuali carte salvate localmente o su Firestore
+    // 3. Carica anche eventuali carte salvate localmente o personalizzate
     const localStored = localStorage.getItem('loratore_custom_cards');
     if (localStored) {
       try {
@@ -72,41 +93,56 @@ const OratoreAdmin = {
     if (!container) return;
 
     let filledCount = 0;
-    const totalSlots = 6 * 8 * 4; // 192
+    const totalSlots = this.levels.length * this.decks.length * this.maxSlotsPerCombination; // 6 * 12 * 20 = 1440
+
+    // Calcolo totale slot compilati
+    Object.keys(this.cardsMap).forEach(() => {
+      filledCount++;
+    });
 
     let html = `
       <div style="background:#070a13; border: 1.5px solid #d4af37; border-radius: 14px; padding: 20px; color:#fff; margin-bottom: 25px;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
           <div>
-            <h3 style="font-size: 1.3rem; color: #d4af37; margin:0;"><i class="fa-solid fa-table-cells"></i> Matrice de L'Oratore (192 Slot)</h3>
-            <p style="font-size: 0.85rem; color: #94a3b8; margin: 4px 0 0 0;">6 Livelli QCER × 8 Mazzi Tematici × 4 Carte per combinazione</p>
+            <h3 style="font-size: 1.3rem; color: #d4af37; margin:0;"><i class="fa-solid fa-table-cells"></i> Matrice de L'Oratore (1.440 Slot Totali)</h3>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin: 4px 0 0 0;">12 Mazzi Tematici × 6 Livelli QCER × 20 Slot per combinazione</p>
           </div>
           <div id="matrix-stats-pill" style="background: rgba(212, 175, 55, 0.15); border: 1px solid #d4af37; padding: 6px 16px; border-radius: 20px; font-weight: 700; color: #f1c40f;">
-            Caricamento statistiche...
+            📊 Slot Compilati: <strong>${filledCount} / ${totalSlots}</strong> (${Math.round(filledCount / totalSlots * 100)}%)
           </div>
         </div>
 
-        <!-- Filtro Rapido Livello -->
-        <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px;">
-          <button class="btn btn-sm" onclick="OratoreAdmin.filterLevel('all')" style="background: #1e293b; color: #fff; border: 1px solid #475569; padding: 5px 12px; border-radius: 20px; cursor:pointer;">Tutti i Livelli</button>
-          ${this.levels.map(l => `
-            <button class="btn btn-sm" onclick="OratoreAdmin.filterLevel('${l.id}')" style="background: #0d1220; color: #d4af37; border: 1px solid #d4af37; padding: 5px 12px; border-radius: 20px; cursor:pointer;">
-              ${l.badge}
-            </button>
-          `).join('')}
+        <!-- Filtri Rapidi (Livello & Mazzo) -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; align-items: center;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; white-space: nowrap;">Filtra Livello:</span>
+            <button class="btn btn-sm" onclick="OratoreAdmin.filterLevel('all')" style="background: ${this.activeLevelFilter === 'all' ? '#d4af37' : '#1e293b'}; color: ${this.activeLevelFilter === 'all' ? '#000' : '#fff'}; border: 1px solid #475569; padding: 4px 10px; border-radius: 20px; cursor:pointer; font-weight: 700;">Tutti i Livelli</button>
+            ${this.levels.map(l => `
+              <button class="btn btn-sm" onclick="OratoreAdmin.filterLevel('${l.id}')" style="background: ${this.activeLevelFilter === l.id ? '#d4af37' : '#0d1220'}; color: ${this.activeLevelFilter === l.id ? '#000' : '#d4af37'}; border: 1px solid #d4af37; padding: 4px 10px; border-radius: 20px; cursor:pointer; font-weight: 700;">
+                ${l.badge || l.nome}
+              </button>
+            `).join('')}
+          </div>
+
+          <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; align-items: center;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; white-space: nowrap;">Filtra Mazzo:</span>
+            <button class="btn btn-sm" onclick="OratoreAdmin.filterDeck('all')" style="background: ${this.activeDeckFilter === 'all' ? '#38bdf8' : '#1e293b'}; color: ${this.activeDeckFilter === 'all' ? '#000' : '#fff'}; border: 1px solid #475569; padding: 4px 8px; border-radius: 20px; cursor:pointer; font-size: 0.78rem;">Tutti i Mazzi (12)</button>
+            ${this.decks.map(d => `
+              <button class="btn btn-sm" onclick="OratoreAdmin.filterDeck('${d.id}')" style="background: ${this.activeDeckFilter === d.id ? '#38bdf8' : '#0d1220'}; color: ${this.activeDeckFilter === d.id ? '#000' : '#cbd5e1'}; border: 1px solid #334155; padding: 4px 8px; border-radius: 20px; cursor:pointer; font-size: 0.78rem;">
+                ${d.emoji} ${d.nome.split('&')[0].trim()}
+              </button>
+            `).join('')}
+          </div>
         </div>
 
-        <!-- Tabella Matrice -->
-        <div style="overflow-x: auto; max-height: 550px;">
+        <!-- Tabella Matrice a 20 Slot -->
+        <div style="overflow-x: auto; max-height: 600px; border: 1px solid rgba(212,175,55,0.2); border-radius: 8px;">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left;">
             <thead>
-              <tr style="background: #0d1220; border-bottom: 2px solid #d4af37; color: #d4af37;">
-                <th style="padding: 10px; width: 140px;">Livello (QCER)</th>
-                <th style="padding: 10px; width: 180px;">Mazzo Tematico</th>
-                <th style="padding: 10px; text-align: center;">Slot 1</th>
-                <th style="padding: 10px; text-align: center;">Slot 2</th>
-                <th style="padding: 10px; text-align: center;">Slot 3</th>
-                <th style="padding: 10px; text-align: center;">Slot 4</th>
+              <tr style="background: #0d1220; border-bottom: 2px solid #d4af37; color: #d4af37; position: sticky; top: 0; z-index: 2;">
+                <th style="padding: 10px; width: 140px; background: #0d1220;">Livello (QCER)</th>
+                <th style="padding: 10px; width: 200px; background: #0d1220;">Mazzo Tematico</th>
+                <th style="padding: 10px; text-align: center; background: #0d1220;">Slot Disponibili (20 Carte per combinazione)</th>
               </tr>
             </thead>
             <tbody>
@@ -114,34 +150,40 @@ const OratoreAdmin = {
 
     this.levels.forEach(l => {
       this.decks.forEach(d => {
-        html += `<tr class="matrix-row matrix-row-${l.id}" style="border-bottom: 1px solid rgba(255,255,255,0.08);">
-          <td style="padding: 8px 10px; font-weight: 700; color: #f1c40f;">${l.sigla} • ${l.nome}</td>
-          <td style="padding: 8px 10px; color: #cbd5e1;">${d.emoji} ${d.nome}</td>`;
+        const isLevelMatch = (this.activeLevelFilter === 'all' || this.activeLevelFilter === l.id);
+        const isDeckMatch = (this.activeDeckFilter === 'all' || this.activeDeckFilter === d.id);
+        const displayStyle = (isLevelMatch && isDeckMatch) ? '' : 'none';
 
-        for (let s = 1; s <= 4; s++) {
+        html += `<tr class="matrix-row matrix-row-${l.id} matrix-row-deck-${d.id}" style="border-bottom: 1px solid rgba(255,255,255,0.08); display: ${displayStyle};">
+          <td style="padding: 10px; font-weight: 700; color: #f1c40f; vertical-align: middle;">${l.sigla || l.id.toUpperCase()} • ${l.nome}</td>
+          <td style="padding: 10px; color: #cbd5e1; vertical-align: middle;"><strong>${d.emoji} ${d.nome}</strong></td>
+          <td style="padding: 10px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px;">
+        `;
+
+        for (let s = 1; s <= this.maxSlotsPerCombination; s++) {
           const key = `${l.id}_${d.id}_${s}`;
           const card = this.cardsMap[key];
           if (card) {
-            filledCount++;
             html += `
-              <td style="padding: 6px; text-align: center;">
-                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; padding: 6px 8px; cursor: pointer; text-align: left;" onclick="OratoreAdmin.openEditSlotModal('${l.id}', '${d.id}', ${s})" title="${card.titolo}">
-                  <div style="color: #34d399; font-weight: 700; font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🟢 ${card.titolo}</div>
-                  <div style="color: #94a3b8; font-size: 0.68rem;">Slot #${s} • Clicca per vedere</div>
-                </div>
-              </td>
+              <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; padding: 4px 6px; cursor: pointer; text-align: left; transition: transform 0.15s;" onclick="OratoreAdmin.openEditSlotModal('${l.id}', '${d.id}', ${s})" title="${card.titolo}\n\n${card.incipit}">
+                <div style="color: #34d399; font-weight: 700; font-size: 0.72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🟢 #${s} ${card.titolo}</div>
+                <div style="color: #94a3b8; font-size: 0.65rem;">Modifica carta</div>
+              </div>
             `;
           } else {
             html += `
-              <td style="padding: 6px; text-align: center;">
-                <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 6px 8px; cursor: pointer; text-align: center;" onclick="OratoreAdmin.openEditSlotModal('${l.id}', '${d.id}', ${s})">
-                  <span style="color: #64748b; font-size: 0.72rem;">⚪ Slot #${s} (Vuoto)</span>
-                </div>
-              </td>
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 6px; padding: 4px 6px; cursor: pointer; text-align: center;" onclick="OratoreAdmin.openEditSlotModal('${l.id}', '${d.id}', ${s})">
+                <span style="color: #64748b; font-size: 0.68rem;">⚪ Slot #${s} (Vuoto)</span>
+              </div>
             `;
           }
         }
-        html += `</tr>`;
+
+        html += `
+            </div>
+          </td>
+        </tr>`;
       });
     });
 
@@ -153,22 +195,16 @@ const OratoreAdmin = {
     `;
 
     container.innerHTML = html;
-
-    const statsPill = document.getElementById('matrix-stats-pill');
-    if (statsPill) {
-      statsPill.innerHTML = `📊 Slot Compilati: <strong>${filledCount} / ${totalSlots}</strong> (${Math.round(filledCount / totalSlots * 100)}%)`;
-    }
   },
 
   filterLevel(lvl) {
-    const rows = document.querySelectorAll('.matrix-row');
-    rows.forEach(r => {
-      if (lvl === 'all' || r.classList.contains(`matrix-row-${lvl}`)) {
-        r.style.display = '';
-      } else {
-        r.style.display = 'none';
-      }
-    });
+    this.activeLevelFilter = lvl;
+    this.renderMatrix();
+  },
+
+  filterDeck(deckId) {
+    this.activeDeckFilter = deckId;
+    this.renderMatrix();
   },
 
   parseWordText(rawText, defaultLevel, defaultDeck) {
@@ -195,7 +231,7 @@ const OratoreAdmin = {
           parole_proibite: [],
           parole_da_usare: [],
           livello: defaultLevel || 'b1',
-          mazzo: defaultDeck || 'epica'
+          mazzo: defaultDeck || 'accoglienza'
         };
         return;
       }
@@ -207,7 +243,7 @@ const OratoreAdmin = {
           parole_proibite: [],
           parole_da_usare: [],
           livello: defaultLevel || 'b1',
-          mazzo: defaultDeck || 'epica'
+          mazzo: defaultDeck || 'accoglienza'
         };
       }
 
@@ -274,7 +310,7 @@ const OratoreAdmin = {
 
     cards.forEach(c => {
       let targetSlot = 1;
-      for (let s = 1; s <= 4; s++) {
+      for (let s = 1; s <= this.maxSlotsPerCombination; s++) {
         const key = `${c.livello}_${c.mazzo}_${s}`;
         if (!this.cardsMap[key]) {
           targetSlot = s;
@@ -321,7 +357,7 @@ const OratoreAdmin = {
 
     if (!modalTitle || !modalBody || !modal) return;
 
-    modalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Slot #${slotNum} • ${deckObj.emoji} ${deckObj.nome} (${levelObj.sigla})`;
+    modalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Slot #${slotNum} • ${deckObj.emoji} ${deckObj.nome} (${levelObj.sigla || levelId.toUpperCase()})`;
     modalBody.innerHTML = `
       <div style="margin-bottom: 12px;">
         <label style="display:block; font-size: 0.8rem; font-weight:700; color: #94a3b8; margin-bottom:4px;">Titolo Traccia:</label>
