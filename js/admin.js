@@ -52,37 +52,41 @@ const OratoreAdmin = {
   async loadAllCards() {
     this.cardsMap = {};
 
-    // 1. Inizializzazione sincrona immediata da cards-data.js se disponibile
-    if (window.L_ORATORE_DEFAULT_CARDS && window.L_ORATORE_DEFAULT_CARDS.carte) {
-      window.L_ORATORE_DEFAULT_CARDS.carte.forEach(c => {
-        const key = `${c.livello || 'b1'}_${c.mazzo}_${c.slot || 1}`;
-        this.cardsMap[key] = c;
-      });
-    }
-
-    // 2. Carica da data/consegne.json locale se fetch è disponibile
+    // 1. Carica da data/consegne.json locale con cache-buster orario
     try {
-      const res = await fetch('data/consegne.json');
+      const res = await fetch('data/consegne.json?v=' + Date.now());
       if (res.ok) {
         const json = await res.json();
-        if (json.livelli) this.levels = json.livelli;
-        if (json.mazzi) this.decks = json.mazzi;
+        if (json.livelli && json.livelli.length > 0) this.levels = json.livelli;
+        if (json.mazzi && json.mazzi.length > 0) this.decks = json.mazzi;
         (json.carte || []).forEach(c => {
           const key = `${c.livello || 'b1'}_${c.mazzo}_${c.slot || 1}`;
           this.cardsMap[key] = c;
         });
       }
     } catch (e) {
-      console.warn("Base JSON load:", e);
+      console.warn("Base JSON fetch error, falling back to window object:", e);
     }
 
-    // 3. Carica anche eventuali carte salvate localmente o personalizzate
+    // 2. Se non sono state caricate da fetch, leggi da cards-data.js globale
+    if (Object.keys(this.cardsMap).length === 0 && window.L_ORATORE_DEFAULT_CARDS && window.L_ORATORE_DEFAULT_CARDS.carte) {
+      if (window.L_ORATORE_DEFAULT_CARDS.livelli) this.levels = window.L_ORATORE_DEFAULT_CARDS.livelli;
+      if (window.L_ORATORE_DEFAULT_CARDS.mazzi) this.decks = window.L_ORATORE_DEFAULT_CARDS.mazzi;
+      window.L_ORATORE_DEFAULT_CARDS.carte.forEach(c => {
+        const key = `${c.livello || 'b1'}_${c.mazzo}_${c.slot || 1}`;
+        this.cardsMap[key] = c;
+      });
+    }
+
+    // 3. Carica eventuali override personalizzati salvati localmente
     const localStored = localStorage.getItem('loratore_custom_cards');
     if (localStored) {
       try {
         const custom = JSON.parse(localStored);
         Object.keys(custom).forEach(k => {
-          this.cardsMap[k] = custom[k];
+          if (custom[k] && custom[k].titolo) {
+            this.cardsMap[k] = custom[k];
+          }
         });
       } catch (err) {}
     }
