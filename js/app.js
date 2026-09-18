@@ -134,8 +134,13 @@ const App = {
     }
 
     if (teamHeader) {
-      teamHeader.innerHTML = `<i class="fa-solid fa-chess-pawn"></i> Scegli la Pedina per ${currentTeam.name}`;
-      teamHeader.style.color = currentTeam.color;
+      teamHeader.innerHTML = `
+        <span class="setup-step-badge">Passo 2 di 4</span>
+        <h2 class="setup-title" style="color: ${currentTeam.color}">
+          <i class="fa-solid fa-chess-pawn"></i> Scegli la Pedina per ${currentTeam.name}
+        </h2>
+        <p class="setup-subtitle">Squadra ${this.selectedSetup.currentPawnTeamIdx + 1} di ${this.selectedSetup.teamsCount}: clicca su un personaggio per sceglierlo e procedere.</p>
+      `;
     }
 
     // Pedine già scelte dalle squadre precedenti
@@ -153,10 +158,10 @@ const App = {
 
       if (isTakenByPrev) {
         return `
-          <div class="pawn-choice-card-giant taken" style="border: 2px solid ${isTakenByPrev.color}; opacity: 0.45; cursor: not-allowed; position: relative; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.3); text-align: center;">
-            <div style="position: absolute; top: 6px; right: 6px; background: ${isTakenByPrev.color}; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 6px;">${isTakenByPrev.name}</div>
-            <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" style="width: 80px; height: 80px; object-fit: contain; filter: grayscale(60%); margin-bottom: 6px;">
-            <div style="color: ${isTakenByPrev.color}; font-weight: 700; font-size: 0.8rem;">${isTakenByPrev.name}</div>
+          <div class="pawn-choice-card-giant taken" style="border-color: ${isTakenByPrev.color};">
+            <div class="taken-badge" style="background: ${isTakenByPrev.color};">${isTakenByPrev.name}</div>
+            <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" class="pawn-choice-img" style="filter: grayscale(60%);">
+            <span class="pawn-choice-label" style="color: ${isTakenByPrev.color}; font-weight: 700;">${isTakenByPrev.name}</span>
           </div>
         `;
       }
@@ -164,11 +169,11 @@ const App = {
       return `
         <div class="pawn-choice-card-giant ${isSelectedByCurrent ? 'selected' : ''}" 
              onclick="App.selectPawnCandidate('${pawnSrc}')" 
-             style="border: 2px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.4); text-align: center;"
-             onmouseover="this.style.borderColor='${currentTeam.color}'; this.style.transform='scale(1.05)';"
-             onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.transform='scale(1)';">
-          <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 6px;">
-          <div style="color: #cbd5e1; font-weight: 700; font-size: 0.8rem;">Personaggio ${idx + 1}</div>
+             style="border-color: ${isSelectedByCurrent ? currentTeam.color : 'rgba(212, 175, 55, 0.25)'};"
+             onmouseover="this.style.borderColor='${currentTeam.color}';"
+             onmouseout="this.style.borderColor='${isSelectedByCurrent ? currentTeam.color : 'rgba(212, 175, 55, 0.25)'}';">
+          <img src="${pawnSrc}" alt="Personaggio ${idx + 1}" class="pawn-choice-img">
+          <span class="pawn-choice-label">Personaggio ${idx + 1}</span>
         </div>
       `;
     }).join('');
