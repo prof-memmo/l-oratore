@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L'Oratore - Pannello Gestione 192 Slot & Bulk Importer</title>
+  <title>L'Oratore - Pannello Gestione 1.440 Slot & Bulk Importer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=20260916_1440">
 </head>
 <body style="background:#000000; color:#fff; min-height:100vh; padding:20px;">
 
@@ -16,8 +16,8 @@
       <div style="display: flex; align-items: center; gap: 15px;">
         <img src="assets/branding/oratore-header.png" alt="Logo L'Oratore" style="height: 48px;">
         <div>
-          <h1 style="font-size: 1.5rem; color: #d4af37; margin: 0;">Pannello Riservato • Matrice 192 Slot</h1>
-          <p style="font-size: 0.82rem; color: #94a3b8; margin: 2px 0 0 0;">Gestione e smistamento incipit per L'Oratore</p>
+          <h1 style="font-size: 1.5rem; color: #d4af37; margin: 0;">Pannello Riservato • Matrice 1.440 Slot</h1>
+          <p style="font-size: 0.82rem; color: #94a3b8; margin: 2px 0 0 0;">Gestione, consultazione e smistamento incipit per L'Oratore (12 Mazzi × 6 Livelli × 20 Slot)</p>
         </div>
       </div>
       <div style="display: flex; gap: 10px;">
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <!-- 1. Matrice a 192 Slot -->
+    <!-- 1. Matrice a 1.440 Slot -->
     <div id="oratore-matrix-container">
       <!-- Popolato da OratoreAdmin.renderMatrix() -->
     </div>
@@ -59,21 +59,25 @@
         <div>
           <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Mazzo Predefinito (se non specificato nel testo):</label>
           <select id="oratore-bulk-deck-select" style="width:100%; padding:10px; background:#070a13; border:1px solid #d4af37; border-radius:8px; color:#fff; font-size:0.9rem;">
-            <option value="epica" selected>🏺 Mito & Epica Classica</option>
-            <option value="medioevo">👑 Medioevo & Cavalieri</option>
-            <option value="fantascienza">🚀 Fantascienza & Futuro</option>
-            <option value="teatro">🎭 Teatro & Spettacolo</option>
-            <option value="letteratura">📜 Letteratura & Poesia</option>
-            <option value="civilta">🌍 Mondo, Storia & Civiltà</option>
-            <option value="scienza">🧪 Scienza, Natura & Misteri</option>
-            <option value="party">🧩 Party & Creatività Libera</option>
+            <option value="accoglienza" selected>🎒 Accoglienza & Primi Giorni</option>
+            <option value="emozioni">🎭 Emozioni, Relazioni & Empatia</option>
+            <option value="diritti">🏛️ Diritti, Legalità & Costituzione</option>
+            <option value="digitale">🤖 Digitale, IA & Futuro</option>
+            <option value="clima">🌍 Clima, Natura & Terra</option>
+            <option value="dilemmi">⚖️ Dilemmi Etici & Scelte Morali</option>
+            <option value="mistero">🕵️ Mistero, Indagini & Giallo</option>
+            <option value="epica">🏺 Mito & Epica Classica</option>
+            <option value="favole">🐉 Favole, Fiabe & Simboli</option>
+            <option value="storia">⏳ Grandi Figure & Storia</option>
+            <option value="avventura">🧭 Viaggi, Esplorazioni & Avventura</option>
+            <option value="filosofia">💡 Filosofia, Idee & Debate</option>
           </select>
         </div>
       </div>
 
       <div style="margin-bottom: 15px;">
         <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Testo da Word (Incolla qui):</label>
-        <textarea id="oratore-bulk-textarea" rows="9" style="width:100%; padding:12px; background:#070a13; border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; line-height:1.4;" placeholder="1. L'Inganno del Cavallo&#10;Incipit: Le navi achee sono salpate all'improvviso lasciando sulla riva una gigantesca scultura cava...&#10;Parole Proibite: Cavallo, Legno, Soldati, Greco, Spiaggia&#10;Parole da Usare: Stratagemma, Ingannevole, Presagio, Baluardo, Diffidenza&#10;&#10;2. Il Canto delle Sirene..."></textarea>
+        <textarea id="oratore-bulk-textarea" rows="9" style="width:100%; padding:12px; background:#070a13; border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:#fff; font-family:monospace; font-size:0.85rem; line-height:1.4;" placeholder="1. Il banco vicino alla finestra&#10;Incipit: Sei un bambino al tuo primo giorno di scuola...&#10;Parole Proibite: Banco, Finestra, Scuola, Paura, Seduto&#10;Parole da Usare: Amico, Disegno, Luce, Sorriso, Gioco&#10;&#10;2. La scatola dei colori condivisa..."></textarea>
       </div>
 
       <button class="btn btn-primary" onclick="OratoreAdmin.executeBulkImport()" style="background: #d4af37; color: #000; font-weight: 800; padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer;">
@@ -94,9 +98,9 @@
     </div>
   </div>
 
-  <script src="js/firebase-init.js?v=20260910b"></script>
-  <script src="js/cards-data.js?v=20260910b"></script>
-  <script src="js/live-editor.js?v=20260910b"></script>
-  <script src="js/admin.js?v=20260910b"></script>
+  <script src="js/firebase-init.js?v=20260916_1440"></script>
+  <script src="js/cards-data.js?v=20260916_1440"></script>
+  <script src="js/live-editor.js?v=20260916_1440"></script>
+  <script src="js/admin.js?v=20260916_1440"></script>
 </body>
 </html>
