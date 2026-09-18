@@ -978,22 +978,21 @@ a:hover {
   background: #070a12;
   border: 1.5px solid rgba(212, 175, 55, 0.3);
   border-radius: var(--radius-md);
-  padding: 8px 18px;
-  margin-bottom: 12px;
-  gap: 12px;
+  padding: 12px 24px;
+  margin-bottom: 20px;
+  gap: 16px;
   width: 100%;
-  max-width: 1040px;
 }
 
 .active-team-pill {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .active-team-avatar {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 2px solid var(--accent-gold);
   object-fit: cover;
@@ -1001,13 +1000,13 @@ a:hover {
 }
 
 .active-team-name {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #fff;
 }
 
 .active-team-sub {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
@@ -1015,12 +1014,12 @@ a:hover {
 .circular-timer-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .timer-svg {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   transform: rotate(-90deg);
 }
 
@@ -1042,11 +1041,11 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 4px;
 }
 
 .timer-display-digits {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--accent-gold);
   letter-spacing: 1px;
@@ -1072,15 +1071,14 @@ a:hover {
 
 .orator-main-card {
   width: 100%;
-  max-width: 1040px;
   background: #070a12;
   border: 2px solid rgba(212, 175, 55, 0.35);
-  border-radius: var(--radius-lg);
-  padding: 18px 24px;
+  border-radius: var(--radius-xl);
+  padding: 30px 36px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .card-meta-row {
@@ -1088,16 +1086,16 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
 }
 
 .card-deck-tag {
   background: rgba(212, 175, 55, 0.15);
   border: 1px solid var(--accent-gold);
   color: var(--accent-gold);
-  padding: 4px 14px;
+  padding: 6px 16px;
   border-radius: var(--radius-full);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1107,25 +1105,25 @@ a:hover {
   background: rgba(99, 102, 241, 0.15);
   border: 1px solid #6366f1;
   color: #a5b4fc;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
 .card-main-title {
-  font-size: 1.5rem;
+  font-size: 1.85rem;
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.25;
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  padding-bottom: 8px;
+  padding-bottom: 12px;
 }
 
 /* 2-Column Body Layout (Incipit Left, Words Right) */
 .orator-card-body-columns {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 14px;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
   align-items: stretch;
 }
 
@@ -1139,41 +1137,41 @@ a:hover {
   background: #030509;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 14px 18px;
+  padding: 22px 26px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .card-incipit-label {
-  font-size: 0.76rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: var(--accent-gold);
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   letter-spacing: 0.05em;
 }
 
 .card-incipit-text {
-  font-size: 0.95rem;
-  line-height: 1.48;
-  color: #f1f5f9;
+  font-size: 1.15rem;
+  line-height: 1.62;
+  color: #f8fafc;
 }
 
 .card-words-section {
   background: #030509;
   border: 1.5px solid rgba(212, 175, 55, 0.25);
   border-radius: var(--radius-md);
-  padding: 14px 18px;
+  padding: 22px 26px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .card-words-header {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: #f87171;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
@@ -1183,16 +1181,16 @@ a:hover {
 .card-words-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 12px;
 }
 
 .word-chip {
   background: #000;
   border: 1.5px solid rgba(239, 68, 68, 0.5);
   color: #fecaca;
-  padding: 8px 10px;
+  padding: 12px 14px;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -1208,26 +1206,26 @@ a:hover {
 
 .card-actions-bar {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .btn-buzzer-giant {
   flex: 1;
-  min-width: 200px;
+  min-width: 240px;
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   color: #fff;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  padding: 12px 20px;
+  padding: 16px 24px;
   border-radius: var(--radius-md);
   border: 2px solid #f87171;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1246,25 +1244,25 @@ a:hover {
   color: #b91c1c;
   padding: 2px 10px;
   border-radius: var(--radius-full);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 900;
 }
 
 .btn-advance-giant {
   flex: 1.2;
-  min-width: 220px;
+  min-width: 240px;
   background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
   color: #000;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  padding: 12px 20px;
+  padding: 16px 24px;
   border-radius: var(--radius-md);
   border: 2px solid #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   box-shadow: var(--shadow-gold);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
