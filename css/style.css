@@ -978,10 +978,11 @@ a:hover {
   background: #070a12;
   border: 1.5px solid rgba(212, 175, 55, 0.3);
   border-radius: var(--radius-md);
-  padding: 12px 20px;
-  margin-bottom: 24px;
-  gap: 15px;
-  flex-wrap: wrap;
+  padding: 8px 18px;
+  margin-bottom: 12px;
+  gap: 12px;
+  width: 100%;
+  max-width: 1040px;
 }
 
 .active-team-pill {
@@ -991,8 +992,8 @@ a:hover {
 }
 
 .active-team-avatar {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid var(--accent-gold);
   object-fit: cover;
@@ -1000,13 +1001,13 @@ a:hover {
 }
 
 .active-team-name {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #fff;
 }
 
 .active-team-sub {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
 }
 
@@ -1014,12 +1015,12 @@ a:hover {
 .circular-timer-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .timer-svg {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   transform: rotate(-90deg);
 }
 
@@ -1045,10 +1046,11 @@ a:hover {
 }
 
 .timer-display-digits {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--accent-gold);
   letter-spacing: 1px;
+  line-height: 1;
 }
 
 .btn-switch-board {
@@ -1070,15 +1072,15 @@ a:hover {
 
 .orator-main-card {
   width: 100%;
-  max-width: 960px;
+  max-width: 1040px;
   background: #070a12;
   border: 2px solid rgba(212, 175, 55, 0.35);
-  border-radius: var(--radius-xl);
-  padding: 32px 36px;
+  border-radius: var(--radius-lg);
+  padding: 18px 24px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 .card-meta-row {
@@ -1086,7 +1088,7 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .card-deck-tag {
@@ -1095,7 +1097,7 @@ a:hover {
   color: var(--accent-gold);
   padding: 4px 14px;
   border-radius: var(--radius-full);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1107,36 +1109,53 @@ a:hover {
   color: #a5b4fc;
   padding: 4px 12px;
   border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
 .card-main-title {
-  font-size: 1.85rem;
+  font-size: 1.5rem;
   color: #fff;
-  line-height: 1.25;
+  line-height: 1.2;
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  padding-bottom: 12px;
+  padding-bottom: 8px;
+}
+
+/* 2-Column Body Layout (Incipit Left, Words Right) */
+.orator-card-body-columns {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+@media (max-width: 860px) {
+  .orator-card-body-columns {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card-incipit-box {
   background: #030509;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 20px 24px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .card-incipit-label {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: var(--accent-gold);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: 0.05em;
 }
 
 .card-incipit-text {
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.48;
   color: #f1f5f9;
 }
 
@@ -1144,14 +1163,17 @@ a:hover {
   background: #030509;
   border: 1.5px solid rgba(212, 175, 55, 0.25);
   border-radius: var(--radius-md);
-  padding: 18px 22px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .card-words-header {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: #f87171;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
@@ -1160,20 +1182,23 @@ a:hover {
 
 .card-words-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
 }
 
 .word-chip {
   background: #000;
   border: 1.5px solid rgba(239, 68, 68, 0.5);
   color: #fecaca;
-  padding: 10px 14px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .word-chip.mode-usare {
@@ -1183,26 +1208,26 @@ a:hover {
 
 .card-actions-bar {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 4px;
 }
 
 .btn-buzzer-giant {
   flex: 1;
-  min-width: 240px;
+  min-width: 200px;
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   color: #fff;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  padding: 18px 24px;
+  padding: 12px 20px;
   border-radius: var(--radius-md);
   border: 2px solid #f87171;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1226,16 +1251,22 @@ a:hover {
 }
 
 .btn-advance-giant {
-  flex: 1;
-  min-width: 240px;
-  padding: 18px 24px;
-  font-size: 1.15rem;
+  flex: 1.2;
+  min-width: 220px;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
+  color: #000;
+  font-size: 1.05rem;
   font-weight: 800;
+  padding: 12px 20px;
   border-radius: var(--radius-md);
+  border: 2px solid #fff;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  box-shadow: var(--shadow-gold);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Dedicated Full Board View */

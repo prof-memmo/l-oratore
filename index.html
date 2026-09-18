@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Stylesheet di Progetto (Pure Black Base & Gold Accents) -->
-  <link rel="stylesheet" href="css/style.css?v=20260918_pawnfix">
+  <link rel="stylesheet" href="css/style.css?v=20260918_compactcard">
   
   <!-- Firebase SDKs Compat -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -351,18 +351,20 @@
 
           <h2 class="card-main-title" id="card-title">Caricamento Traccia...</h2>
 
-          <div class="card-incipit-box">
-            <div class="card-incipit-label"><i class="fa-solid fa-feather-pointed"></i> INCIPIT NARRATIVO D'AUTORE:</div>
-            <p class="card-incipit-text" id="card-incipit">Preparati a iniziare il tuo discorso oratorio...</p>
-          </div>
-
-          <!-- 5 Words Box -->
-          <div class="card-words-section">
-            <div class="card-words-header" id="card-words-header">
-              <i class="fa-solid fa-ban" style="color: var(--danger-color);"></i> 5 PAROLE PROIBITE (DA NON PRONUNCIARE):
+          <div class="orator-card-body-columns">
+            <div class="card-incipit-box">
+              <div class="card-incipit-label"><i class="fa-solid fa-feather-pointed"></i> INCIPIT NARRATIVO D'AUTORE:</div>
+              <p class="card-incipit-text" id="card-incipit">Preparati a iniziare il tuo discorso oratorio...</p>
             </div>
-            <div class="card-words-grid" id="card-words-grid">
-              <!-- Popolate dinamicamente -->
+
+            <!-- 5 Words Box -->
+            <div class="card-words-section">
+              <div class="card-words-header" id="card-words-header">
+                <i class="fa-solid fa-ban" style="color: var(--danger-color);"></i> 5 PAROLE PROIBITE (DA NON PRONUNCIARE):
+              </div>
+              <div class="card-words-grid" id="card-words-grid">
+                <!-- Popolate dinamicamente -->
+              </div>
             </div>
           </div>
 
