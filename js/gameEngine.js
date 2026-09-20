@@ -872,23 +872,34 @@ const GameEngine = {
   },
 
   // ==========================================
-  // SALVATAGGIO & RIPRESA PARTITE (LOCALSTORAGE)
+  // SALVATAGGIO & RIPRESA PARTITE (CLOUD & LOCAL)
   // ==========================================
+
+  _cachedSavedGames: null,
 
   getSavedGames() {
     try {
       const raw = localStorage.getItem('loratore_saved_games');
-      return raw ? JSON.parse(raw) : [];
+      const localSaves = raw ? JSON.parse(raw) : [];
+      if (this._cachedSavedGames && this._cachedSavedGames.length > 0) {
+        // Unisci salvataggi cloud e locali per ID
+        const map = new Map();
+        this._cachedSavedGames.forEach(s => map.set(s.id, { ...s, source: 'cloud' }));
+        localSaves.forEach(s => {
+          if (!map.has(s.id)) map.set(s.id, { ...s, source: 'local' });
+        });
+        return Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      }
+      return localSaves.map(s => ({ ...s, source: 'local' }));
     } catch (e) {
       console.warn("Errore lettura saved games:", e);
       return [];
     }
   },
 
-  saveGame(sessionName) {
+  async saveGame(sessionName) {
     if (!this.gameState.teams || this.gameState.teams.length === 0) return false;
 
-    const savedGames = this.getSavedGames();
     const now = new Date();
     const dateFormatted = now.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
@@ -914,8 +925,31 @@ const GameEngine = {
       gameState: serializedState
     };
 
-    savedGames.unshift(newSave);
-    localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames.slice(0, 15))); // Max 15 salvataggi
+    // 1. Salva in LocalStorage (cache immediata offline)
+    try {
+      let savedGames = [];
+      const raw = localStorage.getItem('loratore_saved_games');
+      if (raw) savedGames = JSON.parse(raw);
+      savedGames.unshift(newSave);
+      localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames.slice(0, 20)));
+    } catch (e) {}
+
+    // 2. Salva su Cloud Firestore (prof-memmo-hub) se autenticato
+    if (window.fbDb && window.fbAuth && window.fbAuth.currentUser) {
+      try {
+        const user = window.fbAuth.currentUser;
+        await window.fbDb.collection('oratore_saved_games').doc(saveId).set({
+          ...newSave,
+          userId: user.uid,
+          userEmail: (user.email || '').toLowerCase().trim(),
+          updatedAt: new Date().toISOString()
+        });
+        console.log("☁️ Partita salvata sul Cloud Firestore con successo!");
+      } catch (errCloud) {
+        console.warn("Salvataggio Cloud non riuscito, preservato in locale:", errCloud);
+      }
+    }
+
     return true;
   },
 
@@ -935,10 +969,26 @@ const GameEngine = {
     } catch (e) {}
   },
 
-  deleteSavedGame(saveId) {
-    let savedGames = this.getSavedGames();
-    savedGames = savedGames.filter(s => s.id !== saveId);
-    localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames));
+  async deleteSavedGame(saveId) {
+    try {
+      let raw = localStorage.getItem('loratore_saved_games');
+      if (raw) {
+        let savedGames = JSON.parse(raw);
+        savedGames = savedGames.filter(s => s.id !== saveId);
+        localStorage.setItem('loratore_saved_games', JSON.stringify(savedGames));
+      }
+      if (this._cachedSavedGames) {
+        this._cachedSavedGames = this._cachedSavedGames.filter(s => s.id !== saveId);
+      }
+    } catch (e) {}
+
+    // Elimina dal Cloud Firestore se presente
+    if (window.fbDb && window.fbAuth && window.fbAuth.currentUser) {
+      try {
+        await window.fbDb.collection('oratore_saved_games').doc(saveId).delete();
+      } catch (_) {}
+    }
+
     this.renderSavedGamesList();
   },
 
@@ -993,6 +1043,29 @@ const GameEngine = {
     this.renderSavedGamesList();
     const modal = document.getElementById('saved-games-modal');
     if (modal) modal.classList.remove('hidden');
+
+    // Sincronizza asincronamente dal Cloud
+    this.syncCloudSavedGames();
+  },
+
+  async syncCloudSavedGames() {
+    if (!window.fbDb || !window.fbAuth || !window.fbAuth.currentUser) return;
+    try {
+      const user = window.fbAuth.currentUser;
+      const snap = await window.fbDb.collection('oratore_saved_games')
+        .where('userId', '==', user.uid)
+        .get();
+
+      const cloudList = [];
+      snap.forEach(doc => {
+        cloudList.push({ id: doc.id, ...doc.data(), source: 'cloud' });
+      });
+
+      this._cachedSavedGames = cloudList;
+      this.renderSavedGamesList();
+    } catch (e) {
+      console.warn("Sync cloud saved games error:", e);
+    }
   },
 
   closeSavedGamesModal() {
@@ -1024,11 +1097,16 @@ const GameEngine = {
         </div>
       `).join(' ');
 
+      const isCloud = s.source === 'cloud';
+
       return `
         <div class="saved-game-item">
           <div class="saved-game-info">
-            <h4 class="saved-game-title">${s.name}</h4>
-            <div class="saved-game-meta">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h4 class="saved-game-title" style="margin:0;">${s.name}</h4>
+              ${isCloud ? '<span style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:700;">☁️ Cloud</span>' : '<span style="background:rgba(148,163,184,0.15); color:#94a3b8; padding:2px 6px; border-radius:6px; font-size:0.7rem;">🖥️ Locale</span>'}
+            </div>
+            <div class="saved-game-meta" style="margin-top:4px;">
               <span><i class="fa-solid fa-calendar"></i> ${s.date}</span> • 
               <span><i class="fa-solid fa-flag"></i> Round ${s.round}</span> • 
               <span style="text-transform:uppercase;">Liv. ${s.level}</span>
@@ -1063,10 +1141,10 @@ const GameEngine = {
     if (dialog) dialog.classList.add('hidden');
   },
 
-  confirmSaveGame() {
+  async confirmSaveGame() {
     const input = document.getElementById('save-session-name-input');
     const name = input ? input.value : '';
-    this.saveGame(name);
+    await this.saveGame(name);
     this.closeSaveDialog();
     alert("Partita salvata con successo! Potrai riprenderla in qualsiasi momento.");
     App.showView('view-welcome');
