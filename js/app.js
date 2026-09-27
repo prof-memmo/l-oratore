@@ -57,6 +57,14 @@ const App = {
       window.history.replaceState({ view: 'view-welcome' }, '', '#welcome');
     }
 
+    if (window.OratoreRulesService) {
+      window.OratoreRulesService.subscribe(() => {
+        if (this.currentView === 'view-regolamento') {
+          window.OratoreRulesService.renderPublicView('view-regolamento-container');
+        }
+      });
+    }
+
     console.log("L'Oratore v3.0 initialized with 6 QCER levels, shared round categories, and Ops! Storia turn flow.");
   },
 
@@ -66,6 +74,10 @@ const App = {
     if (target) {
       target.classList.add('active');
       this.currentView = viewId;
+    }
+
+    if (viewId === 'view-regolamento' && window.OratoreRulesService) {
+      window.OratoreRulesService.renderPublicView('view-regolamento-container');
     }
 
     if (pushHistory && window.history && (!window.history.state || window.history.state.view !== viewId)) {
