@@ -246,14 +246,22 @@ const GameEngine = {
       return matchDeck && matchLevel && !this.gameState.usedCardIds.has(c.id);
     });
 
-    // 2. Se finite, cerca nel mazzo qualsiasi livello non ancora usato
+    // 2. Se finite per il livello scelto, cerca nel mazzo qualsiasi livello non ancora usato
     if (available.length === 0) {
       available = this.data.carte.filter(c => c.mazzo === deckId && !this.gameState.usedCardIds.has(c.id));
     }
 
-    // 3. Se tutte le carte del mazzo sono state usate, azzera usedCardIds per questo mazzo
+    // 3. Se tutte le carte del mazzo sono state usate nella sessione, sblocca la rotazione del mazzo
     if (available.length === 0) {
-      available = this.data.carte.filter(c => c.mazzo === deckId);
+      this.data.carte.filter(c => c.mazzo === deckId).forEach(c => this.gameState.usedCardIds.delete(c.id));
+      available = this.data.carte.filter(c => {
+        const matchDeck = (c.mazzo === deckId);
+        const matchLevel = (!c.livello || c.livello === levelId);
+        return matchDeck && matchLevel;
+      });
+      if (available.length === 0) {
+        available = this.data.carte.filter(c => c.mazzo === deckId);
+      }
     }
 
     // 4. Fallback generale su tutte le carte
@@ -351,7 +359,7 @@ const GameEngine = {
     if (wordsGrid) {
       const isUsare = this.gameState.mode === 'USARE';
       wordsGrid.innerHTML = (words || []).map((w, idx) => `
-        <div class="word-chip ${isUsare ? 'mode-usare' : ''}" id="word-chip-${idx}" onclick="GameEngine.toggleWord(${idx})">
+        <div class="word-chip ${isUsare ? 'mode-usare' : ''}" id="word-chip-${idx}" onclick="GameEngine.toggleWord(${idx})" title="${isUsare ? 'Clicca per segnare come usata (+1)' : 'Clicca se pronunciata (+1 Penalità)'}">
           <span>${w}</span>
         </div>
       `).join('');
@@ -363,15 +371,25 @@ const GameEngine = {
   },
 
   toggleWord(idx) {
-    this.gameState.wordsHitThisTurn[idx] = !this.gameState.wordsHitThisTurn[idx];
+    const isNowSelected = !this.gameState.wordsHitThisTurn[idx];
+    this.gameState.wordsHitThisTurn[idx] = isNowSelected;
     const chip = document.getElementById(`word-chip-${idx}`);
     if (chip) {
-      chip.classList.toggle('selected', this.gameState.wordsHitThisTurn[idx]);
+      chip.classList.toggle('selected', isNowSelected);
     }
-    if (this.gameState.mode === 'PROIBITE' && this.gameState.wordsHitThisTurn[idx]) {
-      this.triggerBuzzer();
-    } else if (this.gameState.mode === 'USARE' && this.gameState.wordsHitThisTurn[idx]) {
-      if (window.AudioEngine && window.AudioEngine.playChime) window.AudioEngine.playChime();
+    if (this.gameState.mode === 'PROIBITE') {
+      if (isNowSelected) {
+        this.triggerBuzzer();
+      } else {
+        // Deselezione / annullamento errore
+        this.gameState.penaltiesThisTurn = Math.max(0, this.gameState.penaltiesThisTurn - 1);
+        const badge = document.getElementById('buzzer-count-badge');
+        if (badge) badge.textContent = this.gameState.penaltiesThisTurn;
+      }
+    } else if (this.gameState.mode === 'USARE') {
+      if (isNowSelected) {
+        if (window.AudioEngine && window.AudioEngine.playChime) window.AudioEngine.playChime();
+      }
     }
   },
 
