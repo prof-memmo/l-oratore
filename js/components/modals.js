@@ -31,10 +31,17 @@ const Modals = {
   ],
 
   openMiniguida() {
+    if (window.MiniguidaService) {
+      window.MiniguidaService.openModal();
+      return;
+    }
     this.currentGuideStep = 1;
     this.renderGuideStep();
     const modal = document.getElementById('miniguida-modal');
-    if (modal) modal.classList.remove('hidden');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
   },
 
   openMiniguidaModal() {
@@ -42,8 +49,15 @@ const Modals = {
   },
 
   closeMiniguida() {
+    if (window.MiniguidaService) {
+      window.MiniguidaService.closeModal();
+      return;
+    }
     const modal = document.getElementById('miniguida-modal');
-    if (modal) modal.classList.add('hidden');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+    }
   },
 
   closeMiniguidaModal() {
@@ -51,6 +65,10 @@ const Modals = {
   },
 
   renderGuideStep() {
+    if (window.MiniguidaService) {
+      window.MiniguidaService.renderModal();
+      return;
+    }
     const step = this.guideSteps[this.currentGuideStep - 1];
     const iconEl = document.getElementById('guide-step-icon');
     const titleEl = document.getElementById('guide-step-title');
@@ -72,6 +90,10 @@ const Modals = {
   },
 
   nextGuideStep() {
+    if (window.MiniguidaService) {
+      window.MiniguidaService.nextStep();
+      return;
+    }
     if (this.currentGuideStep < this.totalGuideSteps) {
       this.currentGuideStep++;
       this.renderGuideStep();
@@ -81,6 +103,10 @@ const Modals = {
   },
 
   prevGuideStep() {
+    if (window.MiniguidaService) {
+      window.MiniguidaService.prevStep();
+      return;
+    }
     if (this.currentGuideStep > 1) {
       this.currentGuideStep--;
       this.renderGuideStep();

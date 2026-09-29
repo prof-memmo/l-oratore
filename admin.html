@@ -90,6 +90,9 @@
     <!-- 3. Regolamento Ufficiale Live Editor Cloud -->
     <div id="oratore-rules-editor-container"></div>
 
+    <!-- 4. Miniguida & Tutorial Live Editor -->
+    <div id="oratore-miniguida-editor-container"></div>
+
   </div>
 
   <!-- Slot Edit Modal -->
@@ -105,11 +108,15 @@
   <script src="js/cards-data.js?v=20260927_rules_v1"></script>
   <script src="js/live-editor.js?v=20260927_rules_v1"></script>
   <script src="js/rules-service.js?v=20260927_rules_v1"></script>
+  <script src="js/services/miniguida-service.js?v=20260929_miniguida_v1"></script>
   <script src="js/admin.js?v=20260927_rules_v1"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.OratoreRulesService) {
         window.OratoreRulesService.renderAdminEditor('oratore-rules-editor-container');
+      }
+      if (window.OratoreMiniguidaService) {
+        window.OratoreMiniguidaService.renderAdminEditor('oratore-miniguida-editor-container');
       }
     });
   </script>
