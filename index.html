@@ -610,18 +610,30 @@
   </div>
 
   <!-- Miniguida Modal -->
-  <div id="miniguida-modal" class="legal-modal hidden">
-    <div class="legal-modal-content">
-      <span class="close-legal" onclick="Modals.closeMiniguidaModal()">&times;</span>
-      <h3 style="color: var(--accent-gold); margin-bottom: 15px;"><i class="fa-solid fa-chalkboard-user"></i> Miniguida Didattica per la LIM</h3>
-      <div style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; max-height: 60vh; overflow-y: auto; text-align: left;">
-        <p><strong>1. Preparazione dell'Aula:</strong> Proietta L'Oratore sulla LIM e dividi la classe in 2, 3 o 4 squadre.</p>
-        <p><strong>2. Scelta del Livello:</strong> Seleziona il livello scolastico adeguato (A1..C2) in modo da tarare la complessità del lessico.</p>
-        <p><strong>3. L'Oratore al Centro:</strong> Per ogni turno, l'oratore della squadra si posiziona al centro della classe. Quando è pronto, clicca "Avvia Discorso".</p>
-        <p><strong>4. La Giuria col Buzzer:</strong> Le squadre avversarie ascoltano attentamente. Se viene pronunciata una parola proibita, premono il pulsante Buzzer.</p>
-        <p><strong>5. Valutazione e Tabellone:</strong> A fine discorso, il sistema mostra il riepilogo punti e anima la pedina sul tabellone a 24 caselle!</p>
+  <div id="miniguida-modal" class="modal-overlay hidden" style="align-items: center; justify-content: center; z-index: 9999; background: rgba(15,23,42,0.8); backdrop-filter: blur(4px); position: fixed; inset: 0; padding: 20px;">
+    <div class="modal-content" style="background: white; border-radius: 24px; width: 100%; max-width: 900px; display: flex; overflow: hidden; position: relative; max-height: 90vh; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+      <div style="width: 33%; background: #f8fafc; display: flex; align-items: flex-end; justify-content: center; border-right: 2px solid #f1f5f9; padding-top: 20px;" class="hide-mobile">
+        <img src="assets/prof_memmo_full.jpg" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-full.jpg';" alt="Prof Memmo" style="width: 120%; object-fit: contain; mix-blend-mode: multiply; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));">
       </div>
-      <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="Modals.closeMiniguidaModal()">Ho Capito</button>
+      <div style="flex: 1; padding: 30px 40px; display: flex; flex-direction: column; position: relative; min-height: 450px;">
+        <button onclick="Modals.closeMiniguidaModal()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border-radius: 50%; border: none; background: #f1f5f9; color: #475569; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;"><i class="fa-solid fa-xmark"></i></button>
+        
+        <h2 id="guide-modal-title" style="font-size: 2rem; font-weight: 900; color: #d4af37; margin-bottom: 25px; text-align: center; text-transform: uppercase; border-bottom: 4px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px; display: inline-block; margin-left: auto; margin-right: auto;">Come si gioca?</h2>
+        
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.3s ease-out;">
+          <div id="guide-step-icon" style="font-size: 4.5rem; margin-bottom: 15px;">👥</div>
+          <h3 id="guide-step-title" style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">1. Forma le Squadre e Scegli la Pedina</h3>
+          <p id="guide-step-desc" style="font-size: 1.15rem; color: #475569; line-height: 1.6; font-weight: 500; max-width: 520px;"></p>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: #94a3b8;" id="guide-step-num">Passo 1 di 4</div>
+          <div style="display: flex; gap: 10px;">
+            <button id="guide-prev-btn" onclick="Modals.prevGuideStep()" style="background: #f1f5f9; color: #475569; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer;">Indietro</button>
+            <button id="guide-next-btn" onclick="Modals.nextGuideStep()" style="background: #d4af37; color: #000; border: none; padding: 10px 26px; border-radius: 12px; font-weight: 900; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Avanti ➔</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
