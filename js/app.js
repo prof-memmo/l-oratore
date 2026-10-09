@@ -320,9 +320,10 @@ const App = {
 
   goToUnifiedLogin() {
     const isPreview = window.location.pathname.includes('/preview');
+    const isCustomDomain = window.location.hostname.endsWith('profmemmo.it');
     const portalUrl = isPreview
-      ? "https://prof-memmo.github.io/prof-memmo-gestione-siti/preview/portal.html?redirect=l_oratore"
-      : "https://prof-memmo.github.io/prof-memmo-gestione-siti/portal.html?redirect=l_oratore";
+      ? (isCustomDomain ? "https://profmemmo.it/preview/portal.html?redirect=l_oratore" : "https://prof-memmo.github.io/prof-memmo-gestione-siti/preview/portal.html?redirect=l_oratore")
+      : (isCustomDomain ? "https://profmemmo.it/portal.html?redirect=l_oratore" : "https://prof-memmo.github.io/prof-memmo-gestione-siti/portal.html?redirect=l_oratore");
     window.location.href = portalUrl;
   }
 };
