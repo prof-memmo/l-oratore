@@ -59,6 +59,22 @@ window.Auth = {
         if (fbUser) {
           await this.handleFirebaseUser(fbUser);
         } else {
+          const ssoRaw = localStorage.getItem('pm_oratore_user') || localStorage.getItem('hub_user_session');
+          if (ssoRaw) {
+            try {
+              const parsed = JSON.parse(ssoRaw);
+              if (parsed && (parsed.role === 'admin' || parsed.role === 'docente' || parsed.email)) {
+                this.user = parsed;
+                this.role = parsed.role || 'docente';
+                this.plan = parsed.plan || parsed.subscription || 'docente_ecosistema';
+                this.name = parsed.name || parsed.displayName || 'Prof. Memmo';
+                this.avatar = this.getSafeAvatarUrl(parsed.avatar, this.role === 'admin');
+                this.updateUI();
+                this.routeUser();
+                return;
+              }
+            } catch(e) {}
+          }
           this.user = null;
           this.role = 'guest';
           this.plan = 'base';
