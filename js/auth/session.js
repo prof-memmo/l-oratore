@@ -151,13 +151,25 @@ window.Auth = {
   routeUser: function () {
     if (this.role === 'viandante' || this.plan === 'viandante' || this.role === 'amico') {
       console.log("Auto-routing attivo: Profilo Viandante rilevato -> Apertura diretta Modalità Party.");
-      if (window.App) window.App.showPartyViewDirect();
+      if (window.App && typeof window.App.showPartyViewDirect === 'function') {
+        window.App.showPartyViewDirect();
+      } else if (window.App && typeof window.App.showView === 'function') {
+        window.App.showView('view-welcome', false);
+      }
     } else if (this.role === 'docente' || this.role === 'admin') {
       console.log("Auto-routing attivo: Profilo Docente rilevato -> Apertura diretta Modalità Classe LIM.");
-      if (window.App) window.App.showClasseViewDirect();
+      if (window.App && typeof window.App.showClasseViewDirect === 'function') {
+        window.App.showClasseViewDirect();
+      } else if (window.App && typeof window.App.showView === 'function') {
+        window.App.showView('view-welcome', false);
+      }
     } else {
       // Default: Mostra schermata di benvenuto/selezione
-      if (window.App) window.App.showWelcomeView();
+      if (window.App && typeof window.App.showWelcomeView === 'function') {
+        window.App.showWelcomeView();
+      } else if (window.App && typeof window.App.showView === 'function') {
+        window.App.showView('view-welcome', false);
+      }
     }
   },
 
