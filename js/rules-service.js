@@ -291,12 +291,9 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
             container.innerHTML = `
                 <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 30px;">
                     <div style="border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 15px; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;">
-                            <i class="fa-solid fa-scale-balanced"></i> Regolamento Ufficiale de L'Oratore
+                        <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin: 0;">
+                            <i class="fa-solid fa-scale-balanced"></i> Regolamento
                         </h2>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
-                            Il gioco di retorica, narrazione e improvvisazione per la scuola e il gioco in famiglia.
-                        </p>
                     </div>
 
                     <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main);">
