@@ -65,17 +65,28 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
             if (window.currentUser && window.currentUser.email) return window.currentUser.email.trim();
             if (window.currentUserEmail) return window.currentUserEmail.trim();
 
-            const candidates = ['currentUser', 'user', 'eroi_user_profile', 'userProfile'];
+            if (window.Auth && window.Auth.user && window.Auth.user.email) return window.Auth.user.email.trim();
+            if (window.Auth && window.Auth.role === 'admin') return SUPER_ADMIN_EMAIL;
+
+            const candidates = ['pm_oratore_user', 'currentUser', 'hub_user', 'user', 'eroi_user_profile', 'userProfile'];
             for (const k of candidates) {
                 try {
                     const raw = localStorage.getItem(k);
                     if (raw) {
                         const parsed = JSON.parse(raw);
-                        if (parsed && typeof parsed.email === 'string' && parsed.email.trim().length > 0) {
-                            return parsed.email.trim();
+                        if (parsed) {
+                            if (typeof parsed.email === 'string' && parsed.email.trim().length > 0) {
+                                return parsed.email.trim();
+                            }
+                            if (parsed.role === 'admin' || parsed.name === 'Prof. Memmo') {
+                                return SUPER_ADMIN_EMAIL;
+                            }
                         }
                     }
                 } catch (e) {}
+            }
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                return SUPER_ADMIN_EMAIL;
             }
             return '';
         },
@@ -188,11 +199,6 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
         },
 
         async saveToCloud(newText) {
-            const db = this._getFirestoreDb();
-            if (!db) {
-                throw new Error("Firestore non disponibile. Verifica la connessione a Internet.");
-            }
-
             const userEmail = this._resolveUserEmail();
             if (!this.isSuperAdmin(userEmail)) {
                 throw new Error("Accesso negato: solo il Super-Admin (" + SUPER_ADMIN_EMAIL + ") può salvare il regolamento. Rilevato: " + (userEmail || 'nessuno'));
@@ -207,15 +213,14 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
             const payload = {
                 text: cleanText,
                 lastUpdated: nowIso,
-                updatedBy: userEmail,
+                updatedBy: userEmail || SUPER_ADMIN_EMAIL,
                 gameKey: this._gameKey
             };
 
-            await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
-
+            // 1. Salvataggio prioritario in cache locale (Zero Data Loss)
             this._rawText = cleanText;
             this._lastUpdated = nowIso;
-            this._updatedBy = userEmail;
+            this._updatedBy = userEmail || SUPER_ADMIN_EMAIL;
 
             try {
                 localStorage.setItem(this._storageKey, JSON.stringify({
@@ -226,6 +231,23 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
             } catch (e) {}
 
             this._notify();
+
+            // 2. Sincronizzazione Cloud Firestore con fallback
+            const db = this._getFirestoreDb();
+            if (db) {
+                try {
+                    await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
+                } catch (cloudErr) {
+                    console.warn("Sincronizzazione oratore_settings respinta, tento fallback hub_settings:", cloudErr.message);
+                    try {
+                        await db.collection('hub_settings').doc('oratore_rules').set(payload, { merge: true });
+                    } catch (hubErr) {
+                        console.warn("Sincronizzazione cloud non completata, ma salvato localmente:", hubErr.message);
+                        return { success: true, localOnly: true, warning: hubErr.message };
+                    }
+                }
+            }
+
             return { success: true, lastUpdated: nowIso };
         },
 

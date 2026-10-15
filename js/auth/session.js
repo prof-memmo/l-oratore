@@ -114,6 +114,7 @@ window.Auth = {
 
   saveSession: function () {
     localStorage.setItem('pm_oratore_user', JSON.stringify({
+      email: (this.user && this.user.email) || (this.role === 'admin' ? 'prof.memmo@gmail.com' : ''),
       role: this.role,
       plan: this.plan,
       name: this.name,

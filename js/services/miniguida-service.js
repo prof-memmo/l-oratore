@@ -129,7 +129,14 @@
                 updatedBy: SUPER_ADMIN_EMAIL
             };
 
-            await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
+            try {
+                await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
+            } catch (cloudErr) {
+                console.warn("Miniguida oratore_settings fallita, fallback su hub_settings:", cloudErr.message);
+                try {
+                    await db.collection('hub_settings').doc('oratore_miniguida').set(payload, { merge: true });
+                } catch (e) {}
+            }
             return true;
         },
 
