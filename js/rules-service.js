@@ -15,8 +15,8 @@
 
     const SUPER_ADMIN_EMAIL = 'prof.memmo@gmail.com';
 
-    const DEFAULT_ORATORE_RULES_TEXT = `1. Obiettivo del Gioco
-Lo scopo di ogni squadra è portare la propria pedina per prima al Traguardo (Casella 24), sostenendo discorsi oratori da 2 minuti su incipit narrativi estratti casualmente.
+    const DEFAULT_ORATORE_RULES_TEXT = `1. Scopo del Gioco e Accesso Centralizzato
+L'accesso, la gestione del proprio account, dei piani e delle classi avvengono esclusivamente tramite il Profilo del docente sul portale principale https://prof-memmo.github.io/games/ che genera un codice univoco da condividere con gli studenti. Lo scopo di ogni squadra è portare la propria pedina per prima al Traguardo (Casella 24), sostenendo discorsi oratori da 2 minuti su incipit narrativi estratti casualmente.
 
 2. I 6 Livelli di Difficoltà (QCER)
 Nel setup iniziale si seleziona il livello calibrato sul gruppo: da A1 (Narratore in Erba) fino a C2 (Sommo Accademico / Debate).
@@ -35,11 +35,11 @@ Parole da Usare: L'oratore deve inserire nel discorso i 5 vocaboli chiave in mod
 • Casella 21 (✖️2 Super Raddoppio): I passi ottenuti con il discorso del turno successivo varranno doppio per la volata finale.
 • Casella 24 (🏆 Traguardo Finale): Conquista il tabellone e proclama la vittoria finale della partita!
 
-6. Benessere degli Studenti e Pausa Digitale
-A tutela del benessere cognitivo ed emotivo, dopo 45 minuti di attività oratoria è prevista una pausa di distensione per consentire la riflessione e il confronto costruttivo tra pari.
+6. Benessere Digitale e Gestione delle Pause
+In linea con le linee guida pedagogiche di Prof. Memmo, l'attività didattica prevede sessioni attive di massimo 45 minuti, seguite obbligatoriamente da almeno 15 minuti di pausa o debriefing non mediato da schermi, garantendo un equilibrio sostenibile tra gioco digitale e confronto in presenza.
 
-7. Codice Etico e Spirito della Retorica
-Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento educativo e nel rispetto reciproco, valorizzando l'ascolto attivo, l'empatia e l'inclusione.`;
+7. Codice Deontologico e Spirito della Retorica
+I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla valorizzazione del confronto oratorio costruttivo. Gli studenti identificati tramite il codice classe operano nel pieno rispetto della privacy scolastica e delle regole della comunità educativa.`;
 
     const RulesService = {
         _gameKey: 'oratore',
@@ -57,10 +57,38 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             return DEFAULT_ORATORE_RULES_TEXT.trim();
         },
 
+        _resolveUserEmail(explicitEmail) {
+            if (explicitEmail && explicitEmail.trim().length > 0) return explicitEmail.trim();
+            const fbUser = (window.fbAuth && window.fbAuth.currentUser) ||
+                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
+            if (fbUser && fbUser.email && fbUser.email.trim().length > 0) return fbUser.email.trim();
+            if (window.currentUser && window.currentUser.email) return window.currentUser.email.trim();
+            if (window.currentUserEmail) return window.currentUserEmail.trim();
+
+            const candidates = ['currentUser', 'user', 'eroi_user_profile', 'userProfile'];
+            for (const k of candidates) {
+                try {
+                    const raw = localStorage.getItem(k);
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (parsed && typeof parsed.email === 'string' && parsed.email.trim().length > 0) {
+                            return parsed.email.trim();
+                        }
+                    }
+                } catch (e) {}
+            }
+            return '';
+        },
+
+        _getFirestoreDb() {
+            if (window.fbDb) return window.fbDb;
+            if (window.firebase && window.firebase.firestore) return window.firebase.firestore();
+            if (window.db) return window.db;
+            return null;
+        },
+
         isSuperAdmin(email) {
-            const fbUserEmail = (window.fbAuth && window.fbAuth.currentUser && window.fbAuth.currentUser.email) ||
-                                (window.firebase && window.firebase.auth && window.firebase.auth().currentUser && window.firebase.auth().currentUser.email);
-            const userEmail = (email || fbUserEmail || (window.currentUser && window.currentUser.email) || window.currentUserEmail || '').toLowerCase();
+            const userEmail = this._resolveUserEmail(email).toLowerCase();
             return userEmail === SUPER_ADMIN_EMAIL.toLowerCase();
         },
 
@@ -114,12 +142,22 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             if (this._isInitialized) return;
             this._isInitialized = true;
 
-            const db = window.fbDb || (window.firebase && window.firebase.firestore ? window.firebase.firestore() : null);
+            const db = this._getFirestoreDb();
             if (!db) {
-                console.info("Firestore non ancora disponibile per Oratore. Uso cache locale.");
+                console.info("Firestore non ancora pronto per Oratore. Attendo o uso cache locale.");
+                setTimeout(() => {
+                    const retryDb = this._getFirestoreDb();
+                    if (retryDb && !this._unsubscribeFirestore) {
+                        this._setupFirestoreListener(retryDb);
+                    }
+                }, 1000);
                 return;
             }
 
+            this._setupFirestoreListener(db);
+        },
+
+        _setupFirestoreListener(db) {
             try {
                 this._unsubscribeFirestore = db.collection(this._collectionName).doc(this._docId)
                     .onSnapshot(docSnap => {
@@ -150,17 +188,14 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
         },
 
         async saveToCloud(newText) {
-            const db = window.fbDb || (window.firebase && window.firebase.firestore ? window.firebase.firestore() : null);
+            const db = this._getFirestoreDb();
             if (!db) {
                 throw new Error("Firestore non disponibile. Verifica la connessione a Internet.");
             }
 
-            const fbUser = (window.fbAuth && window.fbAuth.currentUser) ||
-                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
-            const userEmail = (fbUser && fbUser.email ? fbUser.email : (window.currentUserEmail || '')).toLowerCase();
-
+            const userEmail = this._resolveUserEmail();
             if (!this.isSuperAdmin(userEmail)) {
-                throw new Error("Accesso negato: solo il Super-Admin (" + SUPER_ADMIN_EMAIL + ") può salvare il regolamento.");
+                throw new Error("Accesso negato: solo il Super-Admin (" + SUPER_ADMIN_EMAIL + ") può salvare il regolamento. Rilevato: " + (userEmail || 'nessuno'));
             }
 
             const cleanText = (newText || '').trim();
@@ -294,10 +329,8 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             if (!container) return;
 
             const text = this.getRawText();
-            const fbUser = (window.fbAuth && window.fbAuth.currentUser) || 
-                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
-            const userEmail = fbUser ? (fbUser.email || '') : (window.currentUserEmail || '');
-            const isAuthAdmin = userEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+            const userEmail = this._resolveUserEmail();
+            const isAuthAdmin = this.isSuperAdmin(userEmail);
 
             container.innerHTML = `
                 <div class="glass-card" style="border: 2px solid #d4af37; border-radius: 16px; padding: 25px; margin-top: 25px;">
