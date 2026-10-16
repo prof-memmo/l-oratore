@@ -549,21 +549,21 @@
        BOTTOM DOCK NAVIGATION BAR
        ========================================== -->
   <nav class="bottom-bar">
-    <a href="#" class="tab-item active" data-view="view-welcome" onclick="App.showView('view-welcome'); return false;">
+    <a href="#" class="tab-item active" data-view="view-welcome" onclick="App.showView('view-welcome'); return false;" data-tooltip="Home">
       <i class="fa-solid fa-house"></i>
       <span>Home</span>
     </a>
-    <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;">
-      <i class="fa-solid fa-scale-balanced"></i>
-      <span>Regole</span>
-    </a>
-    <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;">
+    <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;" data-tooltip="Miniguida">
       <i class="fa-solid fa-circle-question"></i>
       <span>Miniguida</span>
     </a>
-    <a href="admin.html" class="tab-item" id="nav-tab-admin" target="_self">
+    <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;" data-tooltip="Regolamento">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <span>Regolamento</span>
+    </a>
+    <a href="admin.html" class="tab-item" id="nav-tab-admin" target="_self" data-tooltip="Admin">
       <i class="fa-solid fa-lock"></i>
-      <span>Pannello Admin</span>
+      <span>Admin</span>
     </a>
   </nav>
 
