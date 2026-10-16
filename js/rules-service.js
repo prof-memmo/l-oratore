@@ -118,6 +118,10 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
 
         _notify() {
             const text = this.getRawText();
+            const pubContainer = document.getElementById('view-regolamento-container');
+            if (pubContainer) {
+                this.renderPublicView(pubContainer);
+            }
             this._listeners.forEach(cb => {
                 try {
                     cb(text);
@@ -128,7 +132,6 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
         },
 
         async init() {
-            // 1. Caricamento istantaneo da cache locale o default (Zero-flicker)
             try {
                 const cached = localStorage.getItem(this._storageKey);
                 if (cached) {
@@ -149,13 +152,11 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
 
             this._notify();
 
-            // 2. Setup listener Firestore Realtime
             if (this._isInitialized) return;
             this._isInitialized = true;
 
             const db = this._getFirestoreDb();
             if (!db) {
-                console.info("Firestore non ancora pronto per Oratore. Attendo o uso cache locale.");
                 setTimeout(() => {
                     const retryDb = this._getFirestoreDb();
                     if (retryDb && !this._unsubscribeFirestore) {
@@ -175,6 +176,22 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
                         if (docSnap.exists) {
                             const data = docSnap.data();
                             if (data && data.text) {
+                                const localTime = this._lastUpdated ? new Date(this._lastUpdated).getTime() : 0;
+                                const cloudTime = data.lastUpdated ? new Date(data.lastUpdated).getTime() : 0;
+
+                                if (cloudTime && localTime && cloudTime < localTime && this._rawText && this._rawText.trim().length > 0) {
+                                    console.info("L'Oratore: modifica locale più recente del cloud, mantengo versione locale.");
+                                    try {
+                                        db.collection(this._collectionName).doc(this._docId).set({
+                                            text: this._rawText,
+                                            lastUpdated: this._lastUpdated,
+                                            updatedBy: this._updatedBy || SUPER_ADMIN_EMAIL,
+                                            gameKey: this._gameKey
+                                        }, { merge: true });
+                                    } catch(e) {}
+                                    return;
+                                }
+
                                 this._rawText = data.text;
                                 this._lastUpdated = data.lastUpdated || null;
                                 this._updatedBy = data.updatedBy || '';
