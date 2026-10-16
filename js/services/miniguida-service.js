@@ -11,28 +11,33 @@
     const SUPER_ADMIN_EMAIL = 'prof.memmo@gmail.com';
 
     const DEFAULT_MINIGUIDA = {
-        title: "Come si gioca?",
+        title: "Miniguida",
         themeColor: "#d4af37",
         steps: [
             {
-                icon: "👥",
-                title: "Forma le Squadre e Scegli la Pedina",
-                text: "Dividetevi in 2, 3 o 4 squadre e scegliete il personaggio. A ogni turno, la squadra attiva nomina il proprio <strong>Oratore</strong>, mentre gli avversari compongono la <strong>Giuria</strong>."
+                icon: "🎯",
+                title: "",
+                text: "Lo scopo del gioco è sfidarsi nell'arte della retorica e del dibattito a squadre, esponendo le proprie argomentazioni senza mai pronunciare le parole vietate."
             },
             {
-                icon: "🎯",
-                title: "Scegli la Sfida di Narrazione",
-                text: "<strong>Parole Proibite o da Usare:</strong> L'oratore ha 2 minuti per parlare evitando le 5 parole vietate o inserendo i vocaboli chiave richiesti."
+                icon: "⏱️",
+                title: "",
+                text: "Si gioca a turni: una squadra pronuncia il proprio discorso a tempo cercando di convincere la giuria, mentre gli avversari controllano pronti a premere il buzzer in caso di parola vietata."
+            },
+            {
+                icon: "🏠",
+                title: "",
+                text: "Nella <strong>Home</strong> puoi impostare la partita scegliendo le squadre, i colori delle pedine e la modalità di gara."
             },
             {
                 icon: "🎲",
-                title: "Avanzamento sul Tabellone",
-                text: "Meno errori commetti, più caselle avanzi sul tabellone! Attento alle caselle speciali come la <em>Canna da Pesca</em> o la <em>Mossa del Cavallo</em>."
+                title: "",
+                text: "Durante la sfida, segui il tabellone per scandire i turni di parola, rispettare il timer e pronunciare la tua orazione."
             },
             {
-                icon: "🏆",
-                title: "Traguardo Finale e Vittoria",
-                text: "La prima squadra che raggiunge la casella 24 taglia il <strong>Traguardo</strong> e conquista il titolo di <em>Miglior Oratore dell'Anno</em>!"
+                icon: "🔔",
+                title: "",
+                text: "Clicca sul pulsante del buzzer se chi parla pronuncia una parola vietata, e passa alla votazione della giuria al termine del turno.<br><br><em>Consulta il regolamento per saperne di più.</em>"
             }
         ]
     };
@@ -190,9 +195,9 @@
             const prevBtn = document.getElementById('guide-prev-btn');
             const nextBtn = document.getElementById('guide-next-btn');
 
-            if (titleEl) titleEl.innerText = data.title || "Come si gioca?";
+            if (titleEl) titleEl.innerText = data.title || "Miniguida";
             if (iconEl) iconEl.innerHTML = current.icon || "👥";
-            if (stepTitleEl) stepTitleEl.innerHTML = current.title ? `${this._currentStep + 1}. ${current.title}` : `Passo ${this._currentStep + 1}`;
+            if (stepTitleEl) stepTitleEl.style.display = 'none';
             if (descEl) descEl.innerHTML = current.text || "";
             if (numEl) numEl.innerText = `Passo ${this._currentStep + 1} di ${total}`;
             if (prevBtn) prevBtn.disabled = this._currentStep === 0;
