@@ -268,6 +268,26 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
             return { success: true, lastUpdated: nowIso };
         },
 
+        _formatLinks(str, linkColor = '#d4af37') {
+            if (!str || typeof str !== 'string') return '';
+            // 1. Markdown link: [Label](https://url)
+            let res = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, (m, label, url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: ${linkColor}; text-decoration: underline; font-weight: 700; word-break: break-all;">${label} <span style="font-size: 0.8em; margin-left: 2px;">↗</span></a>`;
+            });
+            // 2. Plain URL: https://...
+            res = res.replace(/(^|[\s(>])(https?:\/\/[^\s<]+)/g, (m, prefix, url) => {
+                let cleanUrl = url;
+                let trailing = '';
+                const trailMatch = url.match(/([.,;:!?)]+)$/);
+                if (trailMatch) {
+                    trailing = trailMatch[1];
+                    cleanUrl = url.substring(0, url.length - trailing.length);
+                }
+                return `${prefix}<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" style="color: ${linkColor}; text-decoration: underline; font-weight: 700; word-break: break-all;">${cleanUrl} <span style="font-size: 0.8em; margin-left: 2px;">↗</span></a>${trailing}`;
+            });
+            return res;
+        },
+
         // Parsing automatico in sezioni
         parseTextToItems(text) {
             const src = (text || this.getRawText()).trim();
@@ -284,8 +304,10 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
                 let title = '';
                 let content = '';
 
-                const matchNumbered = firstLine.match(/^(\d+[\.\)]\s*)(.*)$/);
+                let detectedNumber = null;
+                const matchNumbered = firstLine.match(/^(\d+)[\.\)]\s*(.*)$/);
                 if (matchNumbered) {
+                    detectedNumber = parseInt(matchNumbered[1], 10);
                     firstLine = matchNumbered[2].trim();
                 }
 
@@ -307,7 +329,7 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
                 }
 
                 items.push({
-                    index: index + 1,
+                    index: detectedNumber !== null ? detectedNumber : index + 1,
                     title: title,
                     text: content || title,
                     fullText: block
@@ -345,9 +367,16 @@ I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla v
                                     ${item.text.split('\n').map(l => {
                                         const trimmed = l.trim();
                                         if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
-                                            return `<div style="padding-left: 12px; margin-bottom: 4px;">${trimmed}</div>`;
+                                            const clean = trimmed.replace(/^[•\-]\s*/, '');
+                                            const colonIdx = clean.indexOf(':');
+                                            if (colonIdx !== -1) {
+                                                const label = clean.substring(0, colonIdx).trim();
+                                                const val = clean.substring(colonIdx + 1).trim();
+                                                return `<div style="padding-left: 12px; margin-bottom: 4px;"><strong style="color: var(--accent-gold);">${label}:</strong> ${this._formatLinks(val, '#d4af37')}</div>`;
+                                            }
+                                            return `<div style="padding-left: 12px; margin-bottom: 4px;">• ${this._formatLinks(clean, '#d4af37')}</div>`;
                                         }
-                                        return `<p style="margin: 0 0 8px 0;">${trimmed}</p>`;
+                                        return `<p style="margin: 0 0 8px 0;">${this._formatLinks(trimmed, '#d4af37')}</p>`;
                                     }).join('')}
                                 </div>
                             </div>
