@@ -387,6 +387,11 @@ a:hover {
   color: #f1c40f;
 }
 
+#btn-login-hub-dropdown:hover {
+  background: var(--accent-gold-hover) !important;
+  color: #0f172a !important;
+}
+
 .dropdown-split-row {
   display: flex;
   gap: 8px;
