@@ -51,9 +51,55 @@
             <img id="header-user-avatar" src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png" alt="Avatar" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-avatar.png'">
           </div>
           <div class="user-trigger-text">
-            <span class="user-trigger-name" id="header-user-name">PROF. MEMMO</span>
-            <span class="user-trigger-role" id="header-user-role">AMMINISTRATORE</span>
+            <span class="user-trigger-name" id="header-user-name">ACCEDI</span>
+            <span class="user-trigger-role" id="header-user-role">OSPITE</span>
           </div>
+          <script>
+            (function() {
+              try {
+                var raw = localStorage.getItem('pm_oratore_user');
+                if (raw) {
+                  var parsed = JSON.parse(raw);
+                  if (parsed && (parsed.name || parsed.email)) {
+                    var isAdm = (parsed.role === 'admin' || (parsed.email && parsed.email.toLowerCase() === 'prof.memmo@gmail.com'));
+                    var nm = isAdm ? 'PROF. MEMMO' : (parsed.name || parsed.email.split('@')[0]).toUpperCase();
+                    var rl = isAdm ? 'AMMINISTRATORE' : (parsed.role === 'teacher' || parsed.role === 'docente' ? 'DOCENTE' : 'STUDENTE');
+                    var elN = document.getElementById('header-user-name');
+                    if (elN) elN.textContent = nm;
+                    var elT = document.getElementById('dropdown-user-name');
+                    if (elT) elT.textContent = nm;
+                    var elR = document.getElementById('header-user-role');
+                    if (elR) elR.textContent = rl;
+                    var elSub = document.getElementById('dropdown-user-role-sub');
+                    if (elSub) elSub.textContent = rl;
+                    if (parsed.avatar) {
+                      var elA = document.getElementById('header-user-avatar');
+                      if (elA) elA.src = parsed.avatar;
+                    }
+                  }
+                } else {
+                  var ssoName = localStorage.getItem('hub_user_name') || localStorage.getItem('fanta_user_name') || localStorage.getItem('loratore_user_name');
+                  var ssoAvatar = localStorage.getItem('hub_user_avatar') || localStorage.getItem('fanta_user_avatar');
+                  var ssoRole = localStorage.getItem('hub_user_role') || 'docente';
+                  if (ssoName) {
+                    var roleLabel = (ssoRole === 'docente' || ssoRole === 'admin') ? 'AMMINISTRATORE' : 'STUDENTE';
+                    var elN = document.getElementById('header-user-name');
+                    if (elN) elN.textContent = ssoName.toUpperCase();
+                    var elT = document.getElementById('dropdown-user-name');
+                    if (elT) elT.textContent = ssoName.toUpperCase();
+                    var elR = document.getElementById('header-user-role');
+                    if (elR) elR.textContent = roleLabel;
+                    var elSub = document.getElementById('dropdown-user-role-sub');
+                    if (elSub) elSub.textContent = roleLabel;
+                  }
+                  if (ssoAvatar) {
+                    var elA = document.getElementById('header-user-avatar');
+                    if (elA) elA.src = ssoAvatar;
+                  }
+                }
+              } catch(e) {}
+            })();
+          </script>
           <span class="user-trigger-chevron"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
 
@@ -61,8 +107,8 @@
         <div class="user-dropdown hidden" id="user-dropdown">
           
           <div class="dropdown-user-header">
-            <div class="dropdown-user-title" id="dropdown-user-name">PROF. MEMMO</div>
-            <div class="dropdown-user-subtitle" id="dropdown-user-role-sub">AMMINISTRATORE</div>
+            <div class="dropdown-user-title" id="dropdown-user-name">ACCESSO DOCENTE</div>
+            <div class="dropdown-user-subtitle" id="dropdown-user-role-sub">ECOSISTEMA PROF. MEMMO</div>
           </div>
 
           <!-- Sottofondo Music Player Widget -->
