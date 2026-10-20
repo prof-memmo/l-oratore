@@ -16,27 +16,32 @@
         steps: [
             {
                 icon: "🎯",
-                title: "",
+                title: "Scopo del Gioco",
                 text: "Lo scopo del gioco è sfidarsi nell'arte della retorica e del dibattito a squadre, esponendo le proprie argomentazioni senza mai pronunciare le parole vietate."
             },
             {
+                icon: "🔑",
+                title: "Accesso al Gioco",
+                text: "<strong>Accesso rapido:</strong> effettua il login con il tuo account Docente (o Viandante) per sbloccare tutte le funzionalità.<br><br><strong>Nessuna classe da creare:</strong> per questo gioco non servono codici né account per gli studenti; si gioca subito a squadre direttamente alla LIM o su dispositivo condiviso!"
+            },
+            {
                 icon: "⏱️",
-                title: "",
+                title: "Come si Gioca",
                 text: "Si gioca a turni: una squadra pronuncia il proprio discorso a tempo cercando di convincere la giuria, mentre gli avversari controllano pronti a premere il buzzer in caso di parola vietata."
             },
             {
                 icon: "🏠",
-                title: "",
+                title: "Home",
                 text: "Nella <strong>Home</strong> puoi impostare la partita scegliendo le squadre, i colori delle pedine e la modalità di gara."
             },
             {
                 icon: "🎲",
-                title: "",
+                title: "Sfida e Tabellone",
                 text: "Durante la sfida, segui il tabellone per scandire i turni di parola, rispettare il timer e pronunciare la tua orazione."
             },
             {
                 icon: "🔔",
-                title: "",
+                title: "Buzzer e Verdetto",
                 text: "Clicca sul pulsante del buzzer se chi parla pronuncia una parola vietata, e passa alla votazione della giuria al termine del turno.<br><br><em>Consulta il regolamento per saperne di più.</em>"
             }
         ]
@@ -56,8 +61,22 @@
             return JSON.parse(JSON.stringify(DEFAULT_MINIGUIDA));
         },
 
+        ensureAccessStep(data) {
+            if (!data || !Array.isArray(data.steps)) return data;
+            const hasAccess = data.steps.some(s => 
+                (s.title && s.title.toLowerCase().includes('accesso')) ||
+                (s.text && s.text.toLowerCase().includes('accesso'))
+            );
+            if (!hasAccess && data.steps.length > 0) {
+                const accessStep = JSON.parse(JSON.stringify(DEFAULT_MINIGUIDA.steps[1]));
+                data.steps.splice(1, 0, accessStep);
+            }
+            return data;
+        },
+
         getData() {
-            return this._data || this.getDefaultData();
+            const raw = this._data || this.getDefaultData();
+            return this.ensureAccessStep(raw);
         },
 
         subscribe(callback) {
@@ -267,7 +286,7 @@
                             <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">Anteprima Live (Come appare sulla LIM):</label>
                             <div style="background: white; border-radius: 20px; padding: 20px; color: #1e293b; display: flex; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-height: 420px; position: relative;">
                                 <div style="width: 35%; background: #f8fafc; display: flex; align-items: flex-end; justify-content: center; border-right: 1.5px solid #f1f5f9; padding-top: 15px;">
-                                    <img src="assets/prof_memmo_full.jpg" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-full.jpg';" alt="Prof Memmo" style="width: 120%; object-fit: contain; mix-blend-mode: multiply;">
+                                    <img src="assets/prof_memmo_full.png" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-full.png';" alt="Prof Memmo" style="width: 120%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));">
                                 </div>
                                 <div style="flex: 1; padding: 15px 20px; display: flex; flex-direction: column; justify-content: space-between;">
                                     <div>
