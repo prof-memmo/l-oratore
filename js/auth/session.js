@@ -58,7 +58,7 @@ window.Auth = {
       window.fbAuth.onAuthStateChanged(async (fbUser) => {
         if (fbUser) {
           await this.handleFirebaseUser(fbUser);
-        } else {
+        } else if (!this.user || this.role === 'guest' || !localStorage.getItem('pm_oratore_user')) {
           this.user = null;
           this.role = 'guest';
           this.plan = 'base';
