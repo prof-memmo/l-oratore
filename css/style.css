@@ -246,6 +246,21 @@ a:hover {
   flex-direction: column;
   gap: 14px;
   z-index: 1001;
+  max-height: calc(100vh - 85px);
+  overflow-y: auto;
+}
+
+.badge-notif-pill {
+  background: #e63946;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-dropdown.hidden {
