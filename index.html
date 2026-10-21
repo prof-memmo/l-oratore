@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
     <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=3">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=4">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>L'Oratore - L'Arte del Racconto e della Retorica</title>
@@ -21,7 +21,13 @@
   
   <!-- Configurazione Hub & Protezione Abbonamenti -->
   <script>window.HUB_GAME_ID = "l-oratore";</script>
-  <script src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/hub-subscription-guard.js?v=20260909_oratore"></script>
+  <script>
+    (function() {
+      var isPrev = window.location.pathname.indexOf('/preview') !== -1;
+      var cdnBase = isPrev ? 'https://prof-memmo.github.io/prof-memmo-gestione-siti/preview/shared/' : 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/';
+      document.write('<script src="' + cdnBase + 'hub-subscription-guard.js?v=20261020_oratore_guard"><\/script>');
+    })();
+  </script>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -51,9 +57,55 @@
             <img id="header-user-avatar" src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/avatars/6.png" alt="Avatar" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-avatar.png'">
           </div>
           <div class="user-trigger-text">
-            <span class="user-trigger-name" id="header-user-name">PROF. MEMMO</span>
-            <span class="user-trigger-role" id="header-user-role">AMMINISTRATORE</span>
+            <span class="user-trigger-name" id="header-user-name">ACCEDI</span>
+            <span class="user-trigger-role" id="header-user-role">OSPITE</span>
           </div>
+          <script>
+            (function() {
+              try {
+                var raw = localStorage.getItem('pm_oratore_user');
+                if (raw) {
+                  var parsed = JSON.parse(raw);
+                  if (parsed && (parsed.name || parsed.email)) {
+                    var isAdm = (parsed.role === 'admin' || (parsed.email && parsed.email.toLowerCase() === 'prof.memmo@gmail.com'));
+                    var nm = isAdm ? 'PROF. MEMMO' : (parsed.name || parsed.email.split('@')[0]).toUpperCase();
+                    var rl = isAdm ? 'AMMINISTRATORE' : (parsed.role === 'teacher' || parsed.role === 'docente' ? 'DOCENTE' : 'STUDENTE');
+                    var elN = document.getElementById('header-user-name');
+                    if (elN) elN.textContent = nm;
+                    var elT = document.getElementById('dropdown-user-name');
+                    if (elT) elT.textContent = nm;
+                    var elR = document.getElementById('header-user-role');
+                    if (elR) elR.textContent = rl;
+                    var elSub = document.getElementById('dropdown-user-role-sub');
+                    if (elSub) elSub.textContent = rl;
+                    if (parsed.avatar) {
+                      var elA = document.getElementById('header-user-avatar');
+                      if (elA) elA.src = parsed.avatar;
+                    }
+                  }
+                } else {
+                  var ssoName = localStorage.getItem('hub_user_name') || localStorage.getItem('fanta_user_name') || localStorage.getItem('loratore_user_name');
+                  var ssoAvatar = localStorage.getItem('hub_user_avatar') || localStorage.getItem('fanta_user_avatar');
+                  var ssoRole = localStorage.getItem('hub_user_role') || 'docente';
+                  if (ssoName) {
+                    var roleLabel = (ssoRole === 'docente' || ssoRole === 'admin') ? 'AMMINISTRATORE' : 'STUDENTE';
+                    var elN = document.getElementById('header-user-name');
+                    if (elN) elN.textContent = ssoName.toUpperCase();
+                    var elT = document.getElementById('dropdown-user-name');
+                    if (elT) elT.textContent = ssoName.toUpperCase();
+                    var elR = document.getElementById('header-user-role');
+                    if (elR) elR.textContent = roleLabel;
+                    var elSub = document.getElementById('dropdown-user-role-sub');
+                    if (elSub) elSub.textContent = roleLabel;
+                  }
+                  if (ssoAvatar) {
+                    var elA = document.getElementById('header-user-avatar');
+                    if (elA) elA.src = ssoAvatar;
+                  }
+                }
+              } catch(e) {}
+            })();
+          </script>
           <span class="user-trigger-chevron"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
 
@@ -61,8 +113,8 @@
         <div class="user-dropdown hidden" id="user-dropdown">
           
           <div class="dropdown-user-header">
-            <div class="dropdown-user-title" id="dropdown-user-name">PROF. MEMMO</div>
-            <div class="dropdown-user-subtitle" id="dropdown-user-role-sub">AMMINISTRATORE</div>
+            <div class="dropdown-user-title" id="dropdown-user-name">ACCESSO DOCENTE</div>
+            <div class="dropdown-user-subtitle" id="dropdown-user-role-sub">ECOSISTEMA PROF. MEMMO</div>
           </div>
 
           <!-- Sottofondo Music Player Widget -->
@@ -82,7 +134,7 @@
           </div>
 
           <!-- Golden Pill Action Buttons -->
-          <button class="dropdown-pill-btn" id="btn-login-hub-dropdown" style="background: linear-gradient(135deg, var(--accent-gold) 0%, #b48c08 100%); color: #0a0e1a; font-weight: 800; display: none;" onclick="App.goToUnifiedLogin()">
+          <button class="dropdown-pill-btn" id="btn-login-hub-dropdown" style="background: var(--accent-gold); color: #0f172a; font-weight: 800; display: none;" onclick="App.goToUnifiedLogin()">
             <i class="fa-solid fa-right-to-bracket"></i> Accedi tramite Hub
           </button>
 
@@ -94,17 +146,8 @@
             <i class="fa-solid fa-paper-plane"></i> Invita un Collega
           </button>
 
-          <div class="dropdown-split-row">
-            <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('privacy'); else if(window.Modals) Modals.openLegalModal('privacy');">
-              <i class="fa-solid fa-shield"></i> Privacy
-            </button>
-            <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('termini'); else if(window.Modals) Modals.openLegalModal('termini');">
-              <i class="fa-solid fa-scroll"></i> Termini
-            </button>
-          </div>
-
-          <button class="dropdown-pill-btn" onclick="if(window.openSharedModal) window.openSharedModal('contatti'); else if(window.Modals) Modals.openLegalModal('contatti');">
-            <i class="fa-solid fa-envelope"></i> Contatti
+          <button class="dropdown-pill-btn" id="btn-notifiche-dropdown" onclick="if(window.openSharedModal) window.openSharedModal('notifiche');">
+            <i class="fa-solid fa-bell"></i> Notifiche <span id="dropdown-notif-badge" class="badge-notif-pill" style="display:none;">0</span>
           </button>
 
           <div class="dropdown-bottom-row">
@@ -150,10 +193,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy" id="footer-copyright-text">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy" id="footer-copyright-text">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -190,10 +241,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -212,10 +271,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -256,10 +323,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -281,10 +356,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -299,10 +382,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -386,10 +477,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -400,10 +499,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -441,10 +548,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -487,10 +602,18 @@
       </div>
 
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -499,8 +622,7 @@
       <div id="view-regolamento-container">
         <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 30px;">
           <div style="border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 15px; margin-bottom: 20px;">
-            <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;"><i class="fa-solid fa-scale-balanced"></i> Regolamento Ufficiale de L'Oratore</h2>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Il gioco di retorica, narrazione e improvvisazione per la scuola e il gioco in famiglia.</p>
+            <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin: 0;"><i class="fa-solid fa-scale-balanced"></i> Regolamento</h2>
           </div>
 
           <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main);">
@@ -537,10 +659,18 @@
 
       <!-- Standard View Footer Copyright (identico alla home) -->
       <footer class="view-footer-copyright">
-        <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge">
-        <p class="footer-copy">
-          &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
-        </p>
+        <div class="footer-legal-links">
+          <a href="javascript:void(0)" onclick="openSharedModal('privacy')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('termini')">Termini e Condizioni</a>
+          <a href="javascript:void(0)" onclick="openSharedModal('contatti')">Contatti</a>
+          <a href="https://prof-memmo.github.io/games/condividi-esperienza.html" target="_blank" rel="noopener noreferrer">Condividi Esperienza</a>
+        </div>
+        <div class="footer-badge-text-row">
+          <img src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/legal/patamu-badge.png" alt="Patamu" class="patamu-footer-badge" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+          <p class="footer-copy">
+            &copy; 2026 Guglielmo Piersanti. Tutti i contenuti presenti su questo sito sono di proprietà dell'autore e sono protetti tramite deposito e marcatura temporale presso Patamu. I contenuti sono inoltre distribuiti con licenza Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+          </p>
+        </div>
       </footer>
     </section>
 
@@ -550,21 +680,21 @@
        BOTTOM DOCK NAVIGATION BAR
        ========================================== -->
   <nav class="bottom-bar">
-    <a href="#" class="tab-item active" data-view="view-welcome" onclick="App.showView('view-welcome'); return false;">
+    <a href="#" class="tab-item active" data-view="view-welcome" onclick="App.showView('view-welcome'); return false;" data-tooltip="Home">
       <i class="fa-solid fa-house"></i>
       <span>Home</span>
     </a>
-    <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;">
-      <i class="fa-solid fa-scale-balanced"></i>
-      <span>Regole</span>
-    </a>
-    <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;">
+    <a href="#" class="tab-item" onclick="Modals.openMiniguidaModal(); return false;" data-tooltip="Miniguida">
       <i class="fa-solid fa-circle-question"></i>
       <span>Miniguida</span>
     </a>
-    <a href="admin.html" class="tab-item" id="nav-tab-admin" target="_self">
+    <a href="#" class="tab-item" data-view="view-regolamento" onclick="App.showView('view-regolamento'); return false;" data-tooltip="Regolamento">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <span>Regolamento</span>
+    </a>
+    <a href="admin.html" class="tab-item" id="nav-tab-admin" target="_self" data-tooltip="Admin">
       <i class="fa-solid fa-lock"></i>
-      <span>Pannello Admin</span>
+      <span>Admin</span>
     </a>
   </nav>
 
@@ -616,21 +746,21 @@
   <div id="miniguida-modal" class="modal-overlay hidden" style="align-items: center; justify-content: center; z-index: 9999; background: rgba(15,23,42,0.8); backdrop-filter: blur(4px); position: fixed; inset: 0; padding: 20px;">
     <div class="modal-content" style="background: white; border-radius: 24px; width: 100%; max-width: 900px; display: flex; overflow: hidden; position: relative; max-height: 90vh; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
       <div style="width: 33%; background: #f8fafc; display: flex; align-items: flex-end; justify-content: center; border-right: 2px solid #f1f5f9; padding-top: 20px;" class="hide-mobile">
-        <img src="assets/prof_memmo_full.jpg" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-full.jpg';" alt="Prof Memmo" style="width: 120%; object-fit: contain; mix-blend-mode: multiply; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));">
+        <img src="assets/prof_memmo_full.png" onerror="this.src='https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/assets/branding/prof-memmo/prof-memmo-full.png';" alt="Prof Memmo" style="width: 120%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));">
       </div>
       <div style="flex: 1; padding: 30px 40px; display: flex; flex-direction: column; position: relative; min-height: 450px;">
         <button onclick="Modals.closeMiniguidaModal()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border-radius: 50%; border: none; background: #f1f5f9; color: #475569; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;"><i class="fa-solid fa-xmark"></i></button>
         
-        <h2 id="guide-modal-title" style="font-size: 2rem; font-weight: 900; color: #d4af37; margin-bottom: 25px; text-align: center; text-transform: uppercase; border-bottom: 4px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px; display: inline-block; margin-left: auto; margin-right: auto;">Come si gioca?</h2>
+        <h2 id="guide-modal-title" style="font-size: 2rem; font-weight: 900; color: #d4af37; margin-bottom: 25px; text-align: center; text-transform: uppercase; border-bottom: 4px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px; display: inline-block; margin-left: auto; margin-right: auto;">Miniguida</h2>
         
         <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.3s ease-out;">
-          <div id="guide-step-icon" style="font-size: 4.5rem; margin-bottom: 15px;">👥</div>
-          <h3 id="guide-step-title" style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">1. Forma le Squadre e Scegli la Pedina</h3>
-          <p id="guide-step-desc" style="font-size: 1.15rem; color: #475569; line-height: 1.6; font-weight: 500; max-width: 520px;"></p>
+          <div id="guide-step-icon" style="font-size: 4.5rem; margin-bottom: 15px;">🎯</div>
+          <h3 id="guide-step-title" style="display: none;"></h3>
+          <p id="guide-step-desc" style="font-size: 1.15rem; color: #475569; line-height: 1.6; font-weight: 500; max-width: 520px;">Lo scopo del gioco è sfidarsi nell'arte della retorica e del dibattito a squadre, esponendo le proprie argomentazioni senza mai pronunciare le parole vietate.</p>
         </div>
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: #94a3b8;" id="guide-step-num">Passo 1 di 4</div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: #94a3b8;" id="guide-step-num">Passo 1 di 6</div>
           <div style="display: flex; gap: 10px;">
             <button id="guide-prev-btn" onclick="Modals.prevGuideStep()" style="background: #f1f5f9; color: #475569; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer;">Indietro</button>
             <button id="guide-next-btn" onclick="Modals.nextGuideStep()" style="background: #d4af37; color: #000; border: none; padding: 10px 26px; border-radius: 12px; font-weight: 900; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Avanti ➔</button>
@@ -699,7 +829,13 @@
 
 
   <!-- Scripts -->
-  <script src="https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/legal-modal.js?v=20260819a"></script>
+  <script>
+    (function() {
+      var isPrev = window.location.pathname.indexOf('/preview') !== -1;
+      var cdnBase = isPrev ? 'https://prof-memmo.github.io/prof-memmo-gestione-siti/preview/shared/' : 'https://prof-memmo.github.io/prof-memmo-gestione-siti/shared/';
+      document.write('<script src="' + cdnBase + 'legal-modal.js?v=20261020_oratore_legal"><\/script>');
+    })();
+  </script>
   <script src="js/firebase-init.js?v=20260913a"></script>
   <script src="js/auth/session.js?v=20260913b"></script>
   <script src="js/music.js?v=20260913a"></script>
@@ -711,5 +847,19 @@
   <script src="js/rules-service.js?v=20260927_rules_v1"></script>
   <script src="js/services/miniguida-service.js?v=20260929_miniguida_v1"></script>
   <script src="js/app.js?v=20260927_rules_v1"></script>
+  <script>
+    (function() {
+      if (!window.MutationObserver) return;
+      document.querySelectorAll('.footer-legal-links').forEach(function(fl) {
+        var expected = fl.innerHTML;
+        var obs = new MutationObserver(function() {
+          if (!fl.querySelector('a[href*="condividi-esperienza"]')) {
+            fl.innerHTML = expected;
+          }
+        });
+        obs.observe(fl, { childList: true, subtree: true });
+      });
+    })();
+  </script>
 </body>
 </html>

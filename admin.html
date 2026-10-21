@@ -2,13 +2,18 @@
 <html lang="it">
 <head>
     <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=3">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=4">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L'Oratore - Pannello Gestione 1.440 Slot & Bulk Importer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=20260916_1440">
+
+  <!-- Firebase SDKs Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body style="background:#000000; color:#fff; min-height:100vh; padding:20px;">
 
@@ -108,6 +113,7 @@
   </div>
 
   <script src="js/firebase-init.js?v=20260927_rules_v1"></script>
+  <script src="js/auth/session.js?v=20260927_rules_v1"></script>
   <script src="js/cards-data.js?v=20260927_rules_v1"></script>
   <script src="js/live-editor.js?v=20260927_rules_v1"></script>
   <script src="js/rules-service.js?v=20260927_rules_v1"></script>

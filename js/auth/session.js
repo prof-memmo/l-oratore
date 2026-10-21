@@ -58,7 +58,7 @@ window.Auth = {
       window.fbAuth.onAuthStateChanged(async (fbUser) => {
         if (fbUser) {
           await this.handleFirebaseUser(fbUser);
-        } else {
+        } else if (!this.user || this.role === 'guest' || !localStorage.getItem('pm_oratore_user')) {
           this.user = null;
           this.role = 'guest';
           this.plan = 'base';
@@ -114,6 +114,7 @@ window.Auth = {
 
   saveSession: function () {
     localStorage.setItem('pm_oratore_user', JSON.stringify({
+      email: (this.user && this.user.email) || (this.role === 'admin' ? 'prof.memmo@gmail.com' : ''),
       role: this.role,
       plan: this.plan,
       name: this.name,

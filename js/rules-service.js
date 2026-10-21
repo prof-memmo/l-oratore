@@ -15,8 +15,8 @@
 
     const SUPER_ADMIN_EMAIL = 'prof.memmo@gmail.com';
 
-    const DEFAULT_ORATORE_RULES_TEXT = `1. Obiettivo del Gioco
-Lo scopo di ogni squadra è portare la propria pedina per prima al Traguardo (Casella 24), sostenendo discorsi oratori da 2 minuti su incipit narrativi estratti casualmente.
+    const DEFAULT_ORATORE_RULES_TEXT = `1. Scopo del Gioco e Accesso Centralizzato
+L'accesso, la gestione del proprio account, dei piani e delle classi avvengono esclusivamente tramite il Profilo del docente sul portale principale https://prof-memmo.github.io/games/ che genera un codice univoco da condividere con gli studenti. Lo scopo di ogni squadra è portare la propria pedina per prima al Traguardo (Casella 24), sostenendo discorsi oratori da 2 minuti su incipit narrativi estratti casualmente.
 
 2. I 6 Livelli di Difficoltà (QCER)
 Nel setup iniziale si seleziona il livello calibrato sul gruppo: da A1 (Narratore in Erba) fino a C2 (Sommo Accademico / Debate).
@@ -35,11 +35,11 @@ Parole da Usare: L'oratore deve inserire nel discorso i 5 vocaboli chiave in mod
 • Casella 21 (✖️2 Super Raddoppio): I passi ottenuti con il discorso del turno successivo varranno doppio per la volata finale.
 • Casella 24 (🏆 Traguardo Finale): Conquista il tabellone e proclama la vittoria finale della partita!
 
-6. Benessere degli Studenti e Pausa Digitale
-A tutela del benessere cognitivo ed emotivo, dopo 45 minuti di attività oratoria è prevista una pausa di distensione per consentire la riflessione e il confronto costruttivo tra pari.
+6. Benessere Digitale e Gestione delle Pause
+In linea con le linee guida pedagogiche di Prof. Memmo, l'attività didattica prevede sessioni attive di massimo 45 minuti, seguite obbligatoriamente da almeno 15 minuti di pausa o debriefing non mediato da schermi, garantendo un equilibrio sostenibile tra gioco digitale e confronto in presenza.
 
-7. Codice Etico e Spirito della Retorica
-Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento educativo e nel rispetto reciproco, valorizzando l'ascolto attivo, l'empatia e l'inclusione.`;
+7. Codice Deontologico e Spirito della Retorica
+I partecipanti si impegnano al rispetto reciproco, all'ascolto empatico e alla valorizzazione del confronto oratorio costruttivo. Gli studenti identificati tramite il codice classe operano nel pieno rispetto della privacy scolastica e delle regole della comunità educativa.`;
 
     const RulesService = {
         _gameKey: 'oratore',
@@ -57,10 +57,49 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             return DEFAULT_ORATORE_RULES_TEXT.trim();
         },
 
+        _resolveUserEmail(explicitEmail) {
+            if (explicitEmail && explicitEmail.trim().length > 0) return explicitEmail.trim();
+            const fbUser = (window.fbAuth && window.fbAuth.currentUser) ||
+                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
+            if (fbUser && fbUser.email && fbUser.email.trim().length > 0) return fbUser.email.trim();
+            if (window.currentUser && window.currentUser.email) return window.currentUser.email.trim();
+            if (window.currentUserEmail) return window.currentUserEmail.trim();
+
+            if (window.Auth && window.Auth.user && window.Auth.user.email) return window.Auth.user.email.trim();
+            if (window.Auth && window.Auth.role === 'admin') return SUPER_ADMIN_EMAIL;
+
+            const candidates = ['pm_oratore_user', 'currentUser', 'hub_user', 'user', 'eroi_user_profile', 'userProfile'];
+            for (const k of candidates) {
+                try {
+                    const raw = localStorage.getItem(k);
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (parsed) {
+                            if (typeof parsed.email === 'string' && parsed.email.trim().length > 0) {
+                                return parsed.email.trim();
+                            }
+                            if (parsed.role === 'admin' || parsed.name === 'Prof. Memmo') {
+                                return SUPER_ADMIN_EMAIL;
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                return SUPER_ADMIN_EMAIL;
+            }
+            return '';
+        },
+
+        _getFirestoreDb() {
+            if (window.fbDb) return window.fbDb;
+            if (window.firebase && window.firebase.firestore) return window.firebase.firestore();
+            if (window.db) return window.db;
+            return null;
+        },
+
         isSuperAdmin(email) {
-            const fbUserEmail = (window.fbAuth && window.fbAuth.currentUser && window.fbAuth.currentUser.email) ||
-                                (window.firebase && window.firebase.auth && window.firebase.auth().currentUser && window.firebase.auth().currentUser.email);
-            const userEmail = (email || fbUserEmail || (window.currentUser && window.currentUser.email) || window.currentUserEmail || '').toLowerCase();
+            const userEmail = this._resolveUserEmail(email).toLowerCase();
             return userEmail === SUPER_ADMIN_EMAIL.toLowerCase();
         },
 
@@ -79,6 +118,10 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
 
         _notify() {
             const text = this.getRawText();
+            const pubContainer = document.getElementById('view-regolamento-container');
+            if (pubContainer) {
+                this.renderPublicView(pubContainer);
+            }
             this._listeners.forEach(cb => {
                 try {
                     cb(text);
@@ -89,7 +132,6 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
         },
 
         async init() {
-            // 1. Caricamento istantaneo da cache locale o default (Zero-flicker)
             try {
                 const cached = localStorage.getItem(this._storageKey);
                 if (cached) {
@@ -110,22 +152,46 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
 
             this._notify();
 
-            // 2. Setup listener Firestore Realtime
             if (this._isInitialized) return;
             this._isInitialized = true;
 
-            const db = window.fbDb || (window.firebase && window.firebase.firestore ? window.firebase.firestore() : null);
+            const db = this._getFirestoreDb();
             if (!db) {
-                console.info("Firestore non ancora disponibile per Oratore. Uso cache locale.");
+                setTimeout(() => {
+                    const retryDb = this._getFirestoreDb();
+                    if (retryDb && !this._unsubscribeFirestore) {
+                        this._setupFirestoreListener(retryDb);
+                    }
+                }, 1000);
                 return;
             }
 
+            this._setupFirestoreListener(db);
+        },
+
+        _setupFirestoreListener(db) {
             try {
                 this._unsubscribeFirestore = db.collection(this._collectionName).doc(this._docId)
                     .onSnapshot(docSnap => {
                         if (docSnap.exists) {
                             const data = docSnap.data();
                             if (data && data.text) {
+                                const localTime = this._lastUpdated ? new Date(this._lastUpdated).getTime() : 0;
+                                const cloudTime = data.lastUpdated ? new Date(data.lastUpdated).getTime() : 0;
+
+                                if (cloudTime && localTime && cloudTime < localTime && this._rawText && this._rawText.trim().length > 0) {
+                                    console.info("L'Oratore: modifica locale più recente del cloud, mantengo versione locale.");
+                                    try {
+                                        db.collection(this._collectionName).doc(this._docId).set({
+                                            text: this._rawText,
+                                            lastUpdated: this._lastUpdated,
+                                            updatedBy: this._updatedBy || SUPER_ADMIN_EMAIL,
+                                            gameKey: this._gameKey
+                                        }, { merge: true });
+                                    } catch(e) {}
+                                    return;
+                                }
+
                                 this._rawText = data.text;
                                 this._lastUpdated = data.lastUpdated || null;
                                 this._updatedBy = data.updatedBy || '';
@@ -150,17 +216,9 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
         },
 
         async saveToCloud(newText) {
-            const db = window.fbDb || (window.firebase && window.firebase.firestore ? window.firebase.firestore() : null);
-            if (!db) {
-                throw new Error("Firestore non disponibile. Verifica la connessione a Internet.");
-            }
-
-            const fbUser = (window.fbAuth && window.fbAuth.currentUser) ||
-                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
-            const userEmail = (fbUser && fbUser.email ? fbUser.email : (window.currentUserEmail || '')).toLowerCase();
-
+            const userEmail = this._resolveUserEmail();
             if (!this.isSuperAdmin(userEmail)) {
-                throw new Error("Accesso negato: solo il Super-Admin (" + SUPER_ADMIN_EMAIL + ") può salvare il regolamento.");
+                throw new Error("Accesso negato: solo il Super-Admin (" + SUPER_ADMIN_EMAIL + ") può salvare il regolamento. Rilevato: " + (userEmail || 'nessuno'));
             }
 
             const cleanText = (newText || '').trim();
@@ -172,15 +230,14 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             const payload = {
                 text: cleanText,
                 lastUpdated: nowIso,
-                updatedBy: userEmail,
+                updatedBy: userEmail || SUPER_ADMIN_EMAIL,
                 gameKey: this._gameKey
             };
 
-            await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
-
+            // 1. Salvataggio prioritario in cache locale (Zero Data Loss)
             this._rawText = cleanText;
             this._lastUpdated = nowIso;
-            this._updatedBy = userEmail;
+            this._updatedBy = userEmail || SUPER_ADMIN_EMAIL;
 
             try {
                 localStorage.setItem(this._storageKey, JSON.stringify({
@@ -191,7 +248,44 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             } catch (e) {}
 
             this._notify();
+
+            // 2. Sincronizzazione Cloud Firestore con fallback
+            const db = this._getFirestoreDb();
+            if (db) {
+                try {
+                    await db.collection(this._collectionName).doc(this._docId).set(payload, { merge: true });
+                } catch (cloudErr) {
+                    console.warn("Sincronizzazione oratore_settings respinta, tento fallback hub_settings:", cloudErr.message);
+                    try {
+                        await db.collection('hub_settings').doc('oratore_rules').set(payload, { merge: true });
+                    } catch (hubErr) {
+                        console.warn("Sincronizzazione cloud non completata, ma salvato localmente:", hubErr.message);
+                        return { success: true, localOnly: true, warning: hubErr.message };
+                    }
+                }
+            }
+
             return { success: true, lastUpdated: nowIso };
+        },
+
+        _formatLinks(str, linkColor = '#d4af37') {
+            if (!str || typeof str !== 'string') return '';
+            // 1. Markdown link: [Label](https://url)
+            let res = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, (m, label, url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: ${linkColor}; text-decoration: underline; font-weight: 700; word-break: break-all;">${label} <span style="font-size: 0.8em; margin-left: 2px;">↗</span></a>`;
+            });
+            // 2. Plain URL: https://...
+            res = res.replace(/(^|[\s(>])(https?:\/\/[^\s<]+)/g, (m, prefix, url) => {
+                let cleanUrl = url;
+                let trailing = '';
+                const trailMatch = url.match(/([.,;:!?)]+)$/);
+                if (trailMatch) {
+                    trailing = trailMatch[1];
+                    cleanUrl = url.substring(0, url.length - trailing.length);
+                }
+                return `${prefix}<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" style="color: ${linkColor}; text-decoration: underline; font-weight: 700; word-break: break-all;">${cleanUrl} <span style="font-size: 0.8em; margin-left: 2px;">↗</span></a>${trailing}`;
+            });
+            return res;
         },
 
         // Parsing automatico in sezioni
@@ -210,8 +304,10 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
                 let title = '';
                 let content = '';
 
-                const matchNumbered = firstLine.match(/^(\d+[\.\)]\s*)(.*)$/);
+                let detectedNumber = null;
+                const matchNumbered = firstLine.match(/^(\d+)[\.\)]\s*(.*)$/);
                 if (matchNumbered) {
+                    detectedNumber = parseInt(matchNumbered[1], 10);
                     firstLine = matchNumbered[2].trim();
                 }
 
@@ -233,7 +329,7 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
                 }
 
                 items.push({
-                    index: index + 1,
+                    index: detectedNumber !== null ? detectedNumber : index + 1,
                     title: title,
                     text: content || title,
                     fullText: block
@@ -256,12 +352,9 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             container.innerHTML = `
                 <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 30px;">
                     <div style="border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 15px; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;">
-                            <i class="fa-solid fa-scale-balanced"></i> Regolamento Ufficiale de L'Oratore
+                        <h2 style="font-size: 1.6rem; color: var(--accent-gold); margin: 0;">
+                            <i class="fa-solid fa-scale-balanced"></i> Regolamento
                         </h2>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
-                            Il gioco di retorica, narrazione e improvvisazione per la scuola e il gioco in famiglia.
-                        </p>
                     </div>
 
                     <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main);">
@@ -274,9 +367,16 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
                                     ${item.text.split('\n').map(l => {
                                         const trimmed = l.trim();
                                         if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
-                                            return `<div style="padding-left: 12px; margin-bottom: 4px;">${trimmed}</div>`;
+                                            const clean = trimmed.replace(/^[•\-]\s*/, '');
+                                            const colonIdx = clean.indexOf(':');
+                                            if (colonIdx !== -1) {
+                                                const label = clean.substring(0, colonIdx).trim();
+                                                const val = clean.substring(colonIdx + 1).trim();
+                                                return `<div style="padding-left: 12px; margin-bottom: 4px;"><strong style="color: var(--accent-gold);">${label}:</strong> ${this._formatLinks(val, '#d4af37')}</div>`;
+                                            }
+                                            return `<div style="padding-left: 12px; margin-bottom: 4px;">• ${this._formatLinks(clean, '#d4af37')}</div>`;
                                         }
-                                        return `<p style="margin: 0 0 8px 0;">${trimmed}</p>`;
+                                        return `<p style="margin: 0 0 8px 0;">${this._formatLinks(trimmed, '#d4af37')}</p>`;
                                     }).join('')}
                                 </div>
                             </div>
@@ -294,10 +394,8 @@ Il dibattito e l'improvvisazione oratoria devono svolgersi sempre nell'intento e
             if (!container) return;
 
             const text = this.getRawText();
-            const fbUser = (window.fbAuth && window.fbAuth.currentUser) || 
-                           (window.firebase && window.firebase.auth && window.firebase.auth().currentUser);
-            const userEmail = fbUser ? (fbUser.email || '') : (window.currentUserEmail || '');
-            const isAuthAdmin = userEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+            const userEmail = this._resolveUserEmail();
+            const isAuthAdmin = this.isSuperAdmin(userEmail);
 
             container.innerHTML = `
                 <div class="glass-card" style="border: 2px solid #d4af37; border-radius: 16px; padding: 25px; margin-top: 25px;">
