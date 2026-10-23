@@ -906,6 +906,7 @@ const GameEngine = {
     try {
       const raw = localStorage.getItem('loratore_saved_games');
       const localSaves = raw ? JSON.parse(raw) : [];
+      let allSaves = [];
       if (this._cachedSavedGames && this._cachedSavedGames.length > 0) {
         // Unisci salvataggi cloud e locali per ID
         const map = new Map();
@@ -913,9 +914,34 @@ const GameEngine = {
         localSaves.forEach(s => {
           if (!map.has(s.id)) map.set(s.id, { ...s, source: 'local' });
         });
-        return Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        allSaves = Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      } else {
+        allSaves = localSaves.map(s => ({ ...s, source: 'local' }));
       }
-      return localSaves.map(s => ({ ...s, source: 'local' }));
+
+      // Se è presente una sessione automatica in sospeso, includila in cima all'elenco di ripresa
+      const rawAuto = localStorage.getItem('loratore_autosave');
+      if (rawAuto) {
+        try {
+          const autoData = JSON.parse(rawAuto);
+          if (autoData && autoData.gameState && autoData.gameState.teams && autoData.gameState.teams.length > 0 && !autoData.gameState.isGameFinished) {
+            const dateStr = autoData.timestamp ? new Date(autoData.timestamp).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
+            const autoEntry = {
+              id: 'autosave_session',
+              name: `Sessione Automatica (${dateStr})`,
+              date: dateStr,
+              timestamp: autoData.timestamp || Date.now(),
+              teamsSummary: autoData.gameState.teams.map(t => ({ name: t.name, avatar: t.avatar, color: t.color, position: t.position || 1 })),
+              round: autoData.gameState.currentRound || 1,
+              source: 'autosave',
+              gameState: autoData.gameState
+            };
+            allSaves.unshift(autoEntry);
+          }
+        } catch (_) {}
+      }
+
+      return allSaves;
     } catch (e) {
       console.warn("Errore lettura saved games:", e);
       return [];
@@ -1093,6 +1119,15 @@ const GameEngine = {
   },
 
   async deleteSavedGame(saveId) {
+    if (saveId === 'autosave_session') {
+      try {
+        localStorage.removeItem('loratore_autosave');
+      } catch (e) {}
+      this.checkAutoSaveOnStartup();
+      this.renderSavedGamesList();
+      return;
+    }
+
     try {
       let raw = localStorage.getItem('loratore_saved_games');
       if (raw) {
