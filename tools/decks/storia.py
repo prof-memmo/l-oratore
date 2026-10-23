@@ -1,0 +1,737 @@
+# Mazzo: storia
+# 120 carte uniche calibrate pedagogicamente da A1 a C2 (20 carte per livello)
+
+CARDS = {
+    "a1": [
+        (
+            'Il primo fuoco acceso nella caverna',
+            'Sei un bambino della preistoria che sfrega due pietre focaie fino a far scoccare una scintilla sulle foglie secche. Mostra la fiamma alla tribù.',
+            ['Fuoco', 'Pietre', 'Caverna', 'Tribù', 'Freddo'],
+            ['Scintilla', 'Calore', 'Luce', 'Focolare', 'Meraviglia']
+        ),
+        (
+            'Leonardo da Vinci e il disegno delle ali',
+            'Sei il giovane Leonardo che osserva il volo di un falco nel cielo di Firenze. Disegna sul tuo taccuino una macchina per volare con ali di tela.',
+            ['Leonardo', 'Volare', 'Ali', 'Disegno', 'Macchina'],
+            ['Invenzione', 'Osservazione', 'Natura', 'Taccuino', 'Sogno']
+        ),
+        (
+            'Cristoforo Colombo e le tre caravelle',
+            "Sei il marinaio di vedetta a bordo della Pinta. Dopo settimane di mare infinito, urla 'Terra! Terra!' svegliando l'equipaggio all'alba.",
+            ['Colombo', 'Caravelle', 'Terra', 'Mare', 'Nave'],
+            ['Vedetta', 'Orizzonte', 'Alba', 'Speranza', 'Approdo']
+        ),
+        (
+            'Il primo passo sulla Luna di Neil Armstrong',
+            "Sei l'astronauta con la grande tuta bianca che scende la scaletta del modulo lunare. Descrivi la polvere grigia e l'emozione del primo passo.",
+            ['Luna', 'Astronauta', 'Tuta', 'Passo', 'Spazio'],
+            ['Polvere lunare', 'Scaletta', 'Impronta', 'Trionfo', 'Pianeta azzurro']
+        ),
+        (
+            'Maria Montessori e i giocattoli di legno',
+            'Sei la maestra Maria Montessori che apre la prima Casa dei Bambini. Spiega perché toccare le lettere di cartoncino e i cubi di legno aiuta a imparare felici.',
+            ['Montessori', 'Legno', 'Maestra', 'Scuola', 'Imparare'],
+            ['Autonomia', 'Materiale didattico', 'Rispetto del bambino', 'Scoperta', 'Libertà']
+        ),
+        (
+            'La prima lampadina di Thomas Edison',
+            "Sei l'inventore Edison che vede il filamento di carbone restare acceso per ore nella stanza buia. Annuncia che la notte non farà più paura.",
+            ['Edison', 'Lampadina', 'Luce', 'Filamento', 'Buio'],
+            ['Invenzione', 'Illuminazione', 'Notte sconfitta', 'Tenacia', 'Bagliore']
+        ),
+        (
+            'Marco Polo e il viaggio sulla Via della Seta',
+            "Sei il giovane mercante veneziano alla corte dell'imperatore Kublai Khan in Cina. Mostra i rotoli di seta colorata e le spezie profumate.",
+            ['Marco Polo', 'Cina', 'Seta', 'Venezia', 'Viaggio'],
+            ['Spezie', 'Milione', 'Mercante', 'Corte imperiale', 'Incontro']
+        ),
+        (
+            "Giovanna d'Arco con lo stendardo bianco",
+            "Sei la giovane pastorella Giovanna con la corazza d'acciaio. Sprona i soldati francesi con voce squillante a difendere la loro terra.",
+            ["Giovanna d'Arco", 'Francia', 'Guerra', 'Cavallo', 'Spada'],
+            ['Stendardo bianco', 'Coraggio', 'Fede', 'Vittoria', 'Liberazione']
+        ),
+        (
+            'Guglielmo Marconi e il primo segnale radio',
+            "Sei il giovane Marconi che preme il tasto del telegrafo e fa suonare un campanello dall'altra parte della collina senza fili.",
+            ['Marconi', 'Radio', 'Fili', 'Suono', 'Collina'],
+            ['Onde elettromagnetiche', 'Segnale invisibile', 'Trasmissione', 'Invenzione', 'Trionfo']
+        ),
+        (
+            'La prima fotografia scattata alla finestra',
+            'Sei Joseph Nicéphore Niépce che espone una lastra di peltro alla finestra per otto ore. Mostra agli amici la prima immagine stampata dalla luce.',
+            ['Foto', 'Finestra', 'Luce', 'Macchina', 'Disegno'],
+            ['Lastra di peltro', 'Impronta di luce', 'Pazienza', 'Scatto storico', 'Meraviglia']
+        ),
+        (
+            "Il piccolo Mozart che suona per l'imperatrice",
+            'Sei Wolfgang Amadeus Mozart a sei anni, seduto al clavicembalo a Vienna. Suona una sonata saltellante facendo battere le mani ai nobili.',
+            ['Mozart', 'Bambino', 'Vienna', 'Piano', 'Imperatrice'],
+            ['Clavicembalo', 'Genio precoce', 'Melodia', 'Applauso', 'Musica']
+        ),
+        (
+            'Rosa Parks che resta seduta sul bus',
+            "Sei la sarta Rosa Parks che dice un 'No' calmo e fermo al conducente che le ordina di cedere il posto a un bianco. Spiega che siamo tutti uguali.",
+            ['Bus', 'Rosa Parks', 'Posto', 'Alzarsi', 'No'],
+            ['Dignità', 'Uguaglianza', 'Coraggio civile', 'Fermezza', 'Giustizia']
+        ),
+        (
+            'Il volo dei fratelli Wright a Kitty Hawk',
+            'Sei Orville Wright che decolla sulla spiaggia ventosa con il biplano Flyer per dodici secondi memorabili che cambiano la storia umana.',
+            ['Aereo', 'Wright', 'Volare', 'Spiaggia', 'Motore'],
+            ['Biplano Flyer', 'Decollo storico', 'Conquista del cielo', 'Dodici secondi', 'Ingegno']
+        ),
+        (
+            'La regina Cleopatra sul fiume Nilo',
+            "Sei la regina d'Egitto sulla nave con vele di porpora e remi d'argento. Spiega ai consiglieri come l'astuzia e la cultura proteggano il tuo popolo.",
+            ['Cleopatra', 'Egitto', 'Nilo', 'Regina', 'Piramide'],
+            ['Vele di porpora', 'Sapienza linguistica', 'Sovranità', 'Faraone', 'Splendore']
+        ),
+        (
+            'Albert Einstein che va in bicicletta sognando la luce',
+            "Sei il giovane Einstein all'ufficio brevetti che pedala sorridendo e immagina di viaggiare a cavallo di un raggio di luce.",
+            ['Einstein', 'Bici', 'Luce', 'Fisica', 'Scienziato'],
+            ['Raggio solare', 'Relatività intuitiva', 'Curiosità fanciullesca', 'Spazio e tempo', 'Genio']
+        ),
+        (
+            'Franca Viola che rifiuta il matrimonio riparatore',
+            'Sei la ragazza siciliana che rifiuta coraggiosamente di sposare il suo rapitore, spezzando per sempre una legge ingiusta e patriarcale.',
+            ['Franca Viola', 'Matrimonio', 'Sicilia', 'Paura', 'Sposare'],
+            ['Libertà di scelta', 'Coraggio civile', 'Dignità femminile', "Rifiuto dell'onore falso", 'Pietra miliare']
+        ),
+        (
+            "L'archeologo Howard Carter e la tomba di Tutankhamon",
+            "Sbriciando attraverso un foro nella porta sigillata con una candela accesa, esclami con gli occhi sgranati: 'Vedo cose meravigliose!'.",
+            ['Tutankhamon', 'Tomba', 'Carter', 'Oro', 'Mummia'],
+            ['Cose meravigliose', 'Candela tremolante', 'Tesoro intatto', 'Archeologia', 'Faraone fanciullo']
+        ),
+        (
+            'La staffetta partigiana in bicicletta nella Resistenza',
+            'Sei una ragazzina di quattordici anni che pedala con messaggi segreti nascosti nel manubrio per liberare la tua città dai nazifascisti.',
+            ['Bici', 'Partigiana', 'Messaggio', 'Guerra', 'Paura'],
+            ['Staffetta di libertà', 'Resistenza civile', 'Manubrio', 'Coraggio silenzioso', 'Liberazione']
+        ),
+        (
+            'Il primo orologio meccanico sulla torre della piazza',
+            'I fabbri del medioevo hanno montato le campane e le ruote dentate. Spiega ai cittadini come il rintocco orario segni la vita comune del borgo.',
+            ['Orologio', 'Torre', 'Campana', 'Tempo', 'Minuti'],
+            ['Ruote dentate', 'Rintocco pubblico', 'Comunità scandita', 'Ingegneria medievale', 'Piazza']
+        ),
+        (
+            "L'arringa dei testimoni del passato",
+            'Concludi il modulo storico primario: la storia non è una lista di date noiose, ma la grande catena di persone coraggiose che hanno acceso il fuoco del nostro presente.',
+            ['Date', 'Storia', 'Morti', 'Passato', 'Scuola'],
+            ['Catena umana', 'Testimoni del tempo', 'Fiaccola del presente', 'Memoria viva', 'Eredità feconda']
+        ),
+    ],
+    "a2": [
+        (
+            'Galileo Galilei e il cannocchiale puntato verso Giove',
+            'Nel 1610 punti il tubo con le lenti verso il cielo notturno di Padova scoprendo i quattro satelliti di Giove. Dimostra che la Terra non è il centro del cosmo.',
+            ['Galileo', 'Cannocchiale', 'Giove', 'Terra al centro', 'Pianeti'],
+            ['Satelliti medicei', 'Metodo sperimentale', 'Osservazione telescopica', 'Rivoluzione astronomica', 'Evidenza empirica']
+        ),
+        (
+            "Il discorso di Martin Luther King a Washington: 'I have a dream'",
+            'Sei sul palco davanti a trecentomila cittadini. Dichiara il sogno di un futuro dove i bambini siano giudicati per il carattere e non per il colore della pelle.',
+            ['King', 'Sogno', 'Neri', 'Bianchi', 'Pelle'],
+            ['I have a dream', 'Fratellanza universale', 'Diritti civili', 'Nonviolenza operosa', 'Giustizia razziale']
+        ),
+        (
+            'Louis Pasteur e la scoperta del vaccino antirabbico',
+            'Sei lo scienziato francese che inietta per la prima volta il vaccino al piccolo Joseph Meister morso da un cane idrofobo, vincendo la paura con la scienza.',
+            ['Pasteur', 'Cane', 'Vaccino', 'Microbi', 'Malattia'],
+            ['Immunizzazione', 'Antirabbica', 'Vittoria medica', 'Sperimentazione rigorosa', 'Salvezza umana']
+        ),
+        (
+            'Frida Kahlo: dipingere il proprio dolore con colori vivaci',
+            "Costretta a letto dall'incidente con uno specchio sopra il soffitto, dipingi il tuo autoritratto spiegando che l'arte trasforma la sofferenza in bellezza fiera.",
+            ['Frida', 'Incidente', 'Letto', 'Dipingere', 'Dolore'],
+            ['Autoritratto fiero', 'Resilienza artistica', 'Colori messicani', 'Trasfigurazione estetica', 'Identità indomita']
+        ),
+        (
+            "Giulio Cesare al passaggio del Rubicone: 'Alea iacta est'",
+            "Sei il generale romano sulle rive del piccolo fiume confine d'Italia. Tra la condanna del Senato e la marcia su Roma, pronuncia la decisione fatale.",
+            ['Cesare', 'Rubicone', 'Dado', 'Fiume', 'Guerra civile'],
+            ['Alea iacta est', 'Passaggio del confine', 'Destino di Roma', 'Decisione irrevocabile', 'Audacia strategica']
+        ),
+        (
+            "La Dichiarazione dei diritti dell'uomo e del cittadino (1789)",
+            'Sulle barricate della Rivoluzione Francese a Parigi, proclama gli articoli che dichiarano tutti gli uomini liberi ed eguali nei diritti fin dalla nascita.',
+            ['Rivoluzione', 'Parigi', '1789', 'Ghigliottina', 'Uguali'],
+            ['Liberté, Égalité, Fraternité', 'Dichiarazione universale', 'Cittadinanza attiva', "Crollo dell'antico regime", 'Sovranità popolare']
+        ),
+        (
+            'Nelson Mandela e il discorso dopo ventisette anni di prigione',
+            'Uscito dal carcere di Robben Island, inviti il popolo sudafricano a non cercare vendetta ma a costruire una nazione arcobaleno riconciliata.',
+            ['Mandela', 'Carcere', 'Vendetta', 'Sudafrica', 'Apartheid'],
+            ['Nazione arcobaleno', 'Riconciliazione democratica', "Superamento dell'odio", 'Pazienza titanica', 'Libertà per tutti']
+        ),
+        (
+            'Rita Levi-Montalcini e la scoperta del fattore di crescita nervoso (NGF)',
+            'Durante le persecuzioni razziali allestisci un laboratorio segreto nella tua camera da letto usando uova fecondate. Spiega la tenacia della ricerca.',
+            ['Montalcini', 'Nobel', 'Camera', 'Cervello', 'Leggi razziali'],
+            ['Nerve Growth Factor (NGF)', 'Laboratorio clandestino', 'Passione scientifica', 'Tenacia femminile', 'Luce della scoperta']
+        ),
+        (
+            'Giuseppe Garibaldi e lo sbarco dei Mille a Marsala',
+            "Sei il generale con la camicia rossa che guida mille volontari con scarpe rotte e fucili antiquati per unificare l'Italia dal Sud al Nord.",
+            ['Garibaldi', 'Mille', 'Marsala', 'Camicie rosse', 'Italia'],
+            ['Spedizione patriottica', 'Unità nazionale', 'Volontariato eroico', 'Epopea risorgimentale', 'Passione civile']
+        ),
+        (
+            'Marie Curie e la scoperta del radio nel capannone disadorno',
+            'Sei la scienziata polacca che rimescola quintali di pechblenda con una sbarra di ferro per isolare un grammo di elemento luminoso radioattivo.',
+            ['Marie Curie', 'Radio', 'Nobel', 'Laboratorio', 'Radiazioni'],
+            ['Pechblenda purificata', 'Elemento radioattivo', 'Dedizione totale', 'Pioniera della fisica', 'Nobel doppio']
+        ),
+        (
+            "Il discorso di Winston Churchill: 'Sangue, fatica, lacrime e sudore'",
+            "Nel 1940, con l'Europa caduta sotto il nazismo, prometti al parlamento britannico resistenza a oltranza sulle spiagge e nei cieli fino alla vittoria.",
+            ['Churchill', 'Guerra', 'Inghilterra', 'Hitler', 'Arrendersi'],
+            ['Blood, toil, tears and sweat', 'Resistenza a oltranza', "Battaglia d'Inghilterra", 'Fermezza democratica', 'Vittoria finale']
+        ),
+        (
+            'Mahatma Gandhi e la marcia del sale per la disubbidienza civile',
+            "Sei Gandhi che cammina per quattrocento chilometri verso l'oceano per raccogliere un pugno di sale marino sfidando il monopolio fiscale dell'impero britannico.",
+            ['Gandhi', 'Sale', 'Marcia', 'India', 'Inglesi'],
+            ['Satyagraha (forza della verità)', 'Disobbedienza nonviolenta', 'Monopolio coloniale infranto', 'Cammino di pace', 'Autodeterminazione']
+        ),
+        (
+            "L'apostolo della stampa: Johannes Gutenberg a Magonza",
+            'Nel 1455 assembli i caratteri mobili di piombo e premi il torchio stampando la prima Bibbia. Annuncia la democratizzazione della lettura per tutti.',
+            ['Gutenberg', 'Stampa', 'Libro', 'Bibbia', 'Torchio'],
+            ['Caratteri mobili', 'Democratizzazione del sapere', 'Fine del monopolio amanuense', 'Rivoluzione comunicativa', 'Luce della conoscenza']
+        ),
+        (
+            "Malala Yousafzai all'ONU: 'Un bambino, un insegnante, un libro e una penna...'",
+            "Sopravvissuta all'attacco dei talebani, parli all'assemblea delle Nazioni Unite rivendicando il diritto all'istruzione per ogni bambina del mondo.",
+            ['Malala', 'Talebani', 'Sparare', 'ONU', 'Bambine'],
+            ["Diritto all'istruzione", 'Arma della penna', 'Coraggio testimoniale', 'Educazione universale', 'Emancipazione femminile']
+        ),
+        (
+            'Sandro Pertini e il messaggio di fine anno agli italiani',
+            'Il presidente partigiano parla dal Quirinale col camino acceso: esorta i giovani a essere portatori di pace e a non piegarsi mai davanti alla corruzione.',
+            ['Pertini', 'Presidente', 'Pipa', 'Partigiano', 'Quirinale'],
+            ['Incorruttibilità repubblicana', 'Monito alla gioventù', 'Pace e libertà', 'Fiducia democratica', 'Esemplarità morale']
+        ),
+        (
+            'Florence Nightingale nella guerra di Crimea: la signora della lampada',
+            "Riorganizzi l'ospedale militare sporco di Scutari introducendo l'igiene, le lenzuola pulite e la cura compassionevole dei soldati feriti.",
+            ['Infermiera', 'Lampada', 'Crimea', 'Soldati feriti', 'Ospedale'],
+            ['Igiene ospedaliera', 'Assistenza infermieristica moderna', 'Signora della lampada', 'Compassione metodica', 'Riforma sanitaria']
+        ),
+        (
+            'Giacomo Matteotti: il discorso che gli costò la vita (1924)',
+            'Sei il deputato socialista che denuncia alla Camera le violenze e i brogli fascisti durante le elezioni, consapevole della condanna a morte che ne seguirà.',
+            ['Matteotti', 'Fascismo', 'Mussolini', 'Brogli', 'Ucciso'],
+            ['Denuncia coraggiosa', 'Testimonianza antifascista', 'Camera dei deputati', 'Martirio civile', 'Difesa della libertà']
+        ),
+        (
+            "L'abbattimento del Muro di Berlino (1989)",
+            'La folla di Berlino Est e Ovest che si abbraccia sopra il muro di cemento brandendo picconi. Annuncia la fine della Guerra Fredda e delle barriere tra popoli.',
+            ['Muro', 'Berlino', '1989', 'Piccone', 'Guerra Fredda'],
+            ['Caduta del muro', 'Abbraccio storico', 'Riconciliazione europea', 'Libertà di movimento', 'Fine della divisione']
+        ),
+        (
+            "Albert Schweitzer e l'ospedale nella giungla di Lambaréné",
+            "Lasci la cattedra universitaria e la musica d'organo a Parigi per fondare un ospedale gratuito tra i lebbrosi del Gabon in Africa. Spiega la tua scelta.",
+            ['Schweitzer', 'Africa', 'Giungla', 'Dottore', 'Lebbra'],
+            ['Rispetto per la vita (Ehrfurcht)', 'Ospedale di Lambaréné', 'Servizio disinteressato', "Mistica dell'azione", 'Umanità universale']
+        ),
+        (
+            'Il manifesto dei costruttori di civiltà',
+            'Concludi il percorso: le grandi figure della storia non sono eroi sovrumani, ma uomini e donne che hanno saputo dire di sì alla giustizia e di no alla rassegnazione.',
+            ['Eroi', 'Grandi uomini', 'Storia', 'Noi piccoli', 'Fine'],
+            ['Costruttori di civiltà', 'Responsabilità personale', 'Rifiuto della rassegnazione', 'Fiaccola accesa', 'Esemplarità civica']
+        ),
+    ],
+    "b1": [
+        (
+            "L'apologia di Socrate pronunciata davanti ai giudici ateniesi",
+            'Sei Socrate nel 399 a.C. Spiega ai cinquecento giudici perché preferisci bere la cicuta piuttosto che smettere di interrogare e risvegliare le coscienze dei concittadini.',
+            ['Socrate', 'Cicuta', 'Atene', 'Morte', 'Zittire'],
+            ['Tafano di Atene', 'Esame della vita (Anexetastos bios)', 'Voce del Daimonion', 'Primato della virtù', 'Integrità filosofica']
+        ),
+        (
+            "L'orazione di Cicerone contro Catilina: 'Quousque tandem abutere...'",
+            "Sei Cicerone nel Senato romano che svela la congiura eversiva guardando il traditore negli occhi: 'Fino a quando abuserai della nostra pazienza, Catilina?'.",
+            ['Cicerone', 'Catilina', 'Pazienza', 'Senato', 'Congiura'],
+            ['Quousque tandem', 'Svelamento della congiura', 'Patria in pericolo', 'Eloquenza consolare', 'Stato di diritto repubblicano']
+        ),
+        (
+            'La notte di San Bartolomeo e il fanatismo delle guerre di religione',
+            "Descrivi il massacro degli ugonotti a Parigi nel 1572: fai un'orazione accorata sulla tolleranza civile e sulla mostruosità della violenza perpetrata in nome di Dio.",
+            ['Ugonotti', 'San Bartolomeo', 'Parigi', 'Massacro', 'Cattolici'],
+            ['Fanatismo confessionale', 'Tolleranza voltariana', 'Guerre civili religiose', 'Profanazione del sacro', 'Pace civile']
+        ),
+        (
+            "Il processo a Luigi XVI e l'orazione di Robespierre: 'Il re deve morire...'",
+            "Sei Robespierre alla Convenzione Nazionale: 'Luigi deve morire affinché la patria viva'. Analizza la drammatica frattura tra legalità monarchica e sovranità repubblicana.",
+            ['Luigi XVI', 'Robespierre', 'Ghigliottina', 'Re', 'Convenzione'],
+            ['Morte del sovrano', 'Fondazione repubblicana', 'Terrore giacobino', 'Ragione rivoluzionaria', 'Frattura storica']
+        ),
+        (
+            'La rottura di Martin Lutero alla Dieta di Worms (1521)',
+            "Sei il monaco agostiniano davanti all'imperatore Carlo V: 'Qui sto fermo, non posso fare altrimenti'. Rifiuta di ritrattare le 95 tesi contro le indulgenze papali.",
+            ['Lutero', 'Worms', 'Papa', 'Indulgenze', 'Ritrattare'],
+            ['Libertà del cristiano', 'Sola Scriptura', 'Hier stehe ich', 'Coscienza vincolata alla Parola', 'Riforma protestante']
+        ),
+        (
+            "L'inno alla memoria di Giovanni Falcone e Paolo Borsellino",
+            "A trent'anni dalle stragi di Capaci e via D'Amelio, dimostra agli studenti che il loro sacrificio ha trasformato la rassegnazione in una primavera civile e antimafiosa.",
+            ['Capaci', "D'Amelio", 'Bomba', 'Falcone', 'Borsellino'],
+            ['Memoria operosa', 'Cultura della legalità', 'Primavera civile', 'Dovere della testimonianza', 'Stato senza compromessi']
+        ),
+        (
+            "L'arringa di Danton al Tribunale Rivoluzionario",
+            'Sei Georges Danton accusato dai suoi stessi compagni giacobini: con voce tonante difendi la tua integrità e predici la caduta immediata della dittatura del Terrore.',
+            ['Danton', 'Tribunale', 'Ghigliottina', 'Robespierre', 'Morte'],
+            ['Eloquenza tribunizia', 'Voce del popolo', 'Caduta del tiranno', 'Audacia repubblicana', 'Testamento politico']
+        ),
+        (
+            'La conferenza di Wannsee e la burocratizzazione dello sterminio',
+            "Nel 1942 quindici funzionari nazisti pianificano in ottantacinque minuti la Soluzione Finale. Denuncia l'orrore asettico dell'omicidio di massa industriale.",
+            ['Wannsee', 'Ebrei', 'Treni', 'Sterminio', 'Nazisti'],
+            ['Endlösung (Soluzione finale)', "Burocratizzazione dell'orrore", 'Asepsi omicida', 'Ingegneria dello sterminio', 'Memoria della Shoah']
+        ),
+        (
+            'Il discorso di Gettysburg di Abraham Lincoln (1863)',
+            "Nel cimitero militare della guerra civile americana, consacra il cimitero affinché 'il governo del popolo, dal popolo, per il popolo non scompaia dalla terra'.",
+            ['Lincoln', 'Gettysburg', 'Guerra civile', 'Schiavitù', 'Cimitero'],
+            ['Four score and seven years ago', 'Governo del popolo', 'Nuova nascita della libertà', 'Eguaglianza fondativa', 'Consacrazione della memoria']
+        ),
+        (
+            "L'Editto di Milano di Costantino (313 d.C.) e la libertà di culto",
+            "Presenta il testo imperiale che per la prima volta nella storia stabilisce la libertà di coscienza e di culto per tutte le religioni all'interno dell'impero.",
+            ['Costantino', 'Milano', 'Cristiani', 'Impero', 'Persecuzioni'],
+            ['Libertà religiosa universale', 'Pari dignità confessionale', 'Editto di tolleranza', 'Pace religiosa', 'Svolta costantiniana']
+        ),
+        (
+            "La resa del Giappone e il discorso dell'imperatore Hirohito (1945)",
+            "Dopo Hiroshima e Nagasaki, l'imperatore parla alla radio al popolo per la prima volta ammettendo che 'la situazione di guerra non è andata a nostro vantaggio'.",
+            ['Hirohito', 'Bomba atomica', 'Hiroshima', 'Resa', 'Radio'],
+            ["Sopportare l'insopportabile", 'Fine della divinità imperiale', 'Cessazione delle ostilità', 'Tragedia nucleare', 'Rinascita pacifica']
+        ),
+        (
+            "L'esilio di Dante Alighieri e il rifiuto dell'amnistia disonorevole",
+            "Nel 1315 Dante rifiuta di tornare a Firenze pagando un'ammenda ed espiando con un cappuccio da penitente: 'Non è questa la via del mio ritorno in patria!'.",
+            ['Dante', 'Firenze', 'Esilio', 'Amnistia', 'Soldi'],
+            ['Dignità del vate', 'Rifiuto del compromesso disonorevole', "Pane amaro dell'esilio", 'Incorruttibilità morale', 'Commedia universale']
+        ),
+        (
+            'Il discorso di Pericle ai cittadini di Atene sulla democrazia',
+            "Nel secondo libro delle Storie di Tucidide, ricostruisci la celebre orazione che delinea la democrazia come modello fondato sul merito e sull'uguaglianza davanti alla legge.",
+            ['Pericle', 'Tucidide', 'Atene', 'Democrazia', 'Sparta'],
+            ['Epitaffio tucidideo', 'Eguaglianza delle leggi (Isonomia)', 'Atene scuola della Grecia', 'Partecipazione civica', 'Fioritura della polis']
+        ),
+        (
+            "Il processo d'appello di Giovanna d'Arco e la riabilitazione storica",
+            'Venticinque anni dopo il rogo, la Chiesa dichiara nullo il processo farsa degli inglesi restituendo la memoria immacolata alla liberatrice di Francia.',
+            ['Giovanna', 'Rogo', 'Processo farsa', 'Inglesi', 'Riabilitata'],
+            ['Riabilitazione postuma', 'Nullità del processo corrotto', 'Trionfo della verità storica', 'Candore martirizzato', 'Patrona di Francia']
+        ),
+        (
+            'La Conferenza di Yalta e la spartizione del pianeta (1945)',
+            "Roosevelt, Churchill e Stalin decidono le sfere di influenza dell'Europa post-bellica. Analizza le tensioni diplomatiche che apriranno la Guerra Fredda.",
+            ['Yalta', 'Stalin', 'Roosevelt', 'Churchill', 'Spartire'],
+            ['Conferenza di Yalta', "Sfere d'influenza geopolitiche", 'Equilibrio bipolare', 'Nascita delle Nazioni Unite', 'Cortina di ferro nascente']
+        ),
+        (
+            "Il manifesto di Ventotene: per un'Europa libera e unita (1941)",
+            "Al confino fascista sull'isola di Ventotene, Altiero Spinelli ed Ernesto Rossi scrivono sulla carta da sigarette il sogno degli Stati Uniti d'Europa federale.",
+            ['Spinelli', 'Ventotene', 'Confino', 'Europa unita', 'Isola'],
+            ['Manifesto federalista europeo', 'Superamento della sovranità nazionale', "Stati Uniti d'Europa", 'Pace continentale duratura', 'Visione costituente']
+        ),
+        (
+            'La scoperta delle Americhe e la disputa di Valladolid (1550)',
+            'Il frate Bartolomé de Las Casas difende gli indigeni americani contro Juan Ginés de Sepúlveda: dimostra che gli indios sono esseri umani dotati di anima razionale.',
+            ['Las Casas', 'Sepúlveda', 'Valladolid', 'Indios', 'Schiavi'],
+            ['Disputa di Valladolid', 'Pari dignità degli indigeni', "Denuncia dell'encomienda", 'Diritti umani universali', 'Critica della conquista']
+        ),
+        (
+            'La marcia su Roma e la viltà del Re Vittorio Emanuele III',
+            "Nel 1922 il Re si rifiuta di firmare lo stato d'assedio proposto dal governo Facta, consegnando il potere a Mussolini. Denuncia il tradimento dello Statuto Albertino.",
+            ['Marcia su Roma', 'Mussolini', 'Re', "Stato d'assedio", 'Fascismo'],
+            ['Tradimento monarchico', "Rifiuto dello stato d'assedio", 'Inizio della dittatura fascista', 'Sfacelo statutario', 'Complicità del potere']
+        ),
+        (
+            "L'assassinio di Giulio Cesare e il discorso di Marco Antonio",
+            "Rivisita il dramma shakespeariano: Marco Antonio mostra la toga insanguinata di Cesare ai romani ribaltando la folla contro i congiurati 'uomini d'onore'.",
+            ['Cesare', 'Bruto', 'Marco Antonio', 'Idi di marzo', 'Pugnale'],
+            ['Oratoria shakespeariana', "Uomini d'onore ironico", 'Toga insanguinata', 'Manipolazione della folla', 'Fine della Repubblica']
+        ),
+        (
+            "L'Orazione per la Coscienza Storica: il Tribunale del Tempo",
+            "Pronuncia l'arringa conclusiva: i potenti possono corrompere i tribunali della loro epoca, ma non potranno mai comprare il verdetto incorruttibile della Storia.",
+            ['Potenti', 'Soldi', 'Storia', 'Giudizio', 'Fine'],
+            ['Tribunale incorruttibile della Storia', 'Verdetto della posterità', 'Magistero della memoria civile', 'Trionfo della verità nel tempo', 'Luce imperitura della testimonianza']
+        ),
+    ],
+    "b2": [
+        (
+            "Il processo di Norimberga e i crimini contro l'umanità (1945)",
+            "La requisitoria del procuratore Robert H. Jackson: per la prima volta nella storia un tribunale internazionale giudica i capi di una nazione per guerra d'aggressione.",
+            ['Norimberga', 'Jackson', 'Nazisti', 'Tribunale', 'Impiccati'],
+            ["Crimini contro l'umanità", 'Statuto del Tribunale Militare Internazionale', "Guerra d'aggressione bandita", 'Giurisdizione penale universale', 'Primato del diritto internazionale']
+        ),
+        (
+            "La separazione tra Stato e Chiesa: 'Libera Chiesa in libero Stato' di Cavour",
+            'Nel 1861 Camillo Benso di Cavour espone in parlamento la formula fondamentale del liberalismo moderno: la fine del potere temporale del Papa per Roma capitale.',
+            ['Cavour', 'Papa', 'Roma capitale', 'Chiesa e Stato', 'Preti'],
+            ['Libera Chiesa in libero Stato', 'Secolarizzazione liberale', 'Superamento del potere temporale', 'Patto cavouriano', 'Laicità repubblicana']
+        ),
+        (
+            "L'apologia della nonviolenza radicale nel pensiero di Leone Tolstoj",
+            'Dal saggio Il regno di Dio è dentro di voi: il rifiuto categorico del servizio militare e di ogni violenza di Stato ispirerà la marcia di Gandhi e King.',
+            ['Tolstoj', 'Nonviolenza', 'Soldati', 'Guerra', 'Cristiano'],
+            ['Obiezione di coscienza tolstojana', 'Rifiuto della violenza di Stato', 'Sermone della montagna radicale', 'Anarchismo cristiano', 'Potenza disarmata']
+        ),
+        (
+            'La crisi dei missili di Cuba e il coraggio della de-escalation (1962)',
+            "Kennedy e Krusciov a un passo dalla guerra termonucleare mondiale: la telefonata diplomatica segreta che ritira i missili salvando l'umanità dall'apocalisse.",
+            ['Cuba', 'Kennedy', 'Krusciov', 'Missili', 'Guerra nucleare'],
+            ['Crisi missilistica di Cuba', 'De-escalation diplomatica', 'Abisso nucleare evitato', 'Linea rossa di comunicazione', 'Razionalità negoziata']
+        ),
+        (
+            'La rivoluzione scientifica e la condanna di Giordano Bruno al rogo (1600)',
+            "A Campo de' Fiori, il filosofo nolano rifiuta di abiurare la sua visione degli infiniti mondi e dell'infinità divina di fronte all'Inquisizione romana.",
+            ['Giordano Bruno', 'Rogo', 'Infiniti mondi', 'Inquisizione', 'Campo de Fiori'],
+            ['Eretico nolano indomito', "Cosmologia dell'infinito universo", "Rifiuto categorico dell'abiura", 'Martirio del libero pensiero', 'Luce filosofica immortale']
+        ),
+        (
+            "La Dichiarazione d'Indipendenza americana del 4 luglio 1776",
+            "Thomas Jefferson a Philadelphia: 'Tutti gli uomini sono creati eguali e dotati dal Creatore di inalienabili diritti: la Vita, la Libertà e la ricerca della Felicità'.",
+            ['Jefferson', '4 luglio', 'Indipendenza', 'America', 'Inghilterra'],
+            ['Diritti inalienabili jeffersoniani', 'Ricerca della felicità', 'Diritto alla rivoluzione', 'Patto costituzionale democratico', 'Rottura coloniale']
+        ),
+        (
+            "La Rivoluzione d'Ottobre e la dissoluzione della Costituente in Lenin",
+            "Analizza la presa del Palazzo d'Inverno nel 1917: la dittatura del proletariato teorizzata come strumento transitorio che si consolida in apparato monopartitico.",
+            ['Lenin', '1917', 'Bolscevichi', 'Zar', 'Rivoluzione'],
+            ['Dittatura del proletariato', 'Scioglimento della Costituente', 'Rottura rivoluzionaria leniniana', 'Tutto il potere ai Soviet', 'Centralismo democratico']
+        ),
+        (
+            'Il Concilio Vaticano II e la svolta dialogica di Papa Giovanni XXIII',
+            "Il discorso della luna e l'apertura delle finestre della Chiesa al mondo moderno: l'abbandono dell'anatema per abbracciare la medicina della misericordia.",
+            ['Giovanni XXIII', 'Concilio', 'Discorso della luna', 'Chiesa moderna', 'Preti'],
+            ['Aggiornamento conciliare', 'Medicina della misericordia', 'Ecumenismo e dialogo interreligioso', 'Gaudium et Spes', 'Svolta epocale della Chiesa']
+        ),
+        (
+            'La caduta di Salvador Allende e il bombardamento della Moneda (1973)',
+            "L'ultimo discorso radiofonico del presidente socialista cileno mentre i caccia golpisti bombardano il palazzo presidenziale: 'La storia è nostra e la fanno i popoli'.",
+            ['Allende', 'Pinochet', 'Cile', 'Golpe', 'Moneda'],
+            ['Ultimo discorso di Allende', 'Dignità democratica intatta', 'Golpe fascista militare', 'Grandi viali della libertà', 'Martirio presidenziale']
+        ),
+        (
+            "Il Manifesto di Marx ed Engels: 'Uno spettro si aggira per l'Europa' (1848)",
+            'La concezione materialistica della storia: la lotta di classe tra borghesia e proletariato come motore dialettico delle trasformazioni sociali ed economiche.',
+            ['Marx', 'Engels', 'Manifesto', 'Comunismo', 'Operai'],
+            ['Materialismo storico dialettico', 'Lotta di classe motrice', 'Proletari di tutti i paesi unitevi', 'Espropriazione degli espropriatori', 'Critica del capitale']
+        ),
+        (
+            'La proclamazione della Repubblica Italiana: 2 giugno 1946',
+            'Il primo voto a suffragio universale dove votano anche le donne: il popolo italiano sceglie la Repubblica e manda in esilio per sempre la monarchia sabauda.',
+            ['2 giugno', 'Repubblica', 'Donne al voto', 'Monarchia', '1946'],
+            ['Suffragio universale effettivo', 'Vittoria repubblicana democratica', 'Fine della dinastia sabauda', 'Assemblea Costituente eletta', 'Rinascita della Nazione']
+        ),
+        (
+            "L'assassinio di Thomas Becket nella cattedrale di Canterbury (1170)",
+            "L'arcivescovo trucidato sull'altare dai quattro cavalieri di re Enrico II per aver difeso l'autonomia della Chiesa contro le Costituzioni di Clarendon.",
+            ['Becket', 'Canterbury', 'Enrico II', "Ucciso sull'altare", 'Re'],
+            ['Martirio ecclesiastico', 'Libertas ecclesiae medievale', 'Costituzioni di Clarendon', 'Conflitto tra spada e croce', 'Sacralità del santuario']
+        ),
+        (
+            'La notte dei cristalli (Kristallnacht) e il preludio della Shoah (1938)',
+            "Sinagoghe incendiate, migliaia di vetrine distrutte e decine di omicidi nel silenzio complice della popolazione tedesca: il momento in cui l'orrore divenne legge.",
+            ['Kristallnacht', 'Vetrine', 'Sinagoghe', 'Ebrei', '1938'],
+            ['Pogrom di Stato organizzato', 'Notte dei cristalli', "Complicità dell'indifferenza", 'Salto di qualità antisemita', 'Inizio della distruzione']
+        ),
+        (
+            'Il discorso di Robert Kennedy a Indianapolis dopo la morte di Martin Luther King',
+            "Nel 1968, annunciando alla folla afroamericana l'assassinio di King, cita Eschilo a memoria disarmando la rabbia violenta con la poesia del dolore comune.",
+            ['Robert Kennedy', 'King ucciso', 'Indianapolis', 'Neri arrabbiati', 'Eschilo'],
+            ['Eschilo citato a memoria', 'Dolore che cade goccia a goccia', "Disinnesco dell'insurrezione", 'Compassione civile titanica', 'Orazione disarmante']
+        ),
+        (
+            'La battaglia di Stalingrado e il punto di svolta della Seconda Guerra Mondiale',
+            "Nella città sul Volga ridotta a cumuli di macerie, l'Armata Rossa accerchia la Sesta Armata di von Paulus: la rottura definitiva dell'invincibilità nazista.",
+            ['Stalingrado', 'Paulus', 'Russia', 'Freddo', 'Macerie'],
+            ['Punto di svolta della guerra', 'Resistenza urbana totale', 'Accerchiamento della Sesta Armata', 'Inizio della ritirata nazista', 'Sacrificio di massa']
+        ),
+        (
+            "L'editto di Nantes di Enrico IV e la sua revoca con Fontainebleau",
+            'Analizza la concessione della libertà di culto agli ugonotti nel 1598 e la sua tragica revoca da parte di Luigi XIV nel 1685 con la fuga di centinaia di migliaia di artigiani.',
+            ['Enrico IV', 'Nantes', 'Luigi XIV', 'Revoca', 'Ugonotti'],
+            ['Editto di pacificazione di Nantes', 'Revoca assolutista di Fontainebleau', 'Emigrazione ugonotta di massa', 'Fanatismo economico distruttivo', 'Tolleranza fragile']
+        ),
+        (
+            "Il telegramma Zimmerman e l'ingresso degli Stati Uniti nella Grande Guerra",
+            "Il documento crittografato dell'impero tedesco che offriva un'alleanza al Messico contro Washington: l'intercettazione dell'intelligence che cambiò le sorti del 1917.",
+            ['Zimmerman', 'Messico', 'Telegramma', 'Wilson', 'Guerra 1917'],
+            ['Telegramma Zimmerman decifrato', 'Intercettazione Room 40', 'Ingresso statunitense nel conflitto', "Fine dell'isolazionismo", 'Svolta bellica']
+        ),
+        (
+            'La caduta di Costantinopoli sotto Maometto II (1453)',
+            "L'ultimo imperatore bizantino Costantino XI Paleologo cade combattendo sulle mura teodosiane: la fine dell'Impero Romano d'Oriente e la fuga dei dotti verso l'Italia.",
+            ['Costantinopoli', 'Maometto II', '1453', 'Turchi', 'Bisanzio'],
+            ['Caduta di Costantinopoli', "Fine dell'Impero bizantino millenario", 'Diaspora degli umanisti greci', 'Nascita del Rinascimento', 'Cambiamento geopolitico globale']
+        ),
+        (
+            "La primavera di Praga e l'autoimmolazione di Jan Palach (1969)",
+            "In piazza San Venceslao, lo studente ventenne si dà fuoco come torcia umana per risvegliare il popolo cecoslovacco dalla rassegnazione dopo l'invasione dei carri sovietici.",
+            ['Jan Palach', 'Praga', 'Torcia umana', 'Carri armati', 'URSS'],
+            ['Primavera di Praga soffocata', 'Autoimmolazione testimoniale', "Torcia umana contro l'oblio", 'Risveglio della coscienza', 'Martirio civile eroico']
+        ),
+        (
+            "L'Orazione per la Dignità Storica dell'Uomo",
+            "Pronuncia una requisitoria appassionata: la storia non è dominata dal fato cieco né dalle sole forze economiche, ma dall'insorgere insopprimibile della libertà morale degli individui.",
+            ['Economia sola', 'Destino', 'Siamo marionette', 'Storia decide tutto', 'Fine'],
+            ['Primato della libertà morale', 'Insubordinazione della coscienza', 'Rifiuto del fatalismo storico', "Magistero dell'Oratore Storico", "Trionfo dell'Esemplarità"]
+        ),
+    ],
+    "c1": [
+        (
+            'La storiografia come tribunale della memoria collettiva in Paul Ricoeur',
+            "Nel capolavoro La memoria, la storia, l'oblio, analizza la complessa dialettica tra il dovere di ricordare, il lavoro del lutto e il pericolo della strumentalizzazione politica del passato.",
+            ['Ricoeur', 'Memoria', 'Storia', 'Oblio', 'Perdonare'],
+            ['Ermeneutica ricœuriana della memoria', 'Dovere di memoria vigile', 'Giusta memoria versus abuso politico', 'Perdono difficile', 'Orizzonte testimoniale']
+        ),
+        (
+            'La teologia politica e il concetto di sovranità da Hobbes a Carl Schmitt',
+            "Esporrai la genealogia dello Stato moderno: tutti i concetti giuridici centrali derivano dalla secolarizzazione di dogmi teologici, culminando nella sovranità come decisione sullo stato d'eccezione.",
+            ['Hobbes', 'Schmitt', 'Sovranità', 'Eccezione', 'Dio e Stato'],
+            ['Teologia politica secolarizzata', 'Decisionismo schmittiano', 'Monopolio della decisione ultima', "Stato d'eccezione sovrano", 'Genealogia del potere moderno']
+        ),
+        (
+            "L'apologia machiavelliana del Principe e l'autonomia della politica",
+            "Dimostra come Niccolò Machiavelli non sia stato il maestro del male, ma il fondatore scientifico dell'autonomia della politica, svincolandola dalla subordinazione teologica e morale medievale.",
+            ['Machiavelli', 'Principe', 'Fine giustifica i mezzi', 'Cattivo', 'Morale'],
+            ['Autonomia della sfera politica', 'Verità effettuale della cosa', 'Virtù e Fortuna machiavelliana', 'Realismo politico secolare', 'Fondazione della scienza politica']
+        ),
+        (
+            "La dialettica dell'illuminismo di Horkheimer e Adorno di fronte ad Auschwitz",
+            "Spiega la drammatica tesi francofortese: la razionalità calcolante occidentale, nata per liberare l'uomo dal terrore della natura, si è rovesciata nell'amministrazione scientifica dello sterminio.",
+            ['Adorno', 'Horkheimer', 'Auschwitz', 'Illuminismo', 'Ragione'],
+            ["Dialettica dell'Illuminismo", 'Razionalità strumentale omicida', 'Inversione del mito nella ragione', 'Amministrazione del genocidio', 'Critica della civiltà occidentale']
+        ),
+        (
+            "L'umanesimo civile di Lorenzo Valla e la falsità della Donazione di Costantino",
+            "Nel 1440, attraverso l'analisi filologica dei termini latini anacronistici, dimostra che il documento che legittimava il potere temporale della Chiesa era un volgare falso medievale.",
+            ['Valla', 'Donazione di Costantino', 'Falso', 'Papa', 'Latino'],
+            ['Filologia come arma di verità', 'Umanesimo civile militante', 'Demistificazione documentaria', 'Decostruzione del potere temporale', 'Metodo critico moderno']
+        ),
+        (
+            'La concezione materialistica della storia e il feticismo delle merci in Karl Marx',
+            'Nel primo libro del Capitale, analizza come i rapporti sociali tra esseri umani assumano la forma spettrale e alienata di rapporti oggettivi tra cose e merci nel mercato.',
+            ['Marx', 'Capitale', 'Merci', 'Alienazione', 'Soldi'],
+            ['Feticismo della merce', 'Reificazione dei rapporti umani', "Valore d'uso versus valore di scambio", "Critica dell'economia politica", 'Materialismo storico']
+        ),
+        (
+            'La nascita della biopolitica e il governo dei viventi in Michel Foucault',
+            "Illustra il passaggio storico dal diritto sovrano di 'far morire o lasciar vivere' al potere biopolitico moderno di 'far vivere e lasciar morire' attraverso statistiche demografiche e sanitarie.",
+            ['Foucault', 'Biopolitica', 'Popolazione', 'Morte', 'Controllo'],
+            ['Dispositivo biopolitico foucaultiano', 'Governamentalità neoliberale', 'Gestione statistica delle popolazioni', 'Dal supplizio alla disciplina', 'Anatomia del biopotere']
+        ),
+        (
+            'La dottrina della ragion di Stato in Giovanni Botero e la controriforma',
+            'Analizza come il pensiero politico barocco abbia cercato di conciliare la conservazione del potere principesco con i precetti della morale cattolica contro il machiavellismo ateo.',
+            ['Botero', 'Ragion di Stato', 'Machiavelli', 'Controriforma', 'Chiesa'],
+            ['Ragion di Stato cattolica boteriana', 'Conservazione prudente dello Stato', "Conciliazione con l'ortodossia", 'Pragmatismo pastorale', 'Disputa politica seicentesca']
+        ),
+        (
+            "L'archetipo dell'Antico Regime e la sociologia del potere in Alexis de Tocqueville",
+            "Nell'Antico regime e la rivoluzione, dimostra che la Rivoluzione Francese non distrusse lo Stato monarchico, ma ne portò a compimento il disegno centralizzatore e burocratico.",
+            ['Tocqueville', 'Rivoluzione Francese', 'Antico Regime', 'Burocrazia', 'Re'],
+            ['Continuità amministrativa tocquevilliana', 'Centralizzazione statale precoce', 'Uniformità democratica', 'Decostruzione della frattura rivoluzionaria', 'Sociologia del potere']
+        ),
+        (
+            "L'aporia della tolleranza nell'Epistola de tolerantia di John Locke (1689)",
+            'Esamina i confini rigorosi della tolleranza lockiana: la libertà religiosa concessa a tutte le confessioni tranne agli atei (inaffidabili nei patti) e ai cattolici (fedeli a un sovrano straniero).',
+            ['Locke', 'Tolleranza', 'Atei', 'Cattolici', 'Religione'],
+            ['Epistola de tolerantia lockiana', 'Confine politico della tolleranza', 'Patto fiduciario tra cittadini', 'Separazione tra magistrato e cura animarum', 'Liberalismo originario']
+        ),
+        (
+            'La demistificazione del bonapartismo nel 18 Brumaio di Luigi Bonaparte di Marx',
+            "La celebre apertura: 'Hegel nota che tutti i grandi fatti e i grandi personaggi si presentano due volte. Ha dimenticato di aggiungere: la prima volta come tragedia, la seconda come farsa'.",
+            ['Marx', 'Brumaio', 'Napoleone', 'Tragedia e farsa', 'Hegel'],
+            ['Diciotto Brumaio marxiano', 'Bonapartismo e cesarismo reazionario', 'Ripetizione farsesca della storia', 'Rappresentanza del sottoproletariato', 'Critica del cesarismo']
+        ),
+        (
+            "La teoria dell'azione comunicativa di Jürgen Habermas contro la tecnocrazia",
+            "Dimostra come la sfera pubblica democratica sia costantemente minacciata dalla colonizzazione burocratica ed economica, riaffermando l'etica del discorso disinteressato.",
+            ['Habermas', 'Tecnocrazia', 'Comunicazione', 'Mondo della vita', 'Burocrazia'],
+            ["Teoria dell'agire comunicativo", 'Colonizzazione del mondo-della-vita', 'Sfera pubblica deliberativa', 'Validità argomentativa razionale', 'Emancipazione democratica']
+        ),
+        (
+            'Il concetto di guerra totale nel pensiero militare di Carl von Clausewitz',
+            "Nel trattato Della guerra, analizza l'assioma: 'La guerra non è che la continuazione della politica con altri mezzi', e l'ascesa inarrestabile verso la guerra assoluta senza limiti.",
+            ['Clausewitz', 'Guerra', 'Politica', 'Altri mezzi', 'Battaglia'],
+            ['Della guerra clausewitziano', 'Continuazione della politica con altri mezzi', 'Trinomio popolo-comandante-governo', 'Attrito e nebbia di guerra', 'Tendenza alla guerra assoluta']
+        ),
+        (
+            "La decostruzione del mito fondativo coloniale nell'Orientalismo di Edward Said",
+            "Come l'Occidente ha inventato discorsivamente e letterariamente l'Oriente come terra pigra, sensuale e barbara per giustificarne l'invasione militare e l'assoggettamento imperiale.",
+            ['Said', 'Orientalismo', 'Oriente', 'Arabi', 'Colonizzazione'],
+            ['Discorso orientalista egemonico', 'Rappresentazione imperiale distorcente', 'Decolonizzazione del sapere', 'Geografia immaginaria', 'Post-colonial studies']
+        ),
+        (
+            'La fine delle grandi narrazioni nella Condizione Postmoderna di Jean-François Lyotard',
+            'Nel rapporto del 1979, decreta la crisi definitiva delle metanarrazioni emancipative moderne (illuminismo, idealismo, marxismo) a favore della frammentazione pragmatica dei giochi linguistici.',
+            ['Lyotard', 'Postmoderno', 'Grandi narrazioni', 'Marxismo', 'Fine della storia'],
+            ['Condizione postmoderna', 'Incredulità verso le metanarrazioni', 'Giochi linguistici wittgensteiniani', 'Frammentazione dei saperi', "Tramonto dell'universalismo"]
+        ),
+        (
+            'Il carisma e i tre tipi di potere legittimo nella sociologia di Max Weber',
+            "Illustra i tre modelli di autorità: il potere tradizionale dell'eterno ieri, il potere razionale-legale dello Stato burocratico moderno, e il potere carismatico profetico insorgente.",
+            ['Weber', 'Carisma', 'Burocrazia', 'Potere', 'Re e capi'],
+            ['Tipologia weberiana del potere', 'Potere carismatico rivoluzionario', 'Autorità razionale-legale', 'Routinizzazione del carisma', 'Sociologia della dominazione']
+        ),
+        (
+            "L'enigma del collaborazionismo e la purificazione post-bellica: il caso Petain",
+            'Analizza il processo del 1945 al maresciallo Philippe Pétain, eroe di Verdun divenuto capo dello Stato fantoccio di Vichy complice delle deportazioni naziste.',
+            ['Petain', 'Vichy', 'Francia', 'Traditore', 'Collaborazionista'],
+            ['Regime di Vichy e collaborazionismo', 'Dramma della memoria divisa francese', 'Processo epocale a Pétain', 'Resistenza gollista gaullista', 'Epurazione giudiziaria']
+        ),
+        (
+            "La disobbedienza civile e l'obiezione di coscienza da Thoreau a Hannah Arendt",
+            'Analizza come la disobbedienza non sia un atto criminale privato, ma una dichiarazione pubblica politica compiuta alla luce del sole da una minoranza per correggere la rotta costituzionale.',
+            ['Thoreau', 'Arendt', 'Disobbedienza', 'Tasse', 'Prigione'],
+            ['Disobbedienza civile arendtiana', 'Azione pubblica concertata', 'Fedeltà costituzionale superiore', 'Rifiuto della complicità col male', 'Integrità politica']
+        ),
+        (
+            "L'antitesi amico-nemico come criterio del politico in Carl Schmitt",
+            "Nel saggio Il concetto di 'politico', dimostra che la sfera politica non è definita dalla morale o dall'economia, ma dalla possibilità reale del conflitto mortale tra raggruppamenti contrapposti.",
+            ['Schmitt', 'Amico e nemico', 'Guerra', 'Politica', 'Pace perpetua'],
+            ['Distinzione amico-nemico (Freund-Feind)', 'Essenza del politico schmittiana', 'Realismo conflittuale tragico', 'Critica del pacifismo liberale', 'Pluriverso politico globale']
+        ),
+        (
+            "L'Orazione per la Verità Storica contro i Negazionismi",
+            "Pronuncia una requisitoria implacabile contro ogni revisionismo ideologico e negazionismo della Shoah: i documenti d'archivio e le ceneri dei martiri sono baluardi insuperabili della Verità.",
+            ['Revisionisti', 'Negazionismo', 'Shoah finta', 'Archivi', 'Fine'],
+            ['Inviolabilità dei fatti storici', 'Baluardo documentario contro il negazionismo', 'Custodia testimoniale del lutto', 'Magistero della memoria veridica', 'Trionfo perenne della Verità storica']
+        ),
+    ],
+    "c2": [
+        (
+            "L'aporia dell'evento storico e l'Angelus Novus nelle Tesi di Walter Benjamin",
+            "Pronuncia una summa sulla IX tesi: l'angelo della storia col volto rivolto al passato che vede un'unica catastrofe ininterrotta dove noi vediamo il progresso, spinto in avanti dalla tempesta.",
+            ['Benjamin', 'Angelo della storia', 'Macerie', 'Progresso', 'Tempesta'],
+            ['Angelus Novus kleeiano', 'Tesi di filosofia della storia benjaminiane', 'Catastrofe cumulativa del progresso', 'Tempo-ora (Jetztzeit) messianico', 'Interruzione rivoluzionaria della rovina']
+        ),
+        (
+            'La genealogia della sovranità e la nuda vita nel campo di sterminio',
+            "Sviscera l'analisi di Giorgio Agamben: il campo di concentramento non come anomalia storica temporanea ma come nomos nascosto dello spazio politico della modernità biopolitica.",
+            ['Agamben', 'Campo', 'Nuda vita', 'Auschwitz', 'Eccezione'],
+            ['Campo come nomos della modernità', 'Spazio di eccezione sovrana permanente', 'Biopolitica estrema incarnata', 'Homo sacer contemporaneo', 'Decostruzione della sovranità statale']
+        ),
+        (
+            "L'ontologia del trauma e l'intraducibilità della Shoah in Claude Lanzmann",
+            "Analizza il film-monumento Shoah (1985): il rifiuto categorico di qualsiasi ricostruzione finzionale o spiegazione sociologica consolatoria, lasciando parlare solo l'abisso dei testimoni e dei luoghi.",
+            ['Lanzmann', 'Shoah film', 'Testimoni', 'Nessuna spiegazione', 'Treni'],
+            ['Intraducibilità del trauma ontologico', 'Rifiuto della finzione e della metafora', "Monumento dell'accertamento testimoniale", 'Topografia del massacro industriale', "Pudore assoluto dell'indicibile"]
+        ),
+        (
+            "La de-costruzione della filosofia della storia hegeliana: l'ironia di Schopenhauer",
+            'Attraverso Arthur Schopenhauer, demolisce la pretesa che la storia sia il progresso razionale dello Spirito verso la libertà, svelandola come il teatro insensato e doloroso della cieca Volontà.',
+            ['Hegel', 'Schopenhauer', 'Progresso', 'Spirito', 'Mondo cieco'],
+            ['Demolizione della teodicea storica', 'Storia come eterno presente doloroso', 'Cieca Volontà di vivere (Wille)', "Smascheramento dell'ottimismo hegeliano", 'Compassione tragica disillusa']
+        ),
+        (
+            "L'arcano dell'imperialismo e la radice del totalitarismo in Hannah Arendt",
+            "Ne Le origini del totalitarismo, ricostruisci la genesi dell'abisso novecentesco: dall'antisemitismo all'espansione imperialista della borghesia, fino alla dissoluzione dello Stato-nazione.",
+            ['Arendt', 'Totalitarismo', 'Imperialismo', 'Antisemitismo', 'Lager'],
+            ['Trilogia arendtiana fondamentale', 'Imperialismo ed espansione illimitata', 'Massa sradicata e atomizzata', 'Terrore totale come essenza di governo', 'Perdita del mondo comune']
+        ),
+        (
+            'La parresìa del tribuno e la condanna a morte di Cicerone',
+            'Evoca gli ultimi istanti del grande oratore nel 43 a.C.: Cicerone che sporge il collo dalla lettiga offrendolo alla spada dei sicari di Antonio, sigillando col proprio sangue la fine della libertà repubblicana.',
+            ['Cicerone', 'Sicari', 'Spada', 'Antonio', 'Morte'],
+            ['Martirio supremo della Repubblica', 'Collo sporto alla spada con dignità', 'Fine irrevocabile della libertas senatoria', 'Mani inchiodate ai Rostri', 'Immortalità della gloria oratoria']
+        ),
+        (
+            "L'archetipo del tirannicidio e la dottrina del De Tyranno di Coluccio Salutati",
+            "Analizza la riflessione dell'umanesimo fiorentino: è mai legittimo assassinare il sovrano che ha distrutto la libertà dei cittadini? Il dilemma tra pace dell'ordine e riscatto repubblicano.",
+            ['Tirannicidio', 'Salutati', 'Cesare', 'Uccidere il re', 'Firenze'],
+            ['De Tyranno umanistico', 'Legittimità del tirannicidio', 'Tyrannus absque titulo e in exercitio', 'Conflitto tra legalità e libertas', "Etica dell'insurrezione"]
+        ),
+        (
+            'La decostruzione del concetto di Rivoluzione: dal rivolgimento astronomico al salto politico',
+            "Analizza con Reinhart Koselleck la metamorfosi concettuale della parola 'rivoluzione': dal moto circolare immutabile dei pianeti al salto temporale irreversibile della modernità.",
+            ['Koselleck', 'Rivoluzione', 'Stelle', 'Tempo', 'Progresso'],
+            ['Begriffsgeschichte (storia dei concetti)', "Spazio di esperienza e orizzonte d'attesa", 'Mutamento semantico epocale', 'Accelerazione del tempo storico', "Crisi dell'ordine ciclico"]
+        ),
+        (
+            "L'archetipo dell'esilio e la figura dello straniero universale in Edward Said",
+            "Dal saggio Riflessioni sull'esilio: l'esilio non come mera privazione geografica, ma come condizione ontologica privilegiata per chi rifiuta ogni dogma nazionalista e abita criticamente il confine.",
+            ['Said', 'Esilio', 'Confine', 'Patria', 'Nazione'],
+            ["Condizione ontologica dell'esule", 'Sguardo contrappuntistico critico', 'Rifiuto del tribalismo identitario', 'Abitare la frontiera intellettuale', "Libertà dislocata dell'esilio"]
+        ),
+        (
+            'La dialettica della memoria divisa e le foibe nella storia adriatica',
+            "Affronta il dramma della frontiera orientale italiana: come la memoria del fascismo di confine e la violenza dell'epurazione titina abbiano generato una ferita memoriale decennale.",
+            ['Foibe', 'Titini', 'Fascismo', 'Trieste', 'Esuli'],
+            ['Dramma della frontiera adriatica', 'Memoria divisa e riconciliazione', 'Complessità storiografica del confine', "Tragedia dell'esodo giuliano-dalmata", 'Verità storica condivisa']
+        ),
+        (
+            "L'enigma del tempo storico e la teoria della crisi in Reinhart Koselleck",
+            'Nel saggio Critica e crisi, dimostra come la filosofia illuminista, separando radicalmente la morale dalla politica statale, abbia innescato la crisi permanente della modernità politica.',
+            ['Koselleck', 'Critica e crisi', 'Illuminismo', 'Stato', 'Segreto'],
+            ['Critica e crisi permanente', "Ipocrisia morale dell'illuminismo", 'Tribunale privato della coscienza', 'Frattura tra morale e governo', 'Genealogia della guerra civile']
+        ),
+        (
+            'La decostruzione del mito americano della frontiera (Frontier Thesis)',
+            "Analizza criticamente la tesi di Frederick Jackson Turner del 1893: l'espansione verso ovest come fucina della democrazia americana che ha cancellato sistematicamente la presenza indigena.",
+            ['Frontiera', 'Turner', 'West', 'Indiani', 'Pionieri'],
+            ['Decostruzione del mito della frontiera', 'Eccezionismo americano criticato', 'Genocidio dei popoli nativi', 'Dottrina del destino manifesto', 'Violenza coloniale interna']
+        ),
+        (
+            "L'archetipo del sacrificio civile in Don Lorenzo Milani: L'obbedienza non è più una virtù",
+            "Ripercorri la lettera ai cappellani militari del 1965: la difesa dell'obiezione di coscienza contro la guerra atomica, affermando che la vera fedeltà alla Costituzione esige il dissenso.",
+            ['Don Milani', 'Obbedienza', 'Cappellani', 'Militari', 'Barbiana'],
+            ["L'obbedienza non è più una virtù", "Inviolabilità dell'obiezione di coscienza", 'Lezione pedagogica di Barbiana', 'Primato del Vangelo e della Costituzione', 'Coraggio della disobbedienza']
+        ),
+        (
+            'Il silenzio di Pio XII e la controversia vaticana durante la Shoah',
+            'Metti a confronto la diplomazia della prudenza volta a tutelare i cattolici e la mancata scomunica pubblica del nazismo con la rete clandestina di conventi che salvarono migliaia di perseguitati.',
+            ['Pio XII', 'Vaticano', 'Silenzio', 'Hitler', 'Salvare ebrei'],
+            ['Controversia storiografica pacelliana', 'Prudenza diplomatica vaticana', 'Rete clandestina di soccorso conventuale', 'Dilemma del vertice spirituale', 'Giudizio della storia']
+        ),
+        (
+            "L'antitesi tra diritto cosmopolitico e sovranità vestfaliana nella crisi globale",
+            "Dimostra l'inadeguatezza mortale dell'ordine scaturito dalla pace di Vestfalia del 1648 di fronte ai rischi sistemici planetari (guerra atomica, collasso climatico, pandemie).",
+            ['Vestfalia', '1648', 'Stati sovrani', 'Confini', 'ONU debole'],
+            ["Crisi dell'ordine vestfaliano", 'Urgenza del costituzionalismo planetario', 'Ineffettività della sovranità parcellizzata', 'Sfide esistenziali globali', 'Trascendenza cosmopolitica']
+        ),
+        (
+            'La teologia della liberazione e il martirio di Óscar Arnulfo Romero',
+            "Nel 1980, mentre celebra l'eucaristia a San Salvador, l'arcivescovo viene assassinato dagli squadroni della morte per aver intimato ai soldati: 'In nome di Dio, vi prego, vi scongiuro: cessi la repressione!'.",
+            ['Romero', 'San Salvador', 'Squadroni della morte', 'Messa', 'Ucciso'],
+            ['Martirio profetico di Romero', 'Teologia della liberazione latinoamericana', 'In nome di Dio cessi la repressione', 'Opzione preferenziale per i poveri', 'Santità civile incorruttibile']
+        ),
+        (
+            'La fine del colonialismo e i dannati della terra di Frantz Fanon',
+            "Nel saggio del 1961 prefato da Sartre, analizza la violenza decolonizzatrice come prassi disintossicante attraverso cui l'oppresso si libera dalla nevrosi dell'inferiorità imposta dall'invasore.",
+            ['Fanon', 'Dannati della terra', 'Sartre', 'Algeria', 'Coloni'],
+            ['Psichiatria coloniale decolonizzata', 'Dannati della terra fanoniani', "Violenza catartica dell'oppresso", 'Riconquista della dignità negata', "Oltre l'umanesimo ipocrita"]
+        ),
+        (
+            "L'enigma del perdono politico e la Commissione Verità e Riconciliazione (TRC)",
+            "Attraverso Desmond Tutu e Nelson Mandela, analizza l'Ubuntu applicato alla giustizia transizionale: come confessare pubblicamente la tortura possa sanare la lacerazione senza la vendetta del capestro.",
+            ['Tutu', 'Mandela', 'TRC', 'Confessione', 'Apartheid'],
+            ['Commissione Verità e Riconciliazione', 'Concetto etico di Ubuntu', 'Giustizia transizionale senza forca', 'Guarigione pubblica della memoria', 'Miracolo democratico sudafricano']
+        ),
+        (
+            "L'apologia della verità documentale contro la menzogna del potere",
+            "Evoca la figura storica di chi ha custodito gli archivi clandestini (l'archivio Oyneg Shabbos nel ghetto di Varsavia di Emanuel Ringelblum sepolto nei bidoni di latte sotto le macerie).",
+            ['Ringelblum', 'Ghetto di Varsavia', 'Bidoni di latte', 'Archivio sepolto', 'Ceneri'],
+            ['Archivio clandestino Ringelblum', 'Oyneg Shabbos nella notte del ghetto', 'Scrittura come trincea estrema', "Vittoria dell'archivio sull'annientamento", 'Sacralità della prova documentale']
+        ),
+        (
+            "L'Inno all'Umanità Storica: il Giuramento dell'Oratore del Tempo",
+            "Chiudi il magistero di Grandi Figure e Storia: gli oratori muoiono, le corone dei tiranni cadono nella polvere, ma la parola che difende la libertà dell'uomo risuonerà per l'eternità.",
+            ['Fine', 'Tiranni', 'Polvere', 'Voce', 'Libertà'],
+            ['Apoteosi della libertà storica', "Giuramento dell'Oratore del Tempo", "Inno all'umanità insorta", 'Trionfo perenne del Verbo testimoniale', 'Eternità della Giustizia e della Memoria']
+        ),
+    ],
+}

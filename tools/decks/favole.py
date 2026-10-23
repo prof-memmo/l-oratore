@@ -1,0 +1,737 @@
+# Mazzo: favole
+# 120 carte uniche calibrate pedagogicamente da A1 a C2 (20 carte per livello)
+
+CARDS = {
+    "a1": [
+        (
+            "La volpe e l'uva troppo alta",
+            "Sei la volpe affamata che salta per prendere il grappolo d'uva matura ma non ci arriva. Spiega perché dire 'tanto è acerba' è solo una scusa.",
+            ['Volpe', 'Uva', 'Saltare', 'Acerba', 'Fame'],
+            ['Scusa', 'Tentativo', 'Pazienza', 'Verità', 'Grappolo']
+        ),
+        (
+            'La lepre vanitosa e la tartaruga saggia',
+            "Sei la tartaruga che cammina piano un passo dopo l'altro. Supera la lepre che dorme all'ombra spiegando il valore della costanza.",
+            ['Lepre', 'Tartaruga', 'Corsa', 'Dormire', 'Vincere'],
+            ['Costanza', 'Passo lento', 'Traguardo', 'Umiltà', 'Trionfo']
+        ),
+        (
+            'La cicala canterina e la formica lavoratrice',
+            "Sei la cicala che ha cantato tutta l'estate e bussi alla porta della formica d'inverno. Chiedi scusa e offriti di rallegrare la tana con la tua musica.",
+            ['Cicala', 'Formica', 'Inverno', 'Neve', 'Mangiare'],
+            ['Musica', 'Lavoro', 'Scambio', 'Accoglienza', 'Armonia']
+        ),
+        (
+            'Il lupo travestito da pecora',
+            'Sei il pastore che riconosce il lupo sotto il vello di lana guardando i suoi occhi furbi. Spiega ai compagni come riconoscere le bugie.',
+            ['Lupo', 'Pecora', 'Vello', 'Lana', 'Fame'],
+            ['Maschera', 'Verità', 'Occhi', 'Attenzione', 'Smascherare']
+        ),
+        (
+            'Il brutto anatroccolo nello stagno',
+            "Sei l'anatroccolo preso in giro da tutti che si specchia nell'acqua e scopre di essere diventato un bellissimo cigno bianco. Racconta la tua gioia.",
+            ['Anatroccolo', 'Brutto', 'Cigno', 'Stagno', 'Ridere'],
+            ['Meraviglia', 'Piume bianche', 'Volo', 'Bellezza', 'Accettazione']
+        ),
+        (
+            'I tre porcellini e la casa di mattoni',
+            'Sei il porcellino saggio che ha faticato a costruire la casa con mattoni e cemento. Accogli i fratellini spaventati mentre il lupo soffia fuori.',
+            ['Porcellini', 'Lupo', 'Mattoni', 'Soffiare', 'Paglia'],
+            ['Solido', 'Sicurezza', 'Fatica', 'Camino', 'Protezione']
+        ),
+        (
+            'Cappuccetto Rosso e il sentiero fiorito',
+            'Sei Cappuccetto Rosso che incontra il lupo nel bosco. Spiega perché non bisogna mai fidarsi degli sconosciuti che offrono scorciatoie.',
+            ['Cappuccetto', 'Lupo', 'Bosco', 'Nonna', 'Scorciatoia'],
+            ['Prudenza', 'Sentiero', 'Consiglio', 'Fiori', 'Attenzione']
+        ),
+        (
+            'Il gatto con gli stivali e il re',
+            'Sei il gatto con gli stivali. Presentati alla corte reale offrendo doni prelibati a nome del marchese di Carabas.',
+            ['Gatto', 'Stivali', 'Re', 'Carabas', 'Topo'],
+            ['Astuzia', 'Regalo', 'Eleganza', 'Corte', 'Fedeltà']
+        ),
+        (
+            'Hansel e Gretel davanti alla casetta di marzapane',
+            'Sei Gretel che vede la casina fatta di cioccolato e caramelle. Metti in guardia tuo fratello dal mangiare le pareti fatate nel bosco buio.',
+            ['Hansel', 'Gretel', 'Marzapane', 'Strega', 'Cioccolato'],
+            ['Trappola', 'Prudenza', 'Fame', 'Bosco', 'Intelligenza']
+        ),
+        (
+            'Cenerentola e la scarpetta di cristallo',
+            'Sei Cenerentola che corre via dal ballo mentre batte mezzanotte. Racconta la magia del ballo e la scarpetta persa sulla scalinata.',
+            ['Cenerentola', 'Scarpetta', 'Mezzanotte', 'Principe', 'Ballo'],
+            ['Cristallo', 'Scalinata', 'Magia', 'Zucca', 'Speranza']
+        ),
+        (
+            'Pollicino e i sassolini bianchi nella notte',
+            'Sei Pollicino che lascia cadere sassolini bianchi al chiaro di luna per ritrovare la strada di casa con i tuoi fratelli.',
+            ['Pollicino', 'Sassi', 'Pane', 'Uccelli', 'Bosco'],
+            ['Luna', 'Traccia', 'Luce', 'Salvezza', 'Intelligenza']
+        ),
+        (
+            'La bella addormentata e il fuso della discordia',
+            'Sei la fata buona che trasforma il sortilegio della morte in un lungo sonno centenario fino al bacio del vero amore.',
+            ['Addormentata', 'Fuso', 'Puntura', 'Strega', 'Dormire'],
+            ['Incantesimo', 'Fata', 'Rose', 'Risveglio', 'Speranza']
+        ),
+        (
+            'Il pifferaio magico di Hamelin',
+            'Sei il pifferaio che suona una melodia per liberare la città dai topi. Spiega al sindaco perché i patti e le promesse vanno sempre mantenuti.',
+            ['Pifferaio', 'Topi', 'Musica', 'Sindaco', 'Soldi'],
+            ['Promessa', 'Melodia', 'Patto', 'Giustizia', 'Fiducia']
+        ),
+        (
+            'Il principe ranocchio nello stagno',
+            "Sei il ranocchio parlante che restituisce la palla d'oro alla principessa. Chiedile con gentilezza di mantenere la parola data.",
+            ['Ranocchio', "Palla d'oro", 'Pozzo', 'Bacio', 'Principessa'],
+            ['Promessa', 'Dono', 'Gentilezza', 'Parola', 'Incantesimo']
+        ),
+        (
+            'Aladino e la lampada magica',
+            'Sei Aladino che sfrega la vecchia lampada di rame nella caverna delle meraviglie. Esprimi il tuo primo desiderio generoso per aiutare tua madre.',
+            ['Aladino', 'Lampada', 'Genio', 'Desiderio', 'Oro'],
+            ['Generosità', 'Magia', 'Fumo', 'Aiuto', 'Madre']
+        ),
+        (
+            'Il soldatino di piombo dal cuore saldo',
+            'Sei il soldatino di piombo con una gamba sola. Spiega alla ballerina di carta come il coraggio risieda nel cuore e non nelle apparenze.',
+            ['Soldatino', 'Piombo', 'Gamba sola', 'Ballerina', 'Fuoco'],
+            ['Cuore saldo', 'Fedeltà', 'Coraggio', 'Amore', 'Dignità']
+        ),
+        (
+            'I musicanti di Brema sul davanzale',
+            "Sei l'asino che tiene in groppa il cane, il gatto e il gallo. Spiega come quattro animali vecchi ed emarginati abbiano messo in fuga i briganti.",
+            ['Asino', 'Cane', 'Gatto', 'Gallo', 'Briganti'],
+            ['Musica', 'Unione', 'Squadra', 'Astuzia', 'Libertà']
+        ),
+        (
+            'Biancaneve e la mela avvelenata',
+            'Sei Biancaneve che guarda la mela rossa e lucente offerta dalla vecchia mendicante. Ascolta il battito del cuore prima di morderla.',
+            ['Biancaneve', 'Mela', 'Rossa', 'Strega', 'Veleno'],
+            ['Sospetto', 'Inganno', 'Bellezza', 'Prudenza', 'Avviso']
+        ),
+        (
+            "Raperonzolo e la lunga treccia d'oro",
+            "Sei Raperonzolo prigioniera nell'alta torre senza porte. Sciogli la tua treccia dorata per far salire chi ti porta un canto di libertà.",
+            ['Raperonzolo', 'Treccia', 'Torre', 'Capelli', 'Strega'],
+            ['Canto', 'Libertà', 'Oro', 'Finestra', 'Speranza']
+        ),
+        (
+            'Il libro delle fiabe richiuso con cura',
+            'Concludi il viaggio delle fiabe infantili: spiega come i draghi e le streghe nelle storie servano a insegnarci che ogni paura può essere vinta.',
+            ['Fiaba', 'Drago', 'Paura', 'Libro', 'Fine'],
+            ['Insegnamento', 'Coraggio', 'Vittoria', 'Magia interiore', 'Luce']
+        ),
+    ],
+    "a2": [
+        (
+            'Il topo di città e il topo di campagna',
+            'Sei il topolino di campagna che va a trovare il cugino nella ricca dispensa cittadina tra cani feroci e trappole. Spiega perché preferisci le ghiande in pace.',
+            ['Città', 'Campagna', 'Formaggio', 'Gatto', 'Paura'],
+            ['Pace', 'Semplicità', 'Libertà', 'Tranquillità', 'Scelta di vita']
+        ),
+        (
+            'La zuppa di sasso e la cooperazione del villaggio',
+            'Sei il viandante che mette a bollire un sasso in piazza invitando ciascun abitante ad aggiungere una carota, una patata o un pizzico di sale.',
+            ['Zuppa', 'Sasso', 'Pentola', 'Fame', 'Inganno'],
+            ['Condivisione', 'Cooperazione', 'Comunità', 'Festa comune', 'Generosità']
+        ),
+        (
+            "I vestiti nuovi dell'imperatore e il bambino veritiero",
+            "Tutti fingono di ammirare la stoffa invisibile del re per non sembrare stupidi. Sei il bambino tra la folla che grida: 'Il re è nudo!'.",
+            ['Re nudo', 'Imperatore', 'Vestiti', 'Stupido', 'Stoffa invisibile'],
+            ['Verità limpida', 'Candore', 'Ipocrisia sociale', 'Coraggio infantile', 'Smascheramento']
+        ),
+        (
+            "Il pescatore e il pesce d'oro parlante",
+            "Sei il povero pescatore che ha salvato il pesce d'oro. Spiega alla moglie ingorda perché volere sempre di più porta a perdere anche la vecchia capanna.",
+            ["Pesce d'oro", 'Moglie', 'Desideri', 'Ricco', 'Capanna'],
+            ['Avidità', 'Ingordigia', 'Misura', 'Gratitudine', 'Umiltà']
+        ),
+        (
+            'Il ciabattino felice e il banchiere insonne',
+            "Sei il ciabattino che canta mentre risuola le scarpe. Rifiuta la borsa d'oro del banchiere che ti toglieva il sonno e la serenità.",
+            ['Ciabattino', 'Banchiere', 'Oro', 'Dormire', 'Canto'],
+            ['Serenità interiore', 'Libertà dal denaro', 'Lavoro onesto', 'Pace mentale', 'Spensieratezza']
+        ),
+        (
+            'Pinocchio e il campo dei miracoli con la Volpe e il Gatto',
+            "Sei Pinocchio che ha sotterrato i quattro zecchini credendo all'albero delle monete. Avverti i ragazzi sulle facili illusioni dei truffatori.",
+            ['Pinocchio', 'Zecchini', 'Gatto e Volpe', 'Campo dei miracoli', 'Monete'],
+            ['Falsa promessa', 'Inganno', 'Lavoro onesto', 'Illusione facile', 'Maturazione']
+        ),
+        (
+            'La spada nella roccia e il giovane Artù',
+            'Sei il giovane sguattero Artù che estrae con disinvoltura la spada incantata che nessun cavaliere muscoloso era riuscito a muovere.',
+            ['Spada', 'Roccia', 'Artù', 'Re', 'Magia'],
+            ['Purezza di cuore', 'Destino regale', 'Umiltà', 'Forza morale', 'Giustizia']
+        ),
+        (
+            'La fata Turchina e il valore dello studio',
+            'Sei la fata dai capelli turchini che spiega al burattino perché la scuola e il sacrificio costruiscono la libertà di un vero uomo.',
+            ['Fata Turchina', 'Burattino', 'Scuola', 'Studiare', 'Paese dei Balocchi'],
+            ['Crescita', 'Responsabilità', 'Emancipazione', 'Amore educativo', 'Umanità']
+        ),
+        (
+            'Il bosco delle fate e la leggenda di Robin Hood',
+            'Sei Robin Hood nella foresta di Sherwood. Raduna i compagni per spiegare perché togliere ai ricchi avari per dare ai poveri affamati è un dovere.',
+            ['Robin Hood', 'Sherwood', 'Rubare', 'Sceriffo', 'Poveri'],
+            ['Giustizia riparativa', 'Solidarietà silvana', "Resistenza all'avido", 'Dignità degli umili', 'Fratellanza']
+        ),
+        (
+            'La piccola fiammiferaia nella notte di Capodanno',
+            'Sei la bimba infreddolita che accende i fiammiferi contro il muro gelido. Racconta le visioni calde di stufe e alberi di Natale che illuminano la notte.',
+            ['Fiammiferaio', 'Freddo', 'Neve', 'Capodanno', 'Morire'],
+            ['Calore', "Visione d'amore", 'Compassione', 'Luce nel gelo', "Dignità dell'inerme"]
+        ),
+        (
+            'La lampada meravigliosa e il genio imprigionato',
+            'Sei il genio della lampada che ha passato mille anni chiuso nel metallo. Ringrazia Aladino promettendo di usare i poteri magici per il bene.',
+            ['Genio', 'Lampada', 'Mille anni', 'Prigione', 'Potere'],
+            ['Liberazione', 'Gratitudine cosmica', 'Servizio nobile', 'Fine della cattività', 'Amicizia sincera']
+        ),
+        (
+            'Il mito del Minotauro dal punto di vista del mostro',
+            'Sei il Minotauro solo al centro del labirinto buio. Spiega la tua tristezza per essere stato condannato a fare paura senza colpa.',
+            ['Minotauro', 'Mostro', 'Mangiare uomini', 'Labirinto', 'Teseo'],
+            ['Solitudine oscura', 'Condanna innocente', 'Diversità ferita', 'Tristezza del mostro', 'Comprensione']
+        ),
+        (
+            'Il leone riconoscente e la spina nella zampa',
+            "Sei il fiero leone che risparmia lo schiavo Androclo nell'arena del circo, ricordando il giorno in cui gli tolse la dolorosa spina.",
+            ['Leone', 'Androclo', 'Arena', 'Spina', 'Zampa'],
+            ['Gratitudine animale', 'Pietà antica', 'Riconoscenza reciproca', 'Fratellanza', 'Salvezza']
+        ),
+        (
+            "La fanciulla dalle mani d'oro e il re cieco",
+            "Una fanciulla guarisce il regno con la generosità delle sue carezze. Dimostra come la bontà d'animo valga più di tutte le fortezze armate.",
+            ["Mani d'oro", 'Re', 'Guarire', 'Regno', 'Guerra'],
+            ['Cura universale', 'Grazia pacificatrice', 'Bontà disarmata', 'Luce terapeutica', 'Concordia']
+        ),
+        (
+            "L'usignolo dell'imperatore e la gabbia d'oro",
+            'Sei il piccolo usignolo grigio che vola via dalla gabbia tempestata di diamanti. Spiega al sovrano che il canto vero nasce solo in libertà.',
+            ['Usignolo', "Gabbia d'oro", 'Diamanti', 'Imperatore', 'Canto'],
+            ['Libertà essenziale', 'Canto spontaneo', 'Rifiuto della prigione dorata', 'Natura viva', 'Autenticità']
+        ),
+        (
+            'Il drago che non voleva bruciare i villaggi',
+            'Sei un giovane drago che ama raccogliere margherite e cucinare torte con il suo soffio tiepido invece di distruggere castelli.',
+            ['Drago', 'Fuoco', 'Bruciare', 'Villaggio', 'Cavaliere'],
+            ['Pace inattesa', 'Rifiuto della violenza', 'Gentilezza fiammeggiante', 'Amicizia nuova', 'Stereotipo superato']
+        ),
+        (
+            'La leggenda della sirena Partenope e il golfo',
+            "Sei la sirena Partenope che sceglie di adagiarsi sull'isolotto di Megaride per donare la sua bellezza e la sua voce eterna alla città di Napoli.",
+            ['Partenope', 'Sirena', 'Napoli', 'Golfo', 'Morta'],
+            ['Fondazione mitica', 'Canto eterno', 'Custodia marina', 'Bellezza del golfo', 'Origine sacra']
+        ),
+        (
+            'Il re corvo e il mantello di piume nere',
+            'Un principe trasformato in corvo insegna alla corte la modestia e il rispetto per tutti gli esseri alati prima di ritrovare la forma umana.',
+            ['Corvo', 'Piume nere', 'Re', 'Brutto', 'Incantesimo'],
+            ['Lezione di modestia', "Sguardo dall'alto", 'Metamorfosi salvifica', 'Regalità umile', 'Disincanto']
+        ),
+        (
+            'La bottega dei sogni smarriti',
+            'Sei il vecchio orologiaio che ripara i desideri dimenticati nei cassetti dei bambini. Invita la classe a non smettere mai di sognare.',
+            ['Bottega', 'Sogni', 'Bambini', 'Dimenticare', 'Orologio'],
+            ['Custodia dei desideri', 'Riparazione del cuore', 'Speranza operosa', 'Fantasia viva', 'Futuro aperto']
+        ),
+        (
+            'Il manifesto dei narratori di fiabe',
+            'Concludi il percorso: le fiabe non raccontano ai bambini che i mostri esistono, perché i bambini lo sanno già. Le fiabe dicono che i mostri si possono sconfiggere.',
+            ['Fiaba', 'Mostri', 'Paura', 'Bambini', 'Vincere'],
+            ['Sconfitta del mostro', 'Pedagogia del coraggio', 'Luce simbolica', 'Vittoria del bene', 'Memoria incantata']
+        ),
+    ],
+    "b1": [
+        (
+            'Gli archetipi narrativi nella Morfologia della fiaba di Propp',
+            'Presenta alla classe le funzioni fisse individuate da Vladimir Propp: dal danneggiamento iniziale al ruolo del donatore, fino alle nozze finali.',
+            ['Propp', 'Funzioni', 'Favola', 'Schema', 'Eroe'],
+            ['Morfologia fiabesca', 'Struttura proppiana', 'Oggetto magico donato', 'Danneggiamento iniziale', 'Equilibrio ristabilito']
+        ),
+        (
+            'La fattoria degli animali di George Orwell e la degenerazione del potere',
+            "Sei il maiale Napoleone o l'onesto cavallo Boxer: analizza come l'utopia dell'uguaglianza si trasformi nel dogma: 'Tutti gli animali sono uguali, ma alcuni sono più uguali degli altri'.",
+            ['Orwell', 'Fattoria', 'Maiali', 'Napoleone', 'Boxer'],
+            ['Satira del totalitarismo', 'Corruzione del potere', 'Tradimento della rivoluzione', 'Sfruttamento ideologico', 'Decostruzione della propaganda']
+        ),
+        (
+            'Pinocchio e il dramma della metamorfosi in asino',
+            'Sei Collodi che descrive il Paese dei Balocchi: come la fuga infantile da ogni dovere e disciplina si paghi con la bestializzazione e la perdita della parola.',
+            ['Pinocchio', 'Balocchi', 'Asino', 'Orecchie', 'Collodi'],
+            ['Bestializzazione regressiva', "Inganno dell'ozio facile", 'Perdita della parola umana', "Prezzo dell'alienazione", 'Riscatto morale']
+        ),
+        (
+            "Lo specchio delle brame e l'ossessione narcisistica",
+            "Analizza la regina cattiva di Biancaneve: l'incapacità patologica di accettare il trascorrere del tempo e la giovinezza altrui attraverso il consulto dello specchio.",
+            ['Specchio', 'Regina', 'Più bella del reame', 'Invidia', 'Vecchia'],
+            ['Fissazione narcisistica', "Terrore dell'invecchiamento", 'Invidia distruttiva', 'Specchio oracolare', "Alienazione dell'immagine"]
+        ),
+        (
+            "La Bella e la Bestia: la vittoria dell'interiorità sull'apparenza",
+            'Difendi la scelta di Belle che impara ad amare la Bestia per la sua gentilezza e cultura, disprezzando la bellezza vuota e violenta del cacciatore Gaston.',
+            ['Belle', 'Bestia', 'Gaston', 'Mostro', 'Castello'],
+            ["Primato dell'interiorità", "Rifiuto dell'apparenza fisica", 'Amore disinteressato', 'Bellezza morale', "Metamorfosi dell'animo"]
+        ),
+        (
+            'Il lupo cattivo e la colpevolizzazione della vittima',
+            "Decostruisci il lupo delle favole: metafora delle paure ancestrali dell'uomo verso la selva oscura e l'ignoto, o incarnazione della violenza predatoria del più forte?",
+            ['Lupo', 'Cattivo', 'Paura', 'Mangiare', 'Bosco'],
+            ['Archetipo predatorio', 'Proiezione delle ombre psichiche', 'Metafora del pericolo', 'Forza ferina', 'Decodifica simbolica']
+        ),
+        (
+            "L'ombra di Peter Pan e il rifiuto di crescere (Puer Aeternus)",
+            "Sei Peter Pan sull'Isola che non c'è. Dibatti con Wendy: restare per sempre bambini in un gioco senza responsabilità o accettare il rischio doloroso dell'età adulta?",
+            ['Peter Pan', 'Wendy', "Isola che non c'è", 'Bambino per sempre', 'Crescere'],
+            ['Sindrome del Puer Aeternus', 'Rifiuto della temporalità', "Nostalgia dell'infanzia pura", 'Dovere della maturazione', 'Lacerazione biografica']
+        ),
+        (
+            'Il mito del Golem di Praga e la creatura senza parola',
+            "Ripercorri la leggenda del rabbino Loew: plasmare il gigante d'argilla per proteggere la comunità perseguitata dal ghetto, e il terrore quando il gigante sfugge al controllo.",
+            ['Golem', 'Praga', 'Argilla', 'Rabbino', 'Fango'],
+            ["Automa d'argilla cabalistico", 'Protezione dei perseguitati', 'Perdita del controllo demiurgico', 'Parola animatrice Emet', 'Responsabilità della creazione']
+        ),
+        (
+            "La metamorfosi kafkiana: Gregor Samsa e l'insetto ripugnante",
+            'Svegliatosi una mattina trasformato in un enorme scarafaggio, descrivi non il mostro fisico ma il rifiuto e la vergogna della famiglia borghese verso il figlio improduttivo.',
+            ['Kafka', 'Scarafaggio', 'Gregor Samsa', 'Famiglia', 'Lavoro'],
+            ['Alienazione lavorativa kafkiana', 'Ripulsa familiare borghese', "Mostruosità dell'inutilità", 'Incomunicabilità corporea', 'Dramma della solitudine']
+        ),
+        (
+            'Il mantello di Arlecchino e la policromia della miseria',
+            'Spiega la leggenda teatrale: la maschera povera che non potendo comprare un abito riceve dagli altri bambini scampoli di stoffe diverse cucite insieme con amore.',
+            ['Arlecchino', 'Carnevale', 'Stoffa', 'Colori', 'Povero'],
+            ['Policromia comunitaria', 'Dignità della pezzatura', "Commedia dell'arte", 'Solidarietà degli scarti', 'Invenzione teatrale']
+        ),
+        (
+            "La sirenetta di Andersen: il prezzo della voce per avere un'anima",
+            "A differenza della versione edulcorata dei cartoni, racconta il sacrificio tragico: camminare sui coltelli e rinunciare alla voce melodiosa per conquistare un'anima immortale.",
+            ['Sirenetta', 'Voce', 'Coltelli', 'Principe', 'Muta'],
+            ['Tragedia anderseniana', 'Anima immortale conquistata', 'Dolore del passo umano', 'Amore disarmato estremo', 'Schiuma del mare']
+        ),
+        (
+            "Il drago di Fafnir e la maledizione dell'oro del Reno",
+            "Nella saga dei Nibelunghi, il gigante Fafnir si trasforma in drago mostruoso dopo aver assassinato il padre per custodire il tesoro maledetto. Denuncia l'avarizia.",
+            ['Fafnir', 'Drago', 'Oro', 'Nibelunghi', 'Sigfrido'],
+            ["Metamorfosi dell'avidità", "Maledizione dell'oro accumulato", 'Custodia mostruosa del tesoro', "Corruzione dell'anima", 'Saga nordica']
+        ),
+        (
+            'La regina delle nevi e il frammento di specchio nel cuore',
+            "Il piccolo Kay diventa freddo, cinico e crudele perché una scheggia dello specchio del diavolo gli è entrata nell'occhio e nel cuore. Celebra le lacrime di Gerda.",
+            ['Regina delle nevi', 'Kay', 'Gerda', 'Ghiaccio', 'Specchio rotto'],
+            ['Anestesia affettiva del cuore', 'Scheggia di cinismo', 'Lacrime calde liberatrici', 'Fedeltà indomita', "Redenzione dell'amore"]
+        ),
+        (
+            'I viaggi di Gulliver a Lilliput e tra i giganti di Brobdingnag',
+            "Sei Jonathan Swift che usa la favola satirica per ridicolizzare le guerre di religione tra chi rompe l'uovo dalla parte larga o stretta. Esalta la ragione.",
+            ['Gulliver', 'Lilliput', 'Swift', 'Piccoli', 'Uovo'],
+            ['Satira politica swiftiana', 'Futilità dei fanatismi umani', 'Relatività della grandezza', 'Misanthropia illuminata', 'Ironia sferzante']
+        ),
+        (
+            'Il principe felice di Oscar Wilde e la rondine generosa',
+            "La statua dorata del principe fa spogliare le sue foglie d'oro e i suoi occhi di zaffiro dalla rondine per sfamare i poveri della città prima di morire congelati.",
+            ['Principe felice', 'Wilde', 'Rondine', 'Oro', 'Zaffiri'],
+            ['Altruismo sublime', 'Spoliazione della ricchezza', 'Compassione per gli ultimi', 'Morte nel gelo', 'Immortalità spirituale']
+        ),
+        (
+            "Il flauto magico di Mozart: la prova del fuoco e dell'acqua",
+            "Tamino e Pamina attraversano le fiamme e i flutti guidati dal suono melodioso del flauto d'oro. Illustra il cammino iniziatico massonico verso la Luce.",
+            ['Flauto magico', 'Mozart', 'Tamino', 'Pamina', 'Regina della notte'],
+            ['Iniziazione solare mozartiana', "Vittoria della luce sull'oscurità", 'Musica come scudo sacro', 'Amore purificato dalle prove', 'Sapienza di Sarastro']
+        ),
+        (
+            "L'archetipo della selva oscura in Dante e nelle fiabe popolari",
+            'Perché ogni favola e ogni poema morale inizia sempre nel mezzo di una selva oscura dove la diritta via è smarrita? Analizza il bosco come spazio della crisi feconda.',
+            ['Selva oscura', 'Dante', 'Smarrito', 'Bosco', 'Paura'],
+            ['Spazio liminare della crisi', "Perdita dell'orientamento etico", 'Bosco iniziatico universale', 'Necessità dello smarrimento', 'Cammino di rinascita']
+        ),
+        (
+            'La leggenda della Fenice araba che rinasce dalle ceneri',
+            'Descrivi il maestoso uccello di porpora che costruisce il nido con erbe aromatiche e si lascia consumare dal sole per rinascere più splendente. Celebra la resilienza.',
+            ['Fenice', 'Cenere', 'Fuoco', 'Rinascere', 'Uccello'],
+            ['Simbolo universale di palingenesi', 'Resilienza indistruttibile', 'Fuoco purificatore', 'Immortalità ciclica', 'Vittoria sulla fine']
+        ),
+        (
+            'La spada Excalibur e il richiamo della Dama del Lago',
+            "Re Artù morente ordina a Bedivere di gettare la spada magica nelle acque. Il braccio fatato vestito di bianco sciamito che l'afferra e la trascina negli abissi.",
+            ['Excalibur', 'Artù', 'Lago', 'Spada', 'Gettare'],
+            ['Restituzione del potere magico', 'Dama del Lago ancestrale', "Fine dell'epopea di Camelot", 'Morte regale verso Avalon', 'Circolarità del mito']
+        ),
+        (
+            "L'arringa dell'Oratore Simbolico: il risveglio dell'Archetipo",
+            "Pronuncia un'orazione che mostri come le fiabe custodiscano i codici segreti della psiche umana, guidandoci nel buio verso la liberazione interiore.",
+            ['Favole', 'Bambini', 'Simboli', 'Mente', 'Fine'],
+            ['Custodia degli archetipi universali', 'Magistero della narrazione simbolica', 'Luce nella selva della vita', 'Decifrazione del sacro favolistico', 'Trionfo perenne del Logos narrativo']
+        ),
+    ],
+    "b2": [
+        (
+            'La psicoanalisi delle fiabe di Bruno Bettelheim: Il mondo incantato',
+            'Dimostra come le fiabe tradizionali permettano al bambino di affrontare le proprie angosce inconsce (abbandono, distruzione, rivalità fraterna) proiettandole su figure simboliche esterne.',
+            ['Bettelheim', 'Bambini', 'Inconscio', "Paura dell'abbandono", 'Psicoanalisi'],
+            ['Ermeneutica bettelheimiana', 'Proiezione delle pulsioni inconsce', "Elaborazione simbolica dell'angoscia", 'Integrazione psichica infantile', 'Funzione terapeutica della fiaba']
+        ),
+        (
+            "L'archetipo dell'Ombra junghiana nelle fiabe e nel doppelgänger",
+            "Analizza come il lupo, l'orco o la matrigna crudele rappresentino l'Ombra: la parte rimossa, oscura e negata della personalità che l'eroe deve integrare per compiere l'individuazione.",
+            ['Jung', 'Ombra', 'Lupo', 'Matrigna', 'Inconscio'],
+            ["Archetipo dell'Ombra junghiana", 'Processo di individuazione', 'Integrazione del rimosso', 'Doppelgänger simbolico', 'Totalità psichica']
+        ),
+        (
+            'La demistificazione della fiaba borghese nel teatro di Bertolt Brecht',
+            'Sei Brecht che usa lo straniamento teatrale (Verfremdungseffekt) per smascherare le favole moraleggianti che addormentano le masse invece di spingerle alla rivoluzione sociale.',
+            ['Brecht', 'Straniamento', 'Teatro', 'Borghesi', 'Favole per addormentare'],
+            ['Verfremdungseffekt brechtiano', 'Demistificazione ideologica', 'Critica della falsa coscienza', 'Teatro epico rivoluzionario', 'Risveglio della coscienza di classe']
+        ),
+        (
+            'Le fiabe italiane di Italo Calvino come catalogo universale dei destini umani',
+            "Commenta la celebre introduzione del 1956: le fiabe sono vere perché rappresentano, nel catalogo delle loro peripezie, il ventaglio completo delle possibilità e dei destini dell'uomo.",
+            ['Calvino', 'Fiabe italiane', 'Vere', 'Catalogo', 'Destino'],
+            ['Catalogo dei destini umani', 'Ermeneutica calviniana della fiaba', 'Verità antropologica della peripezia', 'Patrimonio popolare dialettale', 'Saggezza narrativa secolare']
+        ),
+        (
+            'La funzione sociale del meraviglioso in Ernst Bloch: Il principio speranza',
+            "Dimostra come il lieto fine fiabesco non sia una fuga disimpegnata dalla realtà, ma una riserva utopica rivoluzionaria che anticipa la vittoria finale dell'uomo sull'oppressione.",
+            ['Bloch', 'Utopia', 'Lieto fine', 'Speranza', 'Favola'],
+            ['Das Prinzip Hoffnung blochiano', 'Riserva utopica del meraviglioso', 'Anticipazione della liberazione', 'Lieto fine come rivolta', 'Orizzonte messianico profano']
+        ),
+        (
+            'La trasformazione del fiabesco nella letteratura gotica: da Hoffmann a Poe',
+            "Come la fiaba romantica tedesca muti nel perturbante (Unheimliche) ottocentesco: l'automa parlante di Olimpia e l'uomo della sabbia che strappa gli occhi ai bambini.",
+            ['Hoffmann', 'Poe', 'Uomo della sabbia', 'Automa', 'Perturbante'],
+            ['Perturbante freudiano (Unheimliche)', "Gusto gotico per l'inquietudine", "Automa e perdita d'identità", 'Angoscia della mutilazione', 'Frattura del fiabesco luminoso']
+        ),
+        (
+            'La satira antropomorfa nelle Favole di Jean de La Fontaine',
+            "Sotto la maschera del leone, della volpe e del lupo, La Fontaine dipinge la spietata corte assolutista di Versailles: l'adulazione cortigiana e il trionfo della violenza travestita da diritto.",
+            ['La Fontaine', 'Versailles', 'Animali', 'Re Sole', 'Corte'],
+            ['Satira cortigiana dissimulata', 'Moralismo critico classico', 'Assolutismo di Versailles dipinto', 'Ipocrisia del potere mascherato', 'Finzione zoo-allegorica']
+        ),
+        (
+            "L'enigma del Flauto Magico: scontro tra matriarcato e patriarcato illuminista",
+            "Analizza la contrapposizione drammatica tra l'oscurità notturna della Regina della Notte e il tempio solare razionale di Sarastro alla luce dell'antropologia di Bachofen.",
+            ['Regina della Notte', 'Sarastro', 'Flauto magico', 'Sole', 'Luce'],
+            ['Matriarcato ctonio bachofeniano', "Trionfo dell'illuminismo solare", 'Conflitto mitico-politico', 'Misteriosofia teatrale', 'Armonia triadica massonica']
+        ),
+        (
+            'Il paradosso della sirena: il prezzo corporeo della parola umana',
+            'Rifletti sul dramma della metamorfosi della Sirenetta: la mutilazione della lingua come pegno per ottenere gambe umane, metafora del dolore delle donne zittite nella sfera pubblica.',
+            ['Sirenetta', 'Lingua tagliata', 'Voce', 'Donne', 'Zitte'],
+            ['Mutilazione simbolica della voce', "Prezzo dell'omologazione sociale", 'Silenzio forzato del femminile', 'Dolore della traduzione corporale', 'Critica patriarcale']
+        ),
+        (
+            "La figura dell'antieroe ne Il maestro e Margherita di Michail Bulgakov",
+            "L'arrivo del diavolo Woland e della sua corte fiabesca nella Mosca sovietica materialista: svelare la corruzione e la vigliaccheria burocratica attraverso il soprannaturale.",
+            ['Bulgakov', 'Woland', 'Maestro e Margherita', 'Diavolo a Mosca', 'Gatto Behemoth'],
+            ['Satira menippea bulgakoviana', 'Diavolo come principio di giustizia', 'I manoscritti non bruciano', 'Smascheramento della burocrazia', "Trascendenza dell'amore assoluto"]
+        ),
+        (
+            "L'enigma della Sfinge e l'antropocentrismo della cultura greca",
+            "Quando Edipo risponde 'L'Uomo' all'enigma della creatura che cammina a quattro, due e tre zampe, consacra la vittoria della ragione greca contro i mostri zoomorfi orientali.",
+            ['Sfinge', 'Edipo', 'Uomo', 'Enigma', 'Zampe'],
+            ["Trionfo dell'antropocentrismo greco", 'Decifrazione della chimera orientale', 'Consacrazione del Logos umano', 'Ragione sovrana di Tebe', 'Origine della tragedia della conoscenza']
+        ),
+        (
+            'La riscrittura femminista delle fiabe ne La camera di sangue di Angela Carter',
+            'Decostruisci Barbablù e Cappuccetto Rosso attraverso la lente postmoderna: la liberazione della sessualità femminile e il rovesciamento del ruolo della vittima sacrificale.',
+            ['Carter', 'Barbablù', 'Femminismo', 'Camera di sangue', 'Sangue'],
+            ['Riscrittura fiabesca postmoderna', 'Decostruzione della violenza patriarcale', 'Emancipazione del desiderio femminile', 'Rovesciamento del ruolo vittimario', 'Gusto neogotico eversivo']
+        ),
+        (
+            "Il mito di Faust e la tragedia dell'insaziabilità moderna in Goethe",
+            "Il patto con Mefistofele: l'uomo moderno condannato a non potersi mai fermare a contemplare il momento presente ('Fermati, sei bello!'), divorato dalla febbre dell'agire eterno.",
+            ['Faust', 'Goethe', 'Mefistofele', 'Anima', 'Fermati sei bello'],
+            ['Inquietudine faustiana (Streben)', 'Patto con il demoniaco secolarizzato', "Dramma dell'insaziabilità tecnica", "Tragicità dell'azione incessante", 'Redenzione finale per grazia']
+        ),
+        (
+            "L'animismo delle fiabe e la sacralità della natura in Hayao Miyazaki",
+            "Da La città incantata a Principessa Mononoke: come l'immaginario scintoista dei kami (spiriti della natura) denunci la distruzione ecologica della modernità industriale.",
+            ['Miyazaki', 'Città incantata', 'Spiriti', 'Natura', 'Mononoke'],
+            ['Animismo ecologico scintoista', 'Kami fluviali e forestali feriti', 'Riconciliazione uomo-natura', 'Inquinamento come profanazione', 'Meraviglioso salvifico']
+        ),
+        (
+            "L'archetipo del labirinto e la perdita del centro nel Novecento",
+            "Dal labirinto classico cretese (che aveva una via d'uscita certa) al labirinto borgesiano e kafkiano privo di centro e di mura, dove ogni svolta è un eterno ritornare.",
+            ['Labirinto', 'Creta', 'Borges', 'Uscita', 'Smarriti'],
+            ['Decostruzione del labirinto classico', 'Labirinto a rizoma senza centro', 'Vertigine ontologica moderna', 'Prigione invisibile della mente', "Scacco della via d'uscita"]
+        ),
+        (
+            'La favola come strumento di resistenza clandestina nei lager nazisti',
+            "Come prigionieri come Primo Levi o i detenuti di Terezin usassero inventare fiabe e recite per proteggere l'umanità dei bambini dalla disumanizzazione dello sterminio.",
+            ['Lager', 'Auschwitz', 'Terezin', 'Bambini', 'Favole nel campo'],
+            ['Resistenza fiabesca nei lager', "Custodia dell'umanità residuale", "Scudo dell'immaginazione poetica", 'Trascendenza del terrore estremo', 'Memoria sacra della testimonianza']
+        ),
+        (
+            'La morte come liberazione e consigliera ne Il settimo sigillo di Bergman',
+            'Il cavaliere Antonius Block gioca a scacchi con la Morte sulla spiaggia desolata, cercando un senso e un atto di bene supremo prima che la partita finisca.',
+            ['Bergman', 'Settimo sigillo', 'Scacchi', 'Morte', 'Cavaliere'],
+            ['Partita a scacchi esistenziale', 'Morte come specchio della fede', 'Silenzio di Dio bergmaniano', "Atto d'amore disinteressato salvifico", 'Danza macabra finale']
+        ),
+        (
+            "La simbologia dell'oro alchemico nelle narrazioni iniziatiche",
+            "Dimostra come la ricerca della pietra filosofale o del vello d'oro non fosse avarizia materiale, ma l'allegoria della trasmutazione spirituale dell'anima dalla piombo all'oro puro.",
+            ['Oro', 'Alchimia', 'Pietra filosofale', 'Magia', 'Soldi'],
+            ['Grande Opera alchemica spirituale', 'Trasmutazione del piombo interiore', 'Allegoria iniziatica universale', 'Raffinamento della coscienza', 'Oro ermetico incorruttibile']
+        ),
+        (
+            'Il silenzio di Cordelia nel Re Lear: la favola rovesciata delle tre figlie',
+            "Lear chiede alle figlie chi lo ami di più: le sorelle ipocrite esagerano con adulazioni mielose, Cordelia sceglie il silenzio dell'amore autentico pagando con la vita.",
+            ['Re Lear', 'Cordelia', 'Shakespeare', 'Figlie', 'Amore vero'],
+            ['Favola tragica rovesciata', "Rifiuto dell'adulazione cortigiana", 'Eloquenza del silenzio veritiero', 'Lutto paterno straziante', "Tragedia dell'ingratitudine"]
+        ),
+        (
+            "L'appello alla Sapienza Simbolica: il Testamento dell'Oratore",
+            "Concludi il modulo superiore: quando i trattati scientifici invecchiano e le ideologie crollano, solo i simboli eterni delle fiabe continuano a parlare all'anima segreta del mondo.",
+            ['Ideologie', 'Favole vecchie', 'Crollare', 'Scienza', 'Fine'],
+            ['Sapienza perenne dei simboli', "Sopravvivenza dell'immaginario mitico", "Magistero dell'Oratore Sapiente", 'Luce indistruttibile della narrazione', "Custodia dell'anima umana"]
+        ),
+    ],
+    "c1": [
+        (
+            "L'ontologia del meraviglioso (Das Unheimliche) freudiano nelle narrazioni fantastiche",
+            'Esporrai la teoria del perturbante: ciò che doveva rimanere segreto e nascosto ma è riemerso alla coscienza, analizzando il confine tra fiaba rasserenante e terrore fantastico.',
+            ['Freud', 'Unheimliche', 'Perturbante', 'Paura', 'Mostri'],
+            ['Perturbante freudiano primordiale', 'Riemersione del rimosso infantile', 'Ermeneutica del fantastico tzvetaniano', "Sospensione dell'esitazione", 'Oscillazione tra razionale e magico']
+        ),
+        (
+            'Il mito decaduto nella favola moderna secondo Walter Benjamin',
+            "Nel celebre saggio Il narratore, illustra come la fiaba rappresenti il primo consigliere dell'umanità contro le forze mitiche cieche, insegnando la furbizia e il coraggio dello scampato.",
+            ['Benjamin', 'Narratore', 'Mito', 'Favola', 'Consiglio'],
+            ['Saggio benjaminiano Il narratore', "Fiaba come consigliera dell'umanità", 'Demistificazione del terrore mitico', 'Furbizia dello scampato (List)', 'Eclissi della facoltà narrativa']
+        ),
+        (
+            "L'ermeneutica della metafora animale da Esopo e Fedro a Franz Kafka",
+            "Ripercorri l'evoluzione dell'animale parlante: dal tipo morale fisso dell'antichità (la volpe astuta, il lupo feroce) all'enigma disumanizzante della metamorfosi di Gregor Samsa.",
+            ['Esopo', 'Fedro', 'Kafka', 'Animali parlanti', 'Favole antiche'],
+            ['Evoluzione della metafora zoomorfa', 'Tipizzazione morale ellenistica', 'Disumanizzazione corporea kafkiana', "Decostruzione dell'animale-specchio", "Ontologia dell'alterità ferina"]
+        ),
+        (
+            "La funzione etica e politica della fiaba nella formazione dell'immaginario democratico",
+            "Dimostra con Gianni Rodari (Grammatica della fantasia) come l'immaginazione favolistica non sia evasione ma palestra civile di pensiero critico e liberazione delle menti infantili.",
+            ['Rodari', 'Grammatica della fantasia', 'Bambini', 'Favole per evadere', 'Democrazia'],
+            ['Grammatica della fantasia rodariana', 'Immaginazione come strumento civico', 'Democratizzazione della parola', "Decostruzione dell'autoritarismo", "Pedagogia dell'emancipazione"]
+        ),
+        (
+            "La morfologia del viaggio dell'eroe e il monomito di Joseph Campbell",
+            "Nel capolavoro L'eroe dai mille volti, illustra la struttura ciclica universale: Separazione, Iniziazione, Ritorno. Dal Buddha a Cristo, da Ulisse a Luke Skywalker.",
+            ['Campbell', 'Mille volti', 'Eroe', 'Viaggio', 'Schema'],
+            ['Monomito universale campbelliano', 'Separazione, Iniziazione, Ritorno', 'Varcamento della prima soglia', 'Dono supremo per la comunità', "Archetipo trasversale dell'eroe"]
+        ),
+        (
+            'Il simbolismo alchemico e il sentiero iniziatico delle fiabe tradizionali',
+            "Decifra i simboli ermetici nelle fiabe popolari: la foresta come nigredo (oscurità e morte), la fonte d'argento come albedo e le nozze regali come rubedo e congiunzione degli opposti.",
+            ['Alchimia', 'Nozze regali', 'Foresta', 'Oro', 'Simboli magici'],
+            ['Nigredo, albedo e rubedo fiabesche', 'Coniunctio oppositorum simbolica', 'Sentiero iniziatico della trasmutazione', 'Archetipi della purificazione interiore', 'Ermetismo narrativo profondo']
+        ),
+        (
+            'La decostruzione del concetto di autore nella fiaba popolare di trasmissione orale',
+            "Analizza con i fratelli Grimm e Claude Lévi-Strauss come la fiaba non abbia autore individuale ma sia l'espressione corale, fluida e senza tempo della memoria collettiva del popolo.",
+            ['Grimm', 'Autore', 'Popolo', 'Orale', 'Chi ha scritto'],
+            ['Autorialità diffusa collettiva', 'Antropologia strutturale lévi-straussiana', 'Memoria orale fluida comunitaria', 'Voce corale senza tempo', 'Scomparsa del soggetto borghese']
+        ),
+        (
+            'Il dramma della sovranità e della tirannide ne La vita è sogno di Calderón de la Barca',
+            'Sigismondo rinchiuso nella torre perché gli astri avevano predetto la sua crudeltà regale. Quando viene liberato, sperimenta la fragilità vertiginosa del confine tra realtà e finzione.',
+            ['Calderón', 'Sigismondo', 'La vita è sogno', 'Torre', 'Destino'],
+            ['Teatralità barocca della sovranità', 'Vertigine gnoseologica calderoniana', 'La vita come sogno effimero', "Trionfo della virtù sull'oroscopo", 'Libero arbitrio cristiano']
+        ),
+        (
+            'La teologia politica del patto col diavolo: da Teofilo a Thomas Mann',
+            "Nel Doktor Faustus, analizza come la vendita dell'anima non sia più solo una vicenda individuale, ma l'allegoria tragica del destino della Germania sprofondata nella barbarie nazista.",
+            ['Mann', 'Doktor Faustus', 'Diavolo', 'Nazismo', 'Germania'],
+            ['Allegoria storico-politica manniana', 'Patto faustiano collettivo nazionale', 'Spettro di Mefistofele nel Novecento', 'Catastrofe della civiltà colta', 'Disonore e redenzione']
+        ),
+        (
+            "L'archetipo della bella addormentata e il risveglio della coscienza",
+            "Interpreta la puntura del fuso all'età di quindici anni e il sonno centenario: la necessaria sospensione del tempo nell'adolescenza prima della fioritura dell'identità adulta integrata.",
+            ['Addormentata', 'Fuso', 'Sonno', 'Adolescenza', 'Risveglio'],
+            ['Sospensione temporale kairologica', 'Elaborazione silenziosa del sé', "Palingenesi dell'identità matura", 'Bacio come incontro trasfigurante', 'Archetipo del risveglio']
+        ),
+        (
+            "La dialettica della maschera nella Commedia dell'Arte e in Pirandello",
+            'Come la maschera fissa della favola popolare (Pantalone, Pulcinella) diventi nella modernità pirandelliana la trappola tragica e asfissiante delle centomila forme imposte dalla società.',
+            ['Pirandello', 'Maschere', 'Arlecchino', 'Pulcinella', 'Farsa'],
+            ['Dalla maschera comica alla forma-trappola', "Disintegrazione dell'io pirandelliana", 'Umorismo e sentimento del contrario', 'Angoscia della fissità sociale', 'Frattura tra vita e forma']
+        ),
+        (
+            'Il meraviglioso cristiano e la teologia fiabesca ne Il Signore degli Anelli di Tolkien',
+            "Nel saggio Sulle fiabe (On Fairy-Stories), illustra il concetto di Eucatastrofe: l'improvviso e miracoloso capovolgimento verso la salvezza che riflette la Grazia dell'Incarnazione.",
+            ['Tolkien', 'Signore degli Anelli', 'Eucatastrofe', 'Grazia', 'Lieto fine'],
+            ['Eucatastrofe tolkieniana', 'Sub-creazione e Mondo Secondario', 'Fuga del prigioniero vs disertore', 'Grazia evangelica nel fiabesco', 'Teologia del meraviglioso']
+        ),
+        (
+            "L'enigma del tempo sospeso nel Paese delle Meraviglie di Lewis Carroll",
+            'Analizza Alice nel paese delle meraviglie attraverso la logica formale e il nonsense matematico: il tè dei matti dove sono sempre le sei del pomeriggio e il tempo si vendica.',
+            ['Carroll', 'Alice', 'Cappellaio matto', 'Tempo', 'Nonsense'],
+            ['Nonsense carrolliano matematico', 'Sovversione della logica vittoriana', 'Tempo arrestato della finzione', 'Ermeneutica del linguaggio ludico', 'Decostruzione della pedagogia pedante']
+        ),
+        (
+            'La figura del Trickster (il briccone divino) nelle mitologie indigene',
+            'Presenta la divinità ambigua, buffona e sovversiva (il Coyote dei Nativi, Ermes o Loki): colui che viola ogni tabù morale per permettere alla cultura di evolvere e non fossilizzarsi.',
+            ['Trickster', 'Coyote', 'Loki', 'Scherzi', 'Tabù'],
+            ['Archetipo del Trickster universale', 'Briccone divino eversore di tabù', 'Motore della metamorfosi culturale', 'Ambiguità morale originaria', 'Funzione omeostatica del caos']
+        ),
+        (
+            "L'aporia della mostruosità morale in Mary Shelley: Frankenstein rivisitato",
+            "Decostruisci il topos della fiaba dell'orco: il mostro assemblato dal dottor Frankenstein nasce candido e gentile, diventando spietato solo dopo l'orrore e il rifiuto persecutorio degli uomini.",
+            ['Frankenstein', 'Mostro', 'Shelley', 'Cattivo', 'Paura'],
+            ['Mostruosità come costruzione sociale', 'Innocenza originaria della creatura', "Rifiuto sistemico dell'alterità", "Tragedia dell'abbandono paterno", 'Etica della cura demiurgica']
+        ),
+        (
+            "La poesia come linguaggio originario dell'umanità in Giambattista Vico",
+            'Ne La Scienza Nuova, illustra la logica poetica dei primi uomini: bestioni sublimi che parlavano per universali fantastici e favole prima della comparsa della prosa filosofica.',
+            ['Vico', 'Scienza Nuova', 'Universali fantastici', 'Primitivi', 'Poesia prima della ragione'],
+            ['Logica poetica vichiana', 'Universali fantastici primordiali', 'Sapienza poetica aurorale', 'Corsi e ricorsi storici', 'Origine metaforica del linguaggio']
+        ),
+        (
+            'Il labirinto e la biblioteca infinita in Jorge Luis Borges',
+            "Analizza La biblioteca di Babele: l'universo inteso come scaffale infinito di lettere combinate a caso dove ogni favola, ogni libro sacro e ogni bestemmia sono già stati scritti per l'eternità.",
+            ['Borges', 'Biblioteca di Babele', 'Infinito', 'Libri', 'Labirinto'],
+            ['Vertigine combinatoria borgesiana', 'Biblioteca cosmica universale', 'Alfabeto totale esaustivo', 'Angoscia della predestinazione testuale', 'Metafora ontologica della scrittura']
+        ),
+        (
+            "L'archetipo della discesa agli Inferi (Nekyia) come immersione nell'inconscio",
+            "Commenta come l'incontro di Ulisse o di Enea con le anime dei defunti corrisponda nei termini della psicologia analitica all'incontro con i complessi ancestrali rimossi dell'eredità biologica.",
+            ['Inferno', 'Ulisse', 'Enea', 'Ombre', 'Inconscio'],
+            ['Nekyia e immersione psichica', 'Confronto con gli antenati interiori', "Sedimentazione dell'eredità filogenetica", "Palingenesi dell'io integrato", 'Archetipo della discesa']
+        ),
+        (
+            "Il silenzio dell'oracolo e la fine dell'età dell'oro in Ovidio e Virgilio",
+            "Rifletti sul mito delle quattro età (oro, argento, bronzo, ferro): la progressiva corruzione morale dell'umanità fino alla fuga disperata di Astrea, la dea della giustizia.",
+            ["Età dell'oro", 'Astrea', 'Ferro', 'Giustizia fugge', 'Corruzione'],
+            ['Mito delle quattro età esiodeo-ovidiano', 'Fuga di Astrea verso le stelle', 'Caduta nel secolo di ferro', "Nostalgia dell'armonia edenica", 'Tensione verso la restaurazione']
+        ),
+        (
+            "L'Inno all'Archetipo Narrativo: il Giuramento dell'Oratore delle Origini",
+            "Pronuncia l'arringa conclusiva del livello C1: l'oratore che conosce i simboli antichi possiede la chiave per spalancare le porte del cuore umano in qualunque epoca e civiltà.",
+            ['Simboli', 'Favole eterne', 'Cuore', 'Parlare bene', 'Fine'],
+            ['Magistero della sapienza simbolica', 'Chiave archetipica dei cuori', 'Trionfo perenne del Logos narrativo', "Inno all'Origine perenne", 'Immortalità della Voce']
+        ),
+    ],
+    "c2": [
+        (
+            "L'ontologia dell'Anima Mundi e la cosmologia simbolica del Timeo platonico",
+            "Pronuncia una summa sulla creazione del cosmo nel Timeo: il Demiurgo che plasma la materia caotica guardando alle Idee eterne, infondendovi l'Anima del Mondo attraverso proporzioni armoniche.",
+            ['Platone', 'Timeo', 'Demiurgo', 'Anima del mondo', 'Materia'],
+            ['Cosmologia simbolica del Timeo', 'Anima Mundi armonizzatrice', 'Demiurgia contemplativa razionale', 'Proporzioni matematico-musicali', 'Trascendenza del modello ideale']
+        ),
+        (
+            "L'archetipo dell'Androgino primordiale e la metafisica della scissione",
+            "Sviscera il mito arcaico della totalità perduta: l'essere umano primigenio sferico e perfetto la cui spaccatura operata da Zeus condanna l'uomo alla nostalgia metafisica perenne dell'Uno.",
+            ['Androgino', 'Spaccati a metà', 'Amore', 'Uno', 'Mito'],
+            ['Metafisica della scissione primigenia', "Nostalgia ontologica dell'Uno", 'Simposio platonico rivisitato', "Lacerazione originaria dell'essere", 'Anelito alla compiutezza']
+        ),
+        (
+            'La catastrofe apocalittica e la palingenesi escatologica nelle cosmologie comparate',
+            'Dal Ragnarök norreno alla conflagrazione universale stoica (Ekpyrosis): dimostra come ogni grande mito concepisca la distruzione totale non come fine assoluta ma come purificazione necessaria per una nuova aurora.',
+            ['Apocalisse', 'Ragnarok', 'Ekpyrosis', 'Fine del mondo', 'Distruzione'],
+            ['Ekpyrosis stoica palingenetica', 'Crepuscolo degli dèi norreno (Ragnarök)', 'Ciclicità cosmogonica universale', 'Purificazione catastrofica del cosmo', "Eterna rinascita dell'ordine"]
+        ),
+        (
+            "La decostruzione del concetto di mostro: l'Altro assoluto e il pharmakos",
+            "Analizza come ogni comunità costruisca miticamente i propri mostri (Minotauro, Medusa, Golem) per proiettare all'esterno la propria violenza mimetica ed espellerla sacrificando il capro espiatorio.",
+            ['Mostro', 'Capro espiatorio', 'Girard', 'Comunità', 'Uccidere'],
+            ['Costruzione mitica del pharmakos', 'Proiezione della violenza mimetica', "Decostruzione dell'alterità mostruosa", 'Espulsione sacrificale originaria', 'Meccanismo vittimario girardiano']
+        ),
+        (
+            "L'enigma del Graal e il re ferito: la terra desolata (Waste Land)",
+            "Nella saga arturiana di Chrétien de Troyes e Wolfram von Eschenbach, il Santo Graal guarisce la terra sterile solo se il cavaliere ha il coraggio morale di pronunciare la domanda empatica: 'Cosa ti addolora?'.",
+            ['Graal', 'Re Pescatore', 'Terra desolata', 'Parsifal', 'Coppa'],
+            ['Mito del Santo Graal soteriologico', 'Sterilità della Waste Land eliottiana', 'Domanda compassionevole salvifica', 'Guarigione del Re Pescatore', 'Mistica cavalleresca estrema']
+        ),
+        (
+            "La teoria dell'archetipo in Carl Gustav Jung e la memoria filogenetica",
+            "Dimostra di fronte al senato accademico che gli archetipi non sono immagini ereditate passive ma organi a priori della psiche oggettiva, patterned cognitivi ed emotivi universali dell'intera specie.",
+            ['Jung', 'Archetipi', 'Inconscio collettivo', 'Ereditari', 'Cervello'],
+            ['Inconscio collettivo transpersonale', 'Archetipo come organo psichico a priori', "Struttura numinosa dell'immaginale", 'Sincronicità e senso cosmico', 'Totalità del Sé trans-individuale']
+        ),
+        (
+            'La decostruzione derridiana del Farmaco platonico nel Fedro',
+            "Nel saggio La farmacia di Platone, analizza l'ambivalenza aporetica della scrittura (pharmakon): medicina della memoria o veleno che produce l'amnesia interiore dell'anima?",
+            ['Derrida', 'Fedro', 'Scrittura', 'Pharmakon', 'Memoria'],
+            ['Aporia derridiana del pharmakon', 'Scrittura come rimedio e veleno', 'Decostruzione del logocentrismo', 'Supplenza pericolosa della memoria', 'Farmacia di Platone']
+        ),
+        (
+            "Il silenzio di Antigone e la rivendicazione della sovranità dell'origine",
+            "Nel confronto titanico con Creonte, dimostra come la grandezza di Antigone non risieda nelle argomentazioni giuridiche ma nella sua fedeltà muta e totale all'incondizionato dell'amore fraterno e della terra.",
+            ['Antigone', 'Creonte', 'Silenzio', 'Amore', 'Morire'],
+            ['Incondizionatezza della pietas', "Sovranità sacra dell'origine", 'Rifiuto della dialettica del compromesso', 'Martirio del candore ontologico', 'Sublime tragico assoluto']
+        ),
+        (
+            'La caduta di Lucifero e la metafisica della ribellione nel Paradiso perduto di Milton',
+            "Pronuncia il monologo di Satana: 'Meglio regnare all'inferno che servire in paradiso'. Analizza la vertigine tragica dell'orgoglio ontologico che preferisce l'abisso alla sottomissione amorosa.",
+            ['Milton', 'Satana', 'Inferno', 'Regnare', 'Paradiso perduto'],
+            ['Epos miltoniano del sublime negativo', "Vertigine dell'orgoglio ontologico", "Meglio regnare all'inferno", 'Tragicità della ribellione assoluta', "Caduta dell'angelo prediletto"]
+        ),
+        (
+            "L'archetipo della fenice e la dottrina dell'eterno ritorno in Nietzsche",
+            "Collega la rinascita dalle ceneri alla prova suprema dello Zarathustra: desiderare che questo attimo ritorni infinite volte, senza rimpianto, redimendo il passato nell'Amor Fati.",
+            ['Nietzsche', 'Eterno ritorno', 'Zarathustra', 'Amor fati', 'Ceneri'],
+            ["Dottrina dell'eterno ritorno dell'uguale", 'Amor fati nietzscheano radicale', "Redenzione del 'Così fu' in 'Così volli'", 'Trionfo della volontà affermativa', 'Palingenesi circolare suprema']
+        ),
+        (
+            'Il mito di Eracle al bivio tra Virtù e Voluttà in Prodico di Ceo',
+            "Esporrai l'orazione sofistica classica: il giovane eroe seduto a un crocevia montano davanti alle personificazioni della Virtù austera e della Voluttà seducente, decidendo il destino della civiltà.",
+            ['Eracle', 'Bivio', 'Virtù', 'Piacere', 'Scelta'],
+            ['Apologo morale prodiceo', 'Bivio ontologico fondamentale', "Austera bellezza dell'inclinazione etica", 'Rifiuto della via facile e vacua', 'Eroismo civilizzatore archetipico']
+        ),
+        (
+            "La desacralizzazione del mito nell'opera di Franz Kafka: Il silenzio delle Sirene",
+            "Kafka rovescia l'Odissea: le Sirene possiedono un'arma ancora più letale del loro canto incantatore, ed è il loro silenzio. Odisseo si salva solo credendo ingenuamente che stessero cantando.",
+            ['Sirene', 'Kafka', 'Silenzio', 'Ulisse', 'Canto'],
+            ["Rovescio kafkiano dell'epos omerico", 'Terrore letale del silenzio delle Sirene', 'Salvezza per beata ingenuità', "Smascheramento della vanità dell'eroe", "Disincanto dell'inerme"]
+        ),
+        (
+            "L'archetipo dell'albero cosmico (Yggdrasill) e l'interconnessione dei mondi",
+            "Evoca il gigantesco frassino della mitologia nordica le cui radici affondano nell'Ade e le cui fronde sostengono le stelle, resistendo ai morsi del serpente cosmico finché regge il mondo.",
+            ['Yggdrasill', 'Frassino', 'Albero cosmico', 'Radici', 'Mondi'],
+            ['Asse del mondo (Axis Mundi)', 'Yggdrasill e cosmologia boreale', 'Interdipendenza radicale degli elementi', 'Resistenza ontologica al caos', 'Sacralità del cosmo vivente']
+        ),
+        (
+            "L'allegoria della nave dei folli (Stultifera Navis) nella modernità",
+            "Da Sebastian Brant a Michel Foucault: l'imbarcazione carica di alienati affidata ai fiumi d'Europa, metafora della ragione nascente che espelle la follia per fondare l'ordine disciplinare borghese.",
+            ['Nave dei folli', 'Foucault', 'Pazzi', 'Fiume', 'Ragione'],
+            ['Stultifera Navis altomedievale', 'Espulsione rituale della follia', "Genealogia foucaultiana dell'internamento", "Marginalizzazione dell'incommensurabile", "Tragedia dell'esclusione"]
+        ),
+        (
+            "L'enigma del Golem e l'autonomia della scrittura sacra nella Cabala",
+            "Dimostra secondo Gershom Scholem come il Golem non sia un robot ma la materializzazione dell'alfabeto ebraico: le lettere della Torah non descrivono il mondo, ma sono i mattoni viventi della Creazione.",
+            ['Scholem', 'Cabala', 'Golem', 'Lettere', 'Torah'],
+            ['Mistica cabalistica del Verbo creatore', 'Sefer Yetzirah e la potenza delle lettere', 'Animazione della materia per combinatoria sacra', 'Teurgia ebraica originaria', 'Responsabilità del Nome ineffabile']
+        ),
+        (
+            "L'archetipo dell'oracolo e l'incomunicabilità del responso profetico",
+            "Commenta il frammento di Eraclito sul dio di Delfi: 'Il signore il cui oracolo è a Delfi non dice né nasconde, ma accenna (semainei)'. L'accenno come struttura del sacro.",
+            ['Eraclito', 'Delfi', 'Oracolo', 'Accenna', 'Nasconde'],
+            ['Frammento eracliteo sul dio delfico', 'Semainei come linguaggio del sacro', 'Oltre la dicotomia svelamento-occultamento', "Ermeneutica dell'accenno sottile", 'Custodia del mistero ontologico']
+        ),
+        (
+            'La morte di Pan e il tramonto degli dèi pagani in Plutarco',
+            "Nel Tramonto degli oracoli, la voce misteriosa che attraversa il mare gridando: 'Il grande Pan è morto!'. L'addio irrevocabile dell'Occidente alla sacralità immanente della natura vivente.",
+            ['Pan', 'Plutarco', 'Morto', 'Dèi', 'Nave'],
+            ['Annuncio plutarcheo della morte di Pan', 'Eclissi della sacralità naturale immanente', "Transizione dolorosa all'era cristiana", 'Lutto cosmico per la physis disincantata', 'Frattura ecologica primordiale']
+        ),
+        (
+            'La riconciliazione tra Dioniso e Apollo nel tempio di Delfi',
+            "Ripercorri la realtà storica del santuario: per nove mesi all'anno vi regnava Apollo, nei tre mesi invernali il tempio era consacrato a Dioniso. La coesistenza necessaria di misura ed estasi.",
+            ['Apollo', 'Dioniso', 'Delfi', 'Inverno', 'Follia e ragione'],
+            ['Sintesi delfica di Apollo e Dioniso', 'Omeostasi sacrale tra estasi e misura', "Superamento dell'unilateralità razionale", 'Banchetto invernale del dio smembrato', 'Armonia perenne dei contrasti']
+        ),
+        (
+            "La trasfigurazione dell'eroe nel bardo immortale: l'archetipo di Orfeo",
+            "Dimostra come la morte violenta di Orfeo per mano delle Menadi non distrugga il canto: la sua testa recisa continua a galleggiare sul fiume Ebro cantando per l'eternità.",
+            ['Orfeo', 'Testa recisa', 'Canto', 'Fiume', 'Morte'],
+            ['Immortalità del canto orfico', 'Testa galleggiante sul fiume Ebro', 'Trionfo della poesia sulla lacerazione', 'Mistica della voce disincarnata', 'Consacrazione del magistero poetico']
+        ),
+        (
+            "L'Inno al Sacro Mito Vivente: il Congedo Supremo dell'Oratore Epico-Fiabesco",
+            "Pronuncia l'orazione conclusiva di Favole e Simboli: le generazioni umane nascono e cadono come foglie nel bosco, ma la parola che custodisce i Grandi Simboli risplende immortale nell'alto dei cieli.",
+            ['Fine', 'Foglie', 'Favole', 'Simboli', 'Uomo'],
+            ['Eternità dei Grandi Simboli cosmici', 'Resurrezione perenne della Voce narrante', "Congedo supremo dell'Oratore delle Origini", 'Consacrazione della memoria mitica', "Trionfo immortale dell'Immaginazione e del Logos"]
+        ),
+    ],
+}
