@@ -482,7 +482,8 @@ const GameEngine = {
       let vocabMod = 0;
       if (countUsed === 5) vocabMod = 1;
       else if (countUsed <= 1) vocabMod = -1;
-      baseSteps = Math.min(4, Math.max(0, level + vocabMod));
+      // Applicazione rigorosa delle penalità buzzer (es. intercalari 'cosa', 'roba') - Art. 13
+      baseSteps = Math.min(4, Math.max(0, level + vocabMod - this.gameState.penaltiesThisTurn));
     }
 
     // Applicazione Moltiplicatore Raddoppio Passi (Casella 21)
@@ -567,8 +568,8 @@ const GameEngine = {
             <div class="orator-level-btn ${currentLevel === 0 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(0)">
               <div class="orator-level-badge">⚪</div>
               <div class="orator-level-info">
-                <div class="orator-level-name">Passo / Rinuncia</div>
-                <div class="orator-level-pts">0 Passi</div>
+                <div class="orator-level-name">Non ha convinto la Giuria</div>
+                <div class="orator-level-pts">0 Passi • Discorso insufficiente o fuori tema</div>
               </div>
             </div>
           </div>
@@ -587,6 +588,12 @@ const GameEngine = {
             <div class="summary-stat-row">
               <span><i class="fa-solid fa-bullseye" style="color: var(--success-color);"></i> Vocaboli Chiave Inseriti:</span>
               <span class="summary-stat-val" style="color: var(--success-color);">${countUsed} / 5 ${countUsed === 5 ? '🌟 (+1 Bonus!)' : (countUsed <= 1 ? '⚠️ (-1)' : '')}</span>
+            </div>
+            <div class="summary-stat-row">
+              <span><i class="fa-solid fa-bell" style="color: var(--danger-color);"></i> Penalità Intercalari / Buzzer:</span>
+              <span class="summary-stat-val" style="color: ${this.gameState.penaltiesThisTurn === 0 ? 'var(--success-color)' : 'var(--danger-color)'};">
+                ${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 0 ? '🎉 (Nessun errore buzzer)' : `(-${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 1 ? 'passo' : 'passi'})`}
+              </span>
             </div>
           `}
           ${this.gameState.activeDoubleStepsThisTurn ? `
