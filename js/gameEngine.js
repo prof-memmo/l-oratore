@@ -994,6 +994,104 @@ const GameEngine = {
     } catch (e) {}
   },
 
+  checkAutoSaveOnStartup() {
+    const banner = document.getElementById('welcome-autosave-banner');
+    if (!banner) return;
+
+    try {
+      const raw = localStorage.getItem('loratore_autosave');
+      if (!raw) {
+        banner.classList.add('hidden');
+        return;
+      }
+      const data = JSON.parse(raw);
+      if (!data || !data.gameState || !data.gameState.teams || data.gameState.teams.length === 0 || data.gameState.isGameFinished) {
+        banner.classList.add('hidden');
+        return;
+      }
+
+      const state = data.gameState;
+      const dateStr = data.timestamp ? new Date(data.timestamp).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
+      const teamsStr = state.teams.map(t => t.name).join(' vs ');
+
+      const titleEl = document.getElementById('autosave-banner-title');
+      const subEl = document.getElementById('autosave-banner-sub');
+      if (titleEl) titleEl.textContent = `Partita in sospeso (${dateStr})`;
+      if (subEl) subEl.textContent = `Round ${state.currentRound || 1} • ${teamsStr} • Modalità ${state.mode === 'PROIBITE' ? 'Parole Proibite' : 'Vocaboli da Usare'}`;
+
+      banner.classList.remove('hidden');
+    } catch (e) {
+      banner.classList.add('hidden');
+    }
+  },
+
+  resumeAutoSave() {
+    try {
+      const raw = localStorage.getItem('loratore_autosave');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (!data || !data.gameState) return;
+
+      const state = data.gameState;
+      this.gameState = {
+        ...state,
+        usedCardIds: new Set(state.usedCardIds || []),
+        timerInterval: null,
+        isTimerRunning: false
+      };
+
+      this.gameState.teams.forEach(t => {
+        if (!t.pendingBonus) {
+          t.pendingBonus = { extraTime: 0, doubleSteps: false };
+        }
+      });
+
+      const banner = document.getElementById('welcome-autosave-banner');
+      if (banner) banner.classList.add('hidden');
+
+      App.showView('view-game-board');
+      BoardEngine.renderPawns(this.gameState.teams);
+      this.renderScoreboard();
+
+      const statusSub = document.getElementById('board-status-sub');
+      if (statusSub) {
+        statusSub.innerHTML = `<span>Sessione automatica ripristinata • Round ${this.gameState.currentRound}</span>`;
+      }
+
+      const btnAction = document.getElementById('btn-board-next-action');
+      if (btnAction) {
+        const isRoundFinished = (this.gameState.turnInCurrentRound >= this.gameState.teams.length - 1);
+        if (isRoundFinished) {
+          btnAction.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> <span>Concludi Round ${this.gameState.currentRound}</span>`;
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
+        } else {
+          const nextTeam = this.gameState.teams[this.gameState.currentTeamIdx];
+          btnAction.innerHTML = `<i class="fa-solid fa-arrow-right"></i> <span>Continua Turno: ${nextTeam ? nextTeam.name : 'Squadra'}</span>`;
+          btnAction.onclick = () => GameEngine.startTurn();
+        }
+      }
+    } catch (err) {
+      console.error("Errore resumeAutoSave:", err);
+      alert("Impossibile ripristinare la sessione automatica.");
+    }
+  },
+
+  discardAutoSave() {
+    if (confirm("Vuoi cancellare definitivamente la sessione automatica in sospeso?")) {
+      try {
+        localStorage.removeItem('loratore_autosave');
+      } catch (e) {}
+      const banner = document.getElementById('welcome-autosave-banner');
+      if (banner) banner.classList.add('hidden');
+    }
+  },
+
+  quickPauseAndSave() {
+    this.stopTimer();
+    this.autoSave();
+    this.promptSaveSession();
+  },
+
   async deleteSavedGame(saveId) {
     try {
       let raw = localStorage.getItem('loratore_saved_games');

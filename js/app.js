@@ -33,6 +33,9 @@ const App = {
     await GameEngine.loadData();
     if (window.AudioEngine && window.AudioEngine.init) window.AudioEngine.init();
     this.renderLevelGrid();
+    if (window.GameEngine && window.GameEngine.checkAutoSaveOnStartup) {
+      window.GameEngine.checkAutoSaveOnStartup();
+    }
 
     // Chiudi dropdown utente cliccando fuori
     document.addEventListener('click', (e) => {
@@ -78,6 +81,10 @@ const App = {
 
     if (viewId === 'view-regolamento' && window.OratoreRulesService) {
       window.OratoreRulesService.renderPublicView('view-regolamento-container');
+    }
+
+    if (viewId === 'view-welcome' && window.GameEngine && window.GameEngine.checkAutoSaveOnStartup) {
+      window.GameEngine.checkAutoSaveOnStartup();
     }
 
     if (pushHistory && window.history && (!window.history.state || window.history.state.view !== viewId)) {
