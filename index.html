@@ -182,26 +182,8 @@
           <div class="mode-pill"><i class="fa-solid fa-layer-group" style="color: #a855f7;"></i> 6 Livelli di Difficoltà (A1-C2)</div>
           <div class="mode-pill"><i class="fa-solid fa-dice" style="color: var(--team-red);"></i> Round a Categorie Condivise</div>
         </div>
-        <!-- Banner Ripresa Sessione Automatica (Art. 13) -->
-        <div id="welcome-autosave-banner" class="welcome-autosave-box hidden" style="margin: 18px auto 0 auto; max-width: 600px; background: rgba(212, 175, 55, 0.12); border: 1.5px solid var(--accent-gold); border-radius: 14px; padding: 14px 18px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <i class="fa-solid fa-clock-rotate-left" style="font-size: 1.8rem; color: var(--accent-gold);"></i>
-            <div>
-              <div style="font-size: 0.95rem; font-weight: 800; color: #fff;" id="autosave-banner-title">Partita in sospeso rilevata</div>
-              <div style="font-size: 0.8rem; color: #cbd5e1;" id="autosave-banner-sub">Puoi riprendere la sfida esattamente da dove era stata interrotta.</div>
-            </div>
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn btn-primary" onclick="GameEngine.resumeAutoSave()" style="padding: 8px 14px; font-size: 0.85rem; font-weight: 800; border-radius: 8px;">
-              <i class="fa-solid fa-play"></i> Riprendi Partita
-            </button>
-            <button class="btn btn-secondary" onclick="GameEngine.discardAutoSave()" title="Elimina sessione automatica" style="padding: 8px 10px; font-size: 0.85rem; border-radius: 8px;">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
-        </div>
 
-        <div class="welcome-actions-wrap" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+        <div class="welcome-actions-wrap" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
           <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()">
             <i class="fa-solid fa-play"></i> Inizia Nuova Sfida
           </button>

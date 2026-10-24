@@ -928,11 +928,13 @@ const GameEngine = {
             const dateStr = autoData.timestamp ? new Date(autoData.timestamp).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
             const autoEntry = {
               id: 'autosave_session',
-              name: `Sessione Automatica (${dateStr})`,
+              name: `Partita in Sospeso (${dateStr})`,
               date: dateStr,
               timestamp: autoData.timestamp || Date.now(),
               teamsSummary: autoData.gameState.teams.map(t => ({ name: t.name, avatar: t.avatar, color: t.color, position: t.position || 1 })),
               round: autoData.gameState.currentRound || 1,
+              level: autoData.gameState.selectedLevel || 'A1',
+              mode: autoData.gameState.mode,
               source: 'autosave',
               gameState: autoData.gameState
             };
@@ -1256,18 +1258,32 @@ const GameEngine = {
       `).join(' ');
 
       const isCloud = s.source === 'cloud';
+      const isAutosave = s.source === 'autosave';
+
+      let sourceBadge = '';
+      if (isAutosave) {
+        sourceBadge = '<span style="background:rgba(212,175,55,0.18); color:var(--accent-gold); border:1px solid rgba(212,175,55,0.4); padding:2px 8px; border-radius:6px; font-size:0.7rem; font-weight:800;"><i class="fa-solid fa-clock-rotate-left"></i> In Sospeso</span>';
+      } else if (isCloud) {
+        sourceBadge = '<span style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:700;">☁️ Cloud</span>';
+      } else {
+        sourceBadge = '<span style="background:rgba(148,163,184,0.15); color:#94a3b8; padding:2px 6px; border-radius:6px; font-size:0.7rem;">🖥️ Locale</span>';
+      }
+
+      const itemStyle = isAutosave 
+        ? 'border: 1.5px solid var(--accent-gold); background: rgba(212, 175, 55, 0.08);' 
+        : '';
 
       return `
-        <div class="saved-game-item">
+        <div class="saved-game-item" style="${itemStyle}">
           <div class="saved-game-info">
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <h4 class="saved-game-title" style="margin:0;">${s.name}</h4>
-              ${isCloud ? '<span style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:700;">☁️ Cloud</span>' : '<span style="background:rgba(148,163,184,0.15); color:#94a3b8; padding:2px 6px; border-radius:6px; font-size:0.7rem;">🖥️ Locale</span>'}
+              ${sourceBadge}
             </div>
             <div class="saved-game-meta" style="margin-top:4px;">
               <span><i class="fa-solid fa-calendar"></i> ${s.date}</span> • 
               <span><i class="fa-solid fa-flag"></i> Round ${s.round}</span> • 
-              <span style="text-transform:uppercase;">Liv. ${s.level}</span>
+              <span style="text-transform:uppercase;">Liv. ${s.level || (s.gameState && s.gameState.selectedLevel) || 'A1'}</span>
             </div>
             <div class="saved-game-teams">${teamsHtml}</div>
           </div>
