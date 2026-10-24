@@ -1199,7 +1199,17 @@ const GameEngine = {
     }
   },
 
-  openSavedGamesModal() {
+  async openSavedGamesModal() {
+    if (window.HubSubscriptionGuard && typeof window.HubSubscriptionGuard.verifyAccess === 'function') {
+      const currentUser = (window.Auth && window.Auth.user) || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) || null;
+      const currentRole = (window.Auth && window.Auth.role) || 'guest';
+      const isAllowed = await window.HubSubscriptionGuard.verifyAccess({
+        user: currentUser,
+        role: currentRole,
+        isPublicView: false
+      });
+      if (!isAllowed) return;
+    }
     this.renderSavedGamesList();
     const modal = document.getElementById('saved-games-modal');
     if (modal) modal.classList.remove('hidden');
