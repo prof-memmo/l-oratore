@@ -482,7 +482,8 @@ const GameEngine = {
       let vocabMod = 0;
       if (countUsed === 5) vocabMod = 1;
       else if (countUsed <= 1) vocabMod = -1;
-      baseSteps = Math.min(4, Math.max(0, level + vocabMod));
+      // Applicazione rigorosa delle penalità buzzer (es. intercalari 'cosa', 'roba') - Art. 13
+      baseSteps = Math.min(4, Math.max(0, level + vocabMod - this.gameState.penaltiesThisTurn));
     }
 
     // Applicazione Moltiplicatore Raddoppio Passi (Casella 21)
@@ -567,8 +568,8 @@ const GameEngine = {
             <div class="orator-level-btn ${currentLevel === 0 ? 'active' : ''}" onclick="GameEngine.selectOratorLevel(0)">
               <div class="orator-level-badge">⚪</div>
               <div class="orator-level-info">
-                <div class="orator-level-name">Passo / Rinuncia</div>
-                <div class="orator-level-pts">0 Passi</div>
+                <div class="orator-level-name">Non ha convinto la Giuria</div>
+                <div class="orator-level-pts">0 Passi • Discorso insufficiente o fuori tema</div>
               </div>
             </div>
           </div>
@@ -587,6 +588,12 @@ const GameEngine = {
             <div class="summary-stat-row">
               <span><i class="fa-solid fa-bullseye" style="color: var(--success-color);"></i> Vocaboli Chiave Inseriti:</span>
               <span class="summary-stat-val" style="color: var(--success-color);">${countUsed} / 5 ${countUsed === 5 ? '🌟 (+1 Bonus!)' : (countUsed <= 1 ? '⚠️ (-1)' : '')}</span>
+            </div>
+            <div class="summary-stat-row">
+              <span><i class="fa-solid fa-bell" style="color: var(--danger-color);"></i> Penalità Intercalari / Buzzer:</span>
+              <span class="summary-stat-val" style="color: ${this.gameState.penaltiesThisTurn === 0 ? 'var(--success-color)' : 'var(--danger-color)'};">
+                ${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 0 ? '🎉 (Nessun errore buzzer)' : `(-${this.gameState.penaltiesThisTurn} ${this.gameState.penaltiesThisTurn === 1 ? 'passo' : 'passi'})`}
+              </span>
             </div>
           `}
           ${this.gameState.activeDoubleStepsThisTurn ? `
@@ -899,6 +906,7 @@ const GameEngine = {
     try {
       const raw = localStorage.getItem('loratore_saved_games');
       const localSaves = raw ? JSON.parse(raw) : [];
+      let allSaves = [];
       if (this._cachedSavedGames && this._cachedSavedGames.length > 0) {
         // Unisci salvataggi cloud e locali per ID
         const map = new Map();
@@ -906,9 +914,36 @@ const GameEngine = {
         localSaves.forEach(s => {
           if (!map.has(s.id)) map.set(s.id, { ...s, source: 'local' });
         });
-        return Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        allSaves = Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      } else {
+        allSaves = localSaves.map(s => ({ ...s, source: 'local' }));
       }
-      return localSaves.map(s => ({ ...s, source: 'local' }));
+
+      // Se è presente una sessione automatica in sospeso, includila in cima all'elenco di ripresa
+      const rawAuto = localStorage.getItem('loratore_autosave');
+      if (rawAuto) {
+        try {
+          const autoData = JSON.parse(rawAuto);
+          if (autoData && autoData.gameState && autoData.gameState.teams && autoData.gameState.teams.length > 0 && !autoData.gameState.isGameFinished) {
+            const dateStr = autoData.timestamp ? new Date(autoData.timestamp).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
+            const autoEntry = {
+              id: 'autosave_session',
+              name: `Partita in Sospeso (${dateStr})`,
+              date: dateStr,
+              timestamp: autoData.timestamp || Date.now(),
+              teamsSummary: autoData.gameState.teams.map(t => ({ name: t.name, avatar: t.avatar, color: t.color, position: t.position || 1 })),
+              round: autoData.gameState.currentRound || 1,
+              level: autoData.gameState.selectedLevel || 'A1',
+              mode: autoData.gameState.mode,
+              source: 'autosave',
+              gameState: autoData.gameState
+            };
+            allSaves.unshift(autoEntry);
+          }
+        } catch (_) {}
+      }
+
+      return allSaves;
     } catch (e) {
       console.warn("Errore lettura saved games:", e);
       return [];
@@ -987,7 +1022,114 @@ const GameEngine = {
     } catch (e) {}
   },
 
+  checkAutoSaveOnStartup() {
+    const banner = document.getElementById('welcome-autosave-banner');
+    if (!banner) return;
+
+    try {
+      const raw = localStorage.getItem('loratore_autosave');
+      if (!raw) {
+        banner.classList.add('hidden');
+        return;
+      }
+      const data = JSON.parse(raw);
+      if (!data || !data.gameState || !data.gameState.teams || data.gameState.teams.length === 0 || data.gameState.isGameFinished) {
+        banner.classList.add('hidden');
+        return;
+      }
+
+      const state = data.gameState;
+      const dateStr = data.timestamp ? new Date(data.timestamp).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
+      const teamsStr = state.teams.map(t => t.name).join(' vs ');
+
+      const titleEl = document.getElementById('autosave-banner-title');
+      const subEl = document.getElementById('autosave-banner-sub');
+      if (titleEl) titleEl.textContent = `Partita in sospeso (${dateStr})`;
+      if (subEl) subEl.textContent = `Round ${state.currentRound || 1} • ${teamsStr} • Modalità ${state.mode === 'PROIBITE' ? 'Parole Proibite' : 'Vocaboli da Usare'}`;
+
+      banner.classList.remove('hidden');
+    } catch (e) {
+      banner.classList.add('hidden');
+    }
+  },
+
+  resumeAutoSave() {
+    try {
+      const raw = localStorage.getItem('loratore_autosave');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (!data || !data.gameState) return;
+
+      const state = data.gameState;
+      this.gameState = {
+        ...state,
+        usedCardIds: new Set(state.usedCardIds || []),
+        timerInterval: null,
+        isTimerRunning: false
+      };
+
+      this.gameState.teams.forEach(t => {
+        if (!t.pendingBonus) {
+          t.pendingBonus = { extraTime: 0, doubleSteps: false };
+        }
+      });
+
+      const banner = document.getElementById('welcome-autosave-banner');
+      if (banner) banner.classList.add('hidden');
+
+      App.showView('view-game-board');
+      BoardEngine.renderPawns(this.gameState.teams);
+      this.renderScoreboard();
+
+      const statusSub = document.getElementById('board-status-sub');
+      if (statusSub) {
+        statusSub.innerHTML = `<span>Sessione automatica ripristinata • Round ${this.gameState.currentRound}</span>`;
+      }
+
+      const btnAction = document.getElementById('btn-board-next-action');
+      if (btnAction) {
+        const isRoundFinished = (this.gameState.turnInCurrentRound >= this.gameState.teams.length - 1);
+        if (isRoundFinished) {
+          btnAction.innerHTML = `<i class="fa-solid fa-flag-checkered"></i> <span>Concludi Round ${this.gameState.currentRound}</span>`;
+          btnAction.onclick = () => GameEngine.proceedAfterBoard();
+        } else {
+          const nextTeam = this.gameState.teams[this.gameState.currentTeamIdx];
+          btnAction.innerHTML = `<i class="fa-solid fa-arrow-right"></i> <span>Continua Turno: ${nextTeam ? nextTeam.name : 'Squadra'}</span>`;
+          btnAction.onclick = () => GameEngine.startTurn();
+        }
+      }
+    } catch (err) {
+      console.error("Errore resumeAutoSave:", err);
+      alert("Impossibile ripristinare la sessione automatica.");
+    }
+  },
+
+  discardAutoSave() {
+    if (confirm("Vuoi cancellare definitivamente la sessione automatica in sospeso?")) {
+      try {
+        localStorage.removeItem('loratore_autosave');
+      } catch (e) {}
+      const banner = document.getElementById('welcome-autosave-banner');
+      if (banner) banner.classList.add('hidden');
+    }
+  },
+
+  quickPauseAndSave() {
+    this.stopTimer();
+    this.autoSave();
+    this.promptSaveSession();
+  },
+
   async deleteSavedGame(saveId) {
+    if (saveId === 'autosave_session') {
+      try {
+        localStorage.removeItem('loratore_autosave');
+      } catch (e) {}
+      this.checkAutoSaveOnStartup();
+      this.renderSavedGamesList();
+      return;
+    }
+
     try {
       let raw = localStorage.getItem('loratore_saved_games');
       if (raw) {
@@ -1057,7 +1199,17 @@ const GameEngine = {
     }
   },
 
-  openSavedGamesModal() {
+  async openSavedGamesModal() {
+    if (window.HubSubscriptionGuard && typeof window.HubSubscriptionGuard.verifyAccess === 'function') {
+      const currentUser = (window.Auth && window.Auth.user) || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) || null;
+      const currentRole = (window.Auth && window.Auth.role) || 'guest';
+      const isAllowed = await window.HubSubscriptionGuard.verifyAccess({
+        user: currentUser,
+        role: currentRole,
+        isPublicView: false
+      });
+      if (!isAllowed) return;
+    }
     this.renderSavedGamesList();
     const modal = document.getElementById('saved-games-modal');
     if (modal) modal.classList.remove('hidden');
@@ -1116,18 +1268,32 @@ const GameEngine = {
       `).join(' ');
 
       const isCloud = s.source === 'cloud';
+      const isAutosave = s.source === 'autosave';
+
+      let sourceBadge = '';
+      if (isAutosave) {
+        sourceBadge = '<span style="background:rgba(212,175,55,0.18); color:var(--accent-gold); border:1px solid rgba(212,175,55,0.4); padding:2px 8px; border-radius:6px; font-size:0.7rem; font-weight:800;"><i class="fa-solid fa-clock-rotate-left"></i> In Sospeso</span>';
+      } else if (isCloud) {
+        sourceBadge = '<span style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:700;">☁️ Cloud</span>';
+      } else {
+        sourceBadge = '<span style="background:rgba(148,163,184,0.15); color:#94a3b8; padding:2px 6px; border-radius:6px; font-size:0.7rem;">🖥️ Locale</span>';
+      }
+
+      const itemStyle = isAutosave 
+        ? 'border: 1.5px solid var(--accent-gold); background: rgba(212, 175, 55, 0.08);' 
+        : '';
 
       return `
-        <div class="saved-game-item">
+        <div class="saved-game-item" style="${itemStyle}">
           <div class="saved-game-info">
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
               <h4 class="saved-game-title" style="margin:0;">${s.name}</h4>
-              ${isCloud ? '<span style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:700;">☁️ Cloud</span>' : '<span style="background:rgba(148,163,184,0.15); color:#94a3b8; padding:2px 6px; border-radius:6px; font-size:0.7rem;">🖥️ Locale</span>'}
+              ${sourceBadge}
             </div>
             <div class="saved-game-meta" style="margin-top:4px;">
               <span><i class="fa-solid fa-calendar"></i> ${s.date}</span> • 
               <span><i class="fa-solid fa-flag"></i> Round ${s.round}</span> • 
-              <span style="text-transform:uppercase;">Liv. ${s.level}</span>
+              <span style="text-transform:uppercase;">Liv. ${s.level || (s.gameState && s.gameState.selectedLevel) || 'A1'}</span>
             </div>
             <div class="saved-game-teams">${teamsHtml}</div>
           </div>

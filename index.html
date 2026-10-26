@@ -182,7 +182,8 @@
           <div class="mode-pill"><i class="fa-solid fa-layer-group" style="color: #a855f7;"></i> 6 Livelli di Difficoltà (A1-C2)</div>
           <div class="mode-pill"><i class="fa-solid fa-dice" style="color: var(--team-red);"></i> Round a Categorie Condivise</div>
         </div>
-        <div class="welcome-actions-wrap" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+
+        <div class="welcome-actions-wrap" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
           <button class="btn btn-primary btn-giant" onclick="App.startSetupFlow()">
             <i class="fa-solid fa-play"></i> Inizia Nuova Sfida
           </button>
@@ -424,9 +425,14 @@
           </div>
         </div>
 
-        <!-- Round Badge Info -->
-        <div class="round-info-pill" id="round-info-pill">
-          <span class="round-number-tag" id="hud-round-label">Round 1</span>
+        <!-- Round Badge Info & Quick Actions (Art. 13) -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="round-info-pill" id="round-info-pill">
+            <span class="round-number-tag" id="hud-round-label">Round 1</span>
+          </div>
+          <button class="btn btn-secondary" onclick="GameEngine.quickPauseAndSave()" title="Sospendi la partita e salva la sessione" style="padding: 7px 12px; font-size: 0.8rem; border-radius: 20px; font-weight: 700; background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.4);">
+            <i class="fa-solid fa-floppy-disk" style="color: var(--accent-gold);"></i> <span>Salva ed Esci</span>
+          </button>
         </div>
       </div>
 
@@ -523,8 +529,11 @@
           <p class="board-view-sub" id="board-status-sub">Avanzamento pedine lungo il tracciato a 24 caselle.</p>
         </div>
         <div id="board-action-btn-wrap" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <button class="btn btn-secondary" onclick="GameEngine.showLeaderboard(false)" title="Visualizza la classifica provvisoria e opzioni sessione">
-            <i class="fa-solid fa-pause"></i> <span>Sospendi / Classifica</span>
+          <button class="btn btn-secondary" onclick="GameEngine.promptSaveSession()" title="Sospendi e salva la sessione di gioco">
+            <i class="fa-solid fa-floppy-disk" style="color: var(--accent-gold);"></i> <span>Salva ed Esci</span>
+          </button>
+          <button class="btn btn-secondary" onclick="GameEngine.showLeaderboard(false)" title="Visualizza la classifica provvisoria">
+            <i class="fa-solid fa-chart-simple"></i> <span>Classifica</span>
           </button>
           <button class="btn btn-primary btn-giant" id="btn-board-next-action" onclick="GameEngine.proceedAfterBoard()">
             <i class="fa-solid fa-forward"></i> <span>Passa al Turno Successivo</span>
@@ -837,16 +846,16 @@
     })();
   </script>
   <script src="js/firebase-init.js?v=20260913a"></script>
-  <script src="js/auth/session.js?v=20260913b"></script>
+  <script src="js/auth/session.js?v=20261024_auth_guest"></script>
   <script src="js/music.js?v=20260913a"></script>
   <script src="js/board.js?v=20260913a"></script>
   <script src="js/cards-data.js?v=20260913a"></script>
   <script src="js/live-editor.js?v=20260913a"></script>
-  <script src="js/gameEngine.js?v=20260913a"></script>
+  <script src="js/gameEngine.js?v=20261024_guard"></script>
   <script src="js/components/modals.js?v=20260913b"></script>
   <script src="js/rules-service.js?v=20260927_rules_v1"></script>
   <script src="js/services/miniguida-service.js?v=20260929_miniguida_v1"></script>
-  <script src="js/app.js?v=20260927_rules_v1"></script>
+  <script src="js/app.js?v=20261024_guard"></script>
   <script>
     (function() {
       if (!window.MutationObserver) return;

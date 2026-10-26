@@ -136,14 +136,14 @@ window.Auth = {
     const loginBtnEl = document.getElementById('btn-login-hub-dropdown');
     const profileBtnEl = document.getElementById('btn-profile-dropdown');
 
-    if (nameEl) nameEl.textContent = this.name.toUpperCase();
+    const isGuest = !this.user || this.role === 'guest';
+    if (nameEl) nameEl.textContent = isGuest ? 'ACCEDI' : this.name.toUpperCase();
     const roleLabel = (this.role === 'admin' ? 'AMMINISTRATORE' : (this.role === 'docente' ? 'DOCENTE' : (this.role === 'viandante' ? 'VIANDANTE' : (this.role === 'studente' ? 'STUDENTE' : 'OSPITE'))));
     if (roleEl) roleEl.textContent = roleLabel;
     if (roleSubEl) roleSubEl.textContent = roleLabel;
     if (avatarEl) avatarEl.src = safeAvatar;
     if (xpEl) xpEl.textContent = `${this.xp} XP`;
 
-    const isGuest = !this.user || this.role === 'guest';
     if (loginBtnEl) loginBtnEl.style.display = isGuest ? 'flex' : 'none';
     if (profileBtnEl) profileBtnEl.style.display = isGuest ? 'none' : 'flex';
   },

@@ -1,0 +1,737 @@
+# Mazzo: filosofia
+# 120 carte uniche calibrate pedagogicamente da A1 a C2 (20 carte per livello)
+
+CARDS = {
+    "a1": [
+        (
+            'Perché le stelle non cadono dal cielo?',
+            'Sei un bambino che guarda il cielo notturno e si chiede perché le stelle restano lassù senza cadere come le mele dagli alberi.',
+            ['Stelle', 'Cadere', 'Cielo', 'Notte', 'Mela'],
+            ['Gravità', 'Meraviglia', 'Mistero', 'Luce', 'Domanda']
+        ),
+        (
+            'Chi sono io quando chiudo gli occhi?',
+            'Quando chiudi gli occhi e non vedi più la stanza, sei ancora tu. Spiega ai compagni dove vanno i tuoi pensieri nel silenzio.',
+            ['Occhi', 'Buio', 'Io', 'Dormire', 'Cameretta'],
+            ['Pensiero', 'Dentro', 'Anima', 'Silenzio', 'Respiro']
+        ),
+        (
+            'Le cose esistono anche quando non le guardiamo?',
+            'Il tuo orsetto di peluche sul comodino esiste anche quando esci dalla stanza e chiudi la porta? Trova una risposta curiosa.',
+            ['Orsetto', 'Vedere', 'Stanza', 'Porta', 'Scomparire'],
+            ['Esistenza', 'Mondo', 'Fiducia', 'Fermezza', 'Realtà']
+        ),
+        (
+            'Perché dobbiamo fare domande su tutto?',
+            "La mamma dice che fai troppi 'perché'. Spiega con un sorriso che fare domande è il modo più bello per far crescere la mente.",
+            ['Perché', 'Mamma', 'Troppe domande', 'Zitto', 'Sapere'],
+            ['Curiosità', 'Mente', 'Imparare', 'Crescita', 'Meraviglia']
+        ),
+        (
+            'Il tempo che vola quando ci divertiamo',
+            "Perché un'ora al parco giochi vola via in un secondo e cinque minuti ad aspettare sembrano un giorno intero? Spiega l'orologio del cuore.",
+            ['Tempo', 'Orologio', 'Veloce', 'Lento', 'Minuti'],
+            ['Cuore', 'Divertimento', 'Attesa', 'Emozione', 'Pazienza']
+        ),
+        (
+            "Cosa c'è prima dell'inizio del mondo?",
+            "Chiediti cosa c'era prima che nascessero gli alberi, le montagne e le persone. Prova a immaginare il silenzio prima della vita.",
+            ['Prima', 'Mondo', 'Inizio', 'Niente', 'Nascere'],
+            ['Silenzio', 'Origine', 'Spazio', 'Mistero', 'Luce prima']
+        ),
+        (
+            "Perché non possiamo toccare l'arcobaleno?",
+            'Vedi i colori splendidi nel cielo ma se allunghi la manina non stringi nulla. Spiega la differenza tra toccare e ammirare la bellezza.',
+            ['Arcobaleno', 'Toccare', 'Mano', 'Colori', 'Prendere'],
+            ['Luce', 'Ammirazione', 'Occhi', 'Impalpabile', 'Bellezza']
+        ),
+        (
+            'I sogni sono veri mentre stiamo sognando?',
+            'Quando sogni di volare su un drago ti sembra verissimo. Spiega la differenza tra il mondo che tocchiamo di giorno e quello della notte.',
+            ['Sogno', 'Vero', 'Finto', 'Dormire', 'Volare'],
+            ['Mondo notturno', 'Immaginazione', 'Realtà', 'Risveglio', 'Mente']
+        ),
+        (
+            'Perché ridere fa bene anche quando si è tristi?',
+            'Un compagno ha il broncio: fagli una battuta buffa e spiega come una risata possa sciogliere i pensieri pesanti come neve al sole.',
+            ['Ridere', 'Triste', 'Broncio', 'Sole', 'Sciogliere'],
+            ['Sorriso', 'Allegria', 'Leggerezza', 'Calore', 'Sollievo']
+        ),
+        (
+            'Di che colore è il vento?',
+            "Senti il vento fresco sulle guance e vedi le foglie danzare, ma l'aria è trasparente. Spiega come possiamo sentire ciò che non si vede.",
+            ['Vento', 'Colore', 'Vedere', 'Aria', 'Foglie'],
+            ['Invisibile', 'Sentire', 'Soffio', 'Presenza', 'Danza']
+        ),
+        (
+            'Perché gli alberi non parlano con le parole?',
+            'Ti avvicini al tronco della grande quercia: spiega perché gli alberi non hanno bisogno di parole umane per comunicare la loro pace.',
+            ['Albero', 'Parlare', 'Bocca', 'Zitto', 'Parole'],
+            ['Silenzio', 'Radici', 'Natura', 'Linguaggio segreto', 'Pace']
+        ),
+        (
+            "La formichina e l'elefante: chi è più importante?",
+            'Un insetto minuscolo e un gigante con la proboscide. Convinci la classe che nella natura ogni essere vivente ha lo stesso valore prezioso.',
+            ['Formica', 'Elefante', 'Grande', 'Piccolo', 'Importante'],
+            ['Pari valore', 'Natura', 'Equilibrio', 'Vita', 'Rispetto']
+        ),
+        (
+            'Perché non possiamo fare sempre quello che vogliamo?',
+            'Vorresti mangiare solo gelato e non andare a letto mai. Spiega perché le regole ci aiutano a crescere sani e forti senza farci male.',
+            ['Gelato', 'Voglio io', 'Regole', 'Dormire', 'Comandare'],
+            ['Salute', 'Misura', 'Crescita', 'Protezione', 'Equilibrio']
+        ),
+        (
+            "Cos'è la musica prima che qualcuno la suoni?",
+            "Prima che le dita tocchino i tasti del pianoforte, dove si nasconde la musica? Racconta che le note dormono nel silenzio dell'aria.",
+            ['Musica', 'Pianoforte', 'Suonare', 'Note', 'Dita'],
+            ['Silenzio', 'Attesa', 'Armonia', 'Melodia', 'Spirito']
+        ),
+        (
+            'Possiamo pensare a niente?',
+            'Chiudi gli occhi e prova a non pensare a nulla per dieci secondi. Ti accorgi che la mente fa apparire nuvole o colori. Spiega la scoperta.',
+            ['Niente', 'Pensare', 'Vuoto', 'Fermarsi', 'Cervello'],
+            ['Mente viva', 'Pensiero continuo', 'Scintilla', 'Respiro', 'Scoperta']
+        ),
+        (
+            'Perché la gentilezza non si consuma mai?',
+            "Se regali un sorriso o un abbraccio, non ne hai uno in meno ma uno in più. Spiega la magia dell'amore che si moltiplica donando.",
+            ['Sorriso', 'Regalare', 'Consumare', 'Finito', 'Abbraccio'],
+            ['Moltiplicare', 'Gentilezza', 'Dono', 'Cuore', 'Inesauribile']
+        ),
+        (
+            'Dove finisce il cielo azzurro?',
+            "Guardando in alto oltre gli uccelli e le nuvole, chiediti dove finisce lo spazio. Prova a spiegare l'infinito a un compagno.",
+            ['Cielo', 'Fine', 'Muro', 'Azzurro', 'Alto'],
+            ['Infinito', 'Oltre', 'Stelle', 'Spazio', 'Meraviglia']
+        ),
+        (
+            'Perché abbiamo due orecchie e una sola bocca?',
+            'Ricorda il vecchio proverbio: forse la natura ci ha fatto così perché dobbiamo ascoltare il doppio di quanto parliamo.',
+            ['Orecchie', 'Bocca', 'Parlare tanto', 'Due e una', 'Ascoltare'],
+            ['Ascolto', 'Misura', 'Saggezza', 'Attenzione', 'Parola pesata']
+        ),
+        (
+            'Le ombre giocano con noi quando camminiamo?',
+            'Camminando sul marciapiede vedi la tua ombra allungarsi e rimpicciolirsi. Spiega come la luce del sole disegna il nostro compagno silenzioso.',
+            ['Ombra', 'Sole', 'Luce', 'Camminare', 'Giocare'],
+            ['Sagoma', 'Compagna silenziosa', 'Riflesso', 'Passi', 'Curiosità']
+        ),
+        (
+            'Il manifesto dei piccoli filosofi curiosi',
+            'Concludi il modulo: chi fa domande non è sciocco, ma è come un piccolo esploratore che accende lanterne nel giardino del mondo.',
+            ['Domande', 'Sciocco', 'Vergogna', 'Sapere tutto', 'Fine'],
+            ['Piccolo filosofo', 'Lanterne di luce', 'Curiosità infinita', 'Amore per il sapere', 'Spirito libero']
+        ),
+    ],
+    "a2": [
+        (
+            'Il fiume di Eraclito: possiamo bagnarci due volte nella stessa acqua?',
+            "Spiega alla classe il celebre paradosso: 'Tutto scorre' (Panta rhei). L'acqua scorre e noi cambiamo ogni giorno: nulla resta mai uguale a se stesso.",
+            ['Eraclito', 'Fiume', 'Stessa acqua', 'Panta rhei', 'Fermo'],
+            ['Tutto scorre', 'Divenire perenne', 'Mutamento continuo', 'Fiume del tempo', 'Trasformazione']
+        ),
+        (
+            'Il dubbio di Cartesio: come so che non sto sognando proprio adesso?',
+            'A volte facciamo sogni così vividi da sembrare veri. Come possiamo essere certi che la realtà presente non sia una gigantesca illusione onirica?',
+            ['Cartesio', 'Sogno', 'Svegliarsi', 'Vero e falso', 'Letto'],
+            ['Dubbio metodico', 'Illusione dei sensi', 'Certezza del pensiero', 'Realtà e veglia', 'Ricerca del vero']
+        ),
+        (
+            "L'anello di Gige: faresti il bene se fossi invisibile e impunito?",
+            'Nel racconto di Platone, un pastore trova un anello magico che lo rende invisibile. Se nessuno potesse vederti o punirti, continueresti a essere onesto?',
+            ['Platone', 'Anello', 'Invisibile', 'Rubare', 'Punizione'],
+            ['Etica disinteressata', 'Coscienza interiore', 'Onestà autentica', 'Prova morale', 'Giustizia pura']
+        ),
+        (
+            'Perché la bellezza non è la stessa per tutti?',
+            "Ciò che per un tuo compagno è un quadro meraviglioso, per te è una macchia sgradevole. Discuti se il bello sia negli occhi di chi guarda o nell'oggetto.",
+            ['Bello', 'Brutto', 'Piacere', 'Occhi', 'Tutti uguali'],
+            ['Soggettività del gusto', 'Armonia oggettiva', 'Diversità di sguardo', 'Giudizio estetico', 'Pluralità']
+        ),
+        (
+            'La maieutica di Socrate: partorire le idee dalla mente',
+            'Socrate diceva di fare lo stesso mestiere della madre levatrice: non insegnava verità preconfezionate, ma aiutava gli interlocutori a far nascere le idee da se stessi.',
+            ['Socrate', 'Levatrice', 'Partorire idee', 'Insegnare', 'Sapere tutto'],
+            ['Arte maieutica', 'Dialogo interrogativo', 'Nascita del pensiero', 'Consapevolezza interiore', 'Parto delle idee']
+        ),
+        (
+            "Che cos'è la verità quando due persone raccontano cose diverse?",
+            'Due testimoni hanno visto lo stesso incidente nel cortile e ne danno versioni opposte in buona fede. Come distinguere il punto di vista dalla verità oggettiva?',
+            ['Verità', 'Bugia', 'Punto di vista', 'Litigare', 'Chi ha ragione'],
+            ['Prospettiva soggettiva', 'Verità oggettiva', 'Confronto critico', 'Ricostruzione dei fatti', 'Equanimità']
+        ),
+        (
+            "Il paradosso della nave di Teseo: l'identità nel tempo",
+            "Se gli ateniesi sostituiscono un'asse di legno alla volta della nave di Teseo finché non resta neanche un pezzo originale, è ancora la stessa nave?",
+            ['Nave di Teseo', 'Legno', 'Pezzi cambiati', 'Stessa nave', 'Vecchia'],
+            ['Identità ontologica', 'Permanenza della forma', 'Sostanza e materia', 'Continuità nel tempo', 'Paradosso filosofico']
+        ),
+        (
+            'La felicità è avere tanto o saper desiderare poco?',
+            'Confronta chi accumula cento giocattoli senza giocarci mai con chi ne ha uno solo e ne è entusiasta. Esponi la felicità come libertà dai desideri inutili.',
+            ['Soldi', 'Comprare', 'Giocattoli', 'Felicità', 'Tanti'],
+            ['Sobrietà felice', 'Libertà dai bisogni', 'Appagamento interiore', 'Gratitudine', 'Misura']
+        ),
+        (
+            'Possiamo pensare a qualcosa che non esiste affatto?',
+            'Possiamo immaginare un cavallo alato o un drago verde combinando cose reali (cavallo + uccello). Possiamo inventare un colore che non abbiamo mai visto?',
+            ['Non esiste', 'Inventare', 'Drago', 'Colori', 'Immaginare'],
+            ["Facoltà dell'immaginazione", 'Combinazione di forme', "Limiti dell'esperienza", 'Creatività concettuale', 'Realtà e finzione']
+        ),
+        (
+            'Il rasoio di Ockham: scegliere la spiegazione più semplice',
+            "Se la finestra della camera sbatte, è stato un fantasma misterioso o un colpo di vento? Spiega perché la ragione deve preferire sempre l'ipotesi più parsimoniosa.",
+            ['Ockham', 'Rasoio', 'Fantasma', 'Vento', 'Spiegazione difficile'],
+            ['Rasoio di Ockham', 'Parsimonia esplicativa', 'Ipotesi più probabile', 'Logica rigorosa', 'Semplicità scientifica']
+        ),
+        (
+            "Che cos'è il coraggio: assenza di paura o vittoria sulla paura?",
+            'Dimostra che chi non ha paura di nulla è solo incosciente o spericolato, mentre il vero eroe è chi sente tremare le ginocchia ma fa il proprio dovere.',
+            ['Paura', 'Incosciente', 'Eroe', 'Tremare', 'Niente paura'],
+            ['Vero coraggio', 'Consapevolezza del pericolo', 'Vittoria sul timore', 'Forza morale', "Fermezza d'animo"]
+        ),
+        (
+            'Perché la libertà ha bisogno di limiti per esistere?',
+            'Se ciascuno fosse libero di guidare a fari spenti contromano, nessuno sarebbe più libero di viaggiare sereno. Dimostra come la regola protegga la vera libertà.',
+            ['Libertà assoluta', 'Faccio quello che voglio', 'Regole fastidiose', 'Limite', 'Vietato'],
+            ['Libertà condivisa', 'Limite salvifico', 'Patto di convivenza', 'Autonomia responsabile', 'Tutela reciproca']
+        ),
+        (
+            "L'amicizia secondo Aristotele: utile, dilettevole o virtuosa?",
+            "Presenta le tre forme di amicizia dell'Etica Nicomachea: per interesse, per divertimento, o l'amicizia perfetta tra persone rette che dura per sempre.",
+            ['Amici', 'Aristotele', 'Interesse', 'Divertimento', 'Vera amicizia'],
+            ['Amicizia virtuosa', "Puro bene dell'altro", 'Stabilità del legame', 'Etica Nicomachea', 'Condivisione morale']
+        ),
+        (
+            "L'orologio di Dio e l'argomento del disegno intelligente",
+            "Se trovi un orologio a terra nel bosco, deduci che c'è stato un orologiaio che l'ha costruito. La complessità della natura prova l'esistenza di un Architetto?",
+            ['Orologio', 'Bosco', 'Orologiaio', 'Dio', 'Natura complessa'],
+            ['Disegno cosmico', 'Argomento teleologico', 'Complessità della vita', 'Grande Architetto', "Meraviglia dell'ordine"]
+        ),
+        (
+            "Il paradosso del mentitore: 'Io sto mentendo in questo momento'",
+            "Se dico che sto mentendo, sto dicendo la verità o una bugia? Diverti e stimola i compagni con la trappola logica dell'autocontraddizione.",
+            ['Mentitore', 'Bugia', 'Vero', 'Paradosso', 'Confusione'],
+            ['Autocontraddizione logica', 'Paradosso del mentitore', 'Circolo autoreferenziale', 'Trappola del linguaggio', 'Rigore dialettico']
+        ),
+        (
+            'La morte fa parte della vita?',
+            'Se fossimo immortali e avessimo tutto il tempo del mondo, rimanderemmo ogni impegno a domani. Spiega come la finitudine dia valore prezioso a ogni nostro istante.',
+            ['Morte', 'Vivere per sempre', 'Immortali', 'Paura', 'Tempo infinito'],
+            ['Finitudine preziosa', "Valore dell'istante presente", 'Consapevolezza del tempo', "Intensità dell'impegno", 'Bellezza della vita']
+        ),
+        (
+            'Possiamo giudicare il passato con gli occhi di oggi?',
+            "Spiega perché non possiamo pretendere che gli antichi Romani la pensassero come noi sui diritti umani: l'importanza del contesto storico per capire senza assolverne gli errori.",
+            ['Romani', 'Giudicare', 'Sbagliato', 'Oggi siamo bravi', 'Passato'],
+            ['Contestualizzazione storica', 'Anacronismo critico', 'Evoluzione morale', 'Comprensione del passato', 'Giudizio ponderato']
+        ),
+        (
+            'Chi è più libero: chi segue tutte le sue voglie o chi sa controllarsi?',
+            'Chi non riesce a dire di no al cioccolato o ai videogiochi è schiavo delle sue pulsioni. Sostieni la libertà interiore della padronanza di sé.',
+            ['Voglia', 'Schiavo', 'Tutto subito', 'Comandarsi', 'Libero'],
+            ['Padronanza di sé (Enkrateia)', 'Libertà interiore', 'Schiavitù delle pulsioni', 'Autodisciplina', 'Sovranità morale']
+        ),
+        (
+            'La tolleranza: dobbiamo essere tolleranti anche con gli intolleranti?',
+            'Esponi il paradosso della tolleranza di Karl Popper: se una società tollera chi predica la distruzione violenta della tolleranza stessa, finirà per essere annientata.',
+            ['Popper', 'Tolleranza', 'Intolleranti', 'Tutti accettati', 'Violenza'],
+            ['Paradosso della tolleranza popperiano', 'Difesa della società aperta', 'Limite invalicabile alla violenza', 'Presidio democratico', 'Fermezza etica']
+        ),
+        (
+            'Il manifesto del pensiero critico',
+            'Concludi il percorso: pensare con la propria testa significa non accettare nulla solo perché lo dicono tutti, ma vagliare ogni affermazione alla luce della ragione e del rispetto.',
+            ['Tutti dicono così', 'Obbedire', 'Pensare da soli', 'Credere a tutto', 'Fine'],
+            ['Pensiero critico autonomo', 'Vaglio della ragione', 'Rifiuto del conformismo', 'Luce del discernimento', 'Libertà intellettuale']
+        ),
+    ],
+    "b1": [
+        (
+            "Il mito della caverna di Platone: l'uscita dalle catene dell'illusione",
+            "Ripercorri l'allegoria centrale della Repubblica: gli schiavi incatenati che scambiano le ombre sul muro per la realtà, e la dolorosa ascesa del filosofo verso la luce del Sole.",
+            ['Platone', 'Caverna', 'Ombre', 'Catene', 'Sole'],
+            ['Illusione sensoriale (Doxa)', 'Liberazione filosofica', 'Luce noetica', 'Dovere pedagogico del ritorno', 'Idea del Bene supremo']
+        ),
+        (
+            "L'imperativo categorico kantiano: 'Agisci in modo che la tua massima...'",
+            "Esporrai la formula morale fondamentale: ogni volta che stai per compiere un'azione, chiediti se vorresti che la tua regola di condotta diventasse una legge universale per tutti gli uomini.",
+            ['Kant', 'Imperativo', 'Regola', 'Tutti fanno', 'Morale'],
+            ['Imperativo categorico kantiano', 'Universalizzabilità della massima', 'Dovere per il dovere', 'Autonomia legislativa della ragione', 'Dignità della persona']
+        ),
+        (
+            'Il dilemma del libero arbitrio versus il determinismo scientifico',
+            'Se ogni evento fisico nel cosmo e nel cervello è la conseguenza necessaria di cause precedenti, esiste davvero la libertà di scelta o è solo una confortevole illusione della mente?',
+            ['Libero arbitrio', 'Determinismo', 'Causa ed effetto', 'Cervello', 'Scelta libera'],
+            ['Determinismo causale rigoroso', 'Libertà morale autentica', 'Compatibilismo filosofico', 'Responsabilità penale ed etica', 'Spazio deliberativo']
+        ),
+        (
+            "La felicità epicurea: l'atarassia e il quadrifarmaco contro le paure",
+            "Sei Epicuro nel Giardino di Atene: dimostra che la felicità non risiede nel lusso sfrenato ma nell'assenza di turbamento dell'animo (atarassia) e nel non temere gli dèi né la morte.",
+            ['Epicuro', 'Piacere', 'Giardino', 'Paura della morte', 'Lusso'],
+            ['Atarassia epicurea', 'Quadrifarmaco filosofico', 'Piaceri naturali e necessari', 'Non curanza degli immortali', 'Pace interiore del Giardino']
+        ),
+        (
+            "La scommessa di Pascal sull'esistenza di Dio",
+            'Nel frammento dei Pensieri, analizza la scommessa probabilistica: scommettere che Dio esiste comporta una perdita finita (qualche piacere terreno) ma un guadagno infinito (la salvezza eterna).',
+            ['Pascal', 'Scommessa', 'Dio', 'Probabilità', 'Credere'],
+            ['Scommessa pascaliana', 'Infinito versus finito', 'Calcolo razionale della fede', "Miseria e grandezza dell'uomo", 'Cuore che ha ragioni']
+        ),
+        (
+            'Il paradosso di Achille e la tartaruga di Zenone di Elea',
+            'Dimostra con gli argomenti di Zenone contro il movimento che il piè veloce Achille non raggiungerà mai la lenta tartaruga partita con dieci metri di vantaggio se lo spazio è infinitamente divisibile.',
+            ['Zenone', 'Achille', 'Tartaruga', 'Corsa', 'Spazio divisibile'],
+            ['Aporia del movimento', 'Divisibilità infinita del continuo', 'Paradosso eleatico di Zenone', 'Spazio matematico vs reale', 'Confutazione del moto']
+        ),
+        (
+            "L'ironia socratica e la consapevolezza di non sapere: 'So di non sapere'",
+            "Il responso dell'oracolo di Delfi consacra Socrate come il più sapiente di tutti perché è l'unico che riconosce la propria ignoranza, smascherando la presunzione dei potenti.",
+            ['Socrate', 'Sapere di non sapere', 'Delfi', 'Ignoranza', 'Più saggio'],
+            ['Docta ignorantia socratica', 'Smascheramento della presunzione', 'Ironia corrosiva liberatoria', 'Inizio della vera ricerca', 'Umiltà epistemica']
+        ),
+        (
+            "Il paradosso del teletrasporto e l'identità personale di Derek Parfit",
+            'Se una macchina scansiona i tuoi atomi, li disintegra e ne crea una copia identica su Marte con gli stessi ricordi, sei ancora tu o sei morto e sostituito da un clone?',
+            ['Teletrasporto', 'Marte', 'Clone', 'Atomi', 'Io'],
+            ['Identità personale continua', 'Esperimento mentale parfitiano', 'Continuità psicologica', "Decostruzione dell'io sostanziale", 'Sdoppiamento ontologico']
+        ),
+        (
+            "L'alienazione del lavoro salariato nei Manoscritti di Karl Marx (1844)",
+            "Illustra le quattro forme di alienazione dell'operaio nella fabbrica capitalistica: dal prodotto, dall'attività lavorativa, dalla propria essenza umana e dai propri simili.",
+            ['Marx', 'Fabbrica', 'Alienazione', 'Operai', 'Soldi'],
+            ['Alienazione del lavoro', "Estraniazione dall'essenza (Gattungswesen)", "Merci che dominano l'uomo", 'Espropriazione del prodotto', 'Rapporto disumanizzante']
+        ),
+        (
+            'La distinzione lockiana tra qualità primarie e qualità secondarie',
+            'Spiega la gnoseologia empirista di John Locke: la forma, il peso e il moto appartengono realmente agli oggetti, mentre il colore, il sapore e il profumo esistono solo nella nostra percezione.',
+            ['Locke', 'Qualità', 'Sapore', 'Colore', 'Mente'],
+            ['Qualità primarie e secondarie', 'Empirismo lockiano', 'Percezione soggettiva dei sensi', 'Oggettività geometrico-meccanica', 'Tabula rasa originaria']
+        ),
+        (
+            'La morale provvisoria nel Discorso sul Metodo di René Descartes',
+            'Mentre demolisce ogni certezza col dubbio, Cartesio fissa tre regole pratiche per vivere serenamente: obbedire alle leggi del paese, essere risoluto nelle azioni e vincere se stessi prima della fortuna.',
+            ['Cartesio', 'Metodo', 'Morale provvisoria', 'Dubbio', 'Regole di vita'],
+            ['Morale par provision', "Risoluzione nell'agire incerto", 'Vincere se stessi non la fortuna', 'Prudenza civile cartesiana', 'Costanza filosofica']
+        ),
+        (
+            "L'eudaimonia aristotelica: la felicità come realizzazione della virtù",
+            "Nell'Etica Nicomachea, confuta l'idea che la felicità sia mero piacere sensoriale o successo effimero: è l'attività dell'anima secondo la virtù perfetta lungo un'intera vita compiuta.",
+            ['Aristotele', 'Felicità', 'Piacere', 'Virtù', 'Vivere bene'],
+            ['Eudaimonia aristotelica', "Attività dell'anima razionale", 'Compiutezza biografica', 'Virtù etiche e dianoetiche', "Fioritura dell'essere umano"]
+        ),
+        (
+            'Il dilemma della stanza cinese di John Searle: sintassi contro semantica',
+            'Un uomo dentro una stanza manipola ideogrammi cinesi seguendo un manuale di regole inglesi senza capire nulla di cinese. Dimostra che i computer processano simboli ma non hanno comprensione mentale.',
+            ['Searle', 'Stanza cinese', 'Computer', 'Capire', 'Simboli'],
+            ['Argomento della stanza cinese', 'Sintassi versus semantica', 'Intenzionalità originaria della mente', "Confutazione dell'IA forte", 'Comprensione cosciente']
+        ),
+        (
+            "Il velo d'ignoranza e la giustizia equa di John Rawls",
+            'Progetta le regole di una società ideale mettendoti dietro un velo che ti impedisce di sapere se nascerai ricco o povero, sano o disabile: sceglierai la massima protezione per i più svantaggiati.',
+            ['Rawls', 'Velo', 'Ignoranza', 'Ricchi e poveri', 'Giustizia'],
+            ["Velo d'ignoranza rawlsiano", 'Posizione originaria deliberativa', 'Principio di differenza equo', 'Massimizzazione del minimo (Maximin)', 'Equità distributiva']
+        ),
+        (
+            "L'illusione del tempo tra passato, presente e futuro nelle Confessioni di Sant'Agostino",
+            "Se il passato non è più e il futuro non è ancora, come possiamo misurare il tempo? Agostino dimostra che il tempo esiste solo come distensione dell'animo tra memoria, attenzione e attesa.",
+            ['Agostino', 'Tempo', 'Passato e futuro', 'Orologio', 'Presente'],
+            ['Distensio animi agostiniana', 'Presente del passato come memoria', 'Presente del futuro come attesa', 'Mistero della temporalità interiore', 'Confessioni metafisiche']
+        ),
+        (
+            'Il rasoio di Ockham e la critica agli enti inutili (Pluralitas non est ponenda)',
+            "Analizza il principio metodologico medievale: 'Non moltiplicare gli enti oltre il necessario'. Rifiuta le spiegazioni arzigogolate per privilegiare l'ipotesi più parsimoniosa ed elegante.",
+            ['Ockham', 'Rasoio', 'Spiegazione', 'Inutile', 'Complesso'],
+            ['Principio di parsimonia ontologica', 'Entia non sunt multiplicanda', 'Nominalismo metodologico', 'Eleganza teorica ed euristica', 'Rigore scientifico']
+        ),
+        (
+            "L'argomento ontologico di Sant'Anselmo d'Aosta nel Proslogion",
+            "Dio è 'ciò di cui non si può pensare nulla di maggiore'. Ma se esistesse solo nell'intelletto e non nella realtà, si potrebbe pensare qualcosa di maggiore: dunque Dio esiste necessariamente.",
+            ['Anselmo', 'Dio', 'Pensare', 'Esistenza', 'Maggiore'],
+            ['Argomento ontologico anselmiano', 'Id quo maius cogitari nequit', "Necessità logica dell'esistenza", "Contraddizione dell'insipiente", 'Prova a priori']
+        ),
+        (
+            "Il nichilismo e la morte di Dio nell'aforisma 125 della Gaia Scienza di Nietzsche",
+            "L'uomo folle che corre al mercato con una lanterna accesa gridando: 'Cerco Dio!'. Analizza l'annuncio della caduta di tutti i valori assoluti e la sfida di non sprofondare nel nulla.",
+            ['Nietzsche', 'Dio è morto', 'Uomo folle', 'Lanterna', 'Mercato'],
+            ['Morte di Dio nietzscheana', 'Crollo dei fondamenti metafisici', 'Vertigine del nichilismo attivo', "Avvento dell'Oltreuomo (Übermensch)", 'Trasvalutazione dei valori']
+        ),
+        (
+            'La società aperta e i suoi nemici nel pensiero di Karl Popper',
+            "Analizza come il dogmatismo totalitario di Platone, Hegel e Marx scaturisca dall'illusione di possedere leggi storiche certe, difendendo la società aperta democratica fondata sul metodo critico.",
+            ['Popper', 'Società aperta', 'Platone', 'Hegel', 'Marx'],
+            ['Società aperta popperiana', 'Critica dello storicismo dogmatico', "Metodo dell'errore correggibile", 'Ingegneria sociale graduale', 'Presidio democratico']
+        ),
+        (
+            "L'Orazione per la Libertà del Dubbio Filosofico",
+            "Concludi il modulo intermedio: chi possiede certezze assolute finisce spesso per imporre dogmi col terrore; chi custodisce il dubbio filosofico coltiva il rispetto per l'altro e la ricerca perenne del Vero.",
+            ['Certezze', 'Dogma', 'Dubbio', 'Sapere tutto', 'Fine'],
+            ['Elogio del dubbio fecondo', 'Rifiuto del fanatismo dogmatico', 'Ricerca inesausta della Verità', "Magistero dell'Oratore Filosofo", 'Luce della Ragione dialogica']
+        ),
+    ],
+    "b2": [
+        (
+            "La lotta per il riconoscimento nella dialettica hegeliana del servo e del padrone",
+            'Analizza nella Fenomenologia dello Spirito la lotta per il puro riconoscimento: il padrone che mette a rischio la vita biologica e il servo che attraverso il lavoro e la paura della morte scopre la libertà.',
+            ['Hegel', 'Servo e padrone', 'Lotta', 'Morte', 'Riconoscimento'],
+            ['Autocoscienza intersoggettiva', 'Lotta a morte per il riconoscimento', 'Formatura del lavoro (Bildung)', 'Dialettica del rovesciamento', 'Fenomenologia dello Spirito']
+        ),
+        (
+            "L'imperativo categorico kantiano e il regno dei fini",
+            "Esporrai la seconda formula dell'imperativo categorico: 'Agisci in modo da trattare l'umanità, sia nella tua persona che in quella di ogni altro, sempre come fine e mai semplicemente come mezzo'.",
+            ['Kant', 'Fine e mezzo', 'Usare le persone', 'Dovere', 'Regno dei fini'],
+            ["Seconda formula dell'imperativo", 'Uomo come fine in sé intangibile', 'Regno dei fini kantiano', 'Inviolabilità della dignità personale', 'Critica della ragion pratica']
+        ),
+        (
+            'La critica nietzscheana della morale e la trasvalutazione di tutti i valori',
+            "Dimostra nella Genealogia della morale come la morale sacerdotale cristiana nasca dal risentimento impotente degli schiavi, e delinea l'avvento dell'Oltreuomo fedele alla terra e all'Amor Fati.",
+            ['Nietzsche', 'Morale dei signori', 'Risentimento', 'Oltreuomo', 'Amor fati'],
+            ['Genealogia nietzscheana dissacrante', 'Ressentiment degli schiavi', 'Fedeltà dionisiaca alla terra', 'Amor fati trasfigurante', 'Volontà di potenza affermativa']
+        ),
+        (
+            'Il mito della caverna platonica: gnoseologia e missione politica del filosofo',
+            "Indaga attraverso la Repubblica i quattro gradi della conoscenza: Eikasia (immaginazione), Pistis (credenza), Dianoia (ragione matematica) e Noesis (intuizione dialettica dell'Idea del Bene).",
+            ['Platone', 'Caverna', 'Ombre', 'Noesis', 'Idea del Bene'],
+            ['Gnoseologia platonica quadripartita', 'Linea divisa della conoscenza', 'Ascesa noetica intellettuale', 'Missione politica del reggitore-filosofo', "Luce dell'Idea del Bene"]
+        ),
+        (
+            'La decostruzione del cogito cartesiano: da Gassendi a Friedrich Nietzsche',
+            "Se Cartesio afferma 'Penso, dunque sono', illustra la critica: dal fatto che vi sia un pensare non segue che vi sia una sostanza pensante immutabile (l'Io è solo un'abitudine grammaticale).",
+            ['Cartesio', 'Cogito', 'Io penso', 'Sostanza', 'Grammatica'],
+            ['Critica del Cogito cartesiano', "Illusione dell'Io sostanziale", 'Inganno della grammatica soggetto-verbo', 'Frammentazione del soggetto', 'Decostruzione epistemologica']
+        ),
+        (
+            "L'alienazione e la struttura economico-materiale in Karl Marx",
+            "Nel Capitale e nell'Ideologia tedesca, dimostra come non sia la coscienza degli uomini a determinare il loro essere sociale, ma al contrario il loro essere sociale economico a determinarne la coscienza.",
+            ['Marx', 'Coscienza', 'Struttura e sovrastruttura', 'Economia', 'Ideologia'],
+            ['Struttura materiale economica', 'Sovrastruttura giuridico-ideologica', 'Falsa coscienza borghese', 'Critica del feticismo delle merci', 'Materialismo storico scientifico']
+        ),
+        (
+            'Il dilemma del determinismo versus compatibilismo in Spinoza e Hume',
+            "Analizza l'Etica di Spinoza: gli uomini si credono liberi solo perché sono coscienti delle loro azioni ma ignoranti delle cause da cui sono determinati, confutando il libero arbitrio come illusione antropocentrica.",
+            ['Spinoza', 'Libero arbitrio', 'Cause', 'Determinismo', 'Volere'],
+            ['Necessità geometrica spinoziana', 'Illusione della libera volontà', 'Deus sive Natura', 'Amor Dei intellectualis', 'Libertà come consapevolezza della necessità']
+        ),
+        (
+            "La fenomenologia dell'angoscia e la disperazione in Søren Kierkegaard",
+            "Nel Concetto dell'angoscia e nella Malattia mortale, distingui l'angoscia come vertigine della possibilità infinita della libertà dal peccato di disperazione dell'io che rifiuta se stesso davanti a Dio.",
+            ['Kierkegaard', 'Angoscia', 'Vertigine', 'Disperazione', 'Libertà'],
+            ['Vertigine del possibile kierkegaardiana', 'Aut-Aut esistenziale categorico', 'Malattia mortale della disperazione', "Singolo di fronte all'Assoluto", 'Salto della fede']
+        ),
+        (
+            "La cura (Sorge) e l'essere-per-la-morte nell'analitica esistenziale di Heidegger",
+            "In Essere e tempo, analizza il Dasein (esserci): l'esistenza deietta nel 'si dice' e 'si fa' inautentico (das Man), riscattata solo dall'assunzione lucida e angosciata della propria morte come possibilità più propria.",
+            ['Heidegger', 'Essere e tempo', 'Morte', 'Angoscia', 'Inautentico'],
+            ['Essere-per-la-morte (Sein-zum-Tode)', 'Analitica del Dasein heideggeriano', 'Caduta nel das Man quotidiano', 'Chiamata della coscienza autentica', 'Finitudine ontologica originaria']
+        ),
+        (
+            'Il principio di falsificabilità di Karl Popper e la demarcazione scientifica',
+            'Dimostra nella Logica della scoperta scientifica che mille verifiche empiriche non bastano a confermare una teoria universale, mentre un solo cigno nero contrario è sufficiente a falsificarla.',
+            ['Popper', 'Falsificabilità', 'Cigno nero', 'Verifica', 'Scienza'],
+            ['Criterio di falsificabilità popperiano', 'Demarcazione tra scienza e metafisica', 'Asimmetria tra conferma e smentita', 'Fallibilismo metodologico', 'Congetture e confutazioni']
+        ),
+        (
+            "L'etica della responsabilità versus l'etica dei principi in Max Weber",
+            'Nella conferenza La politica come professione, sviscera il contrasto tragico tra chi persegue fini assoluti senza calcolare i danni collaterali e chi risponde politicamente delle conseguenze delle proprie decisioni.',
+            ['Weber', 'Politica', 'Responsabilità', 'Principi', 'Conseguenze'],
+            ['Gesinnungsethik versus Verantwortungsethik', "Tragicità dell'azione politica", 'Patto con le potenze diaboliche', 'Etica del risultato mondano', "Lucidità dell'oratore repubblicano"]
+        ),
+        (
+            'Il paradosso della democrazia in Rousseau: costretti a essere liberi',
+            "Nel Contratto sociale, analizza la Volontà Generale (Volonté Générale) che mira all'interesse comune: chi rifiuta di obbedirvi vi sarà costretto dall'intero corpo politico per essere libero.",
+            ['Rousseau', 'Contratto sociale', 'Volontà generale', 'Costretti a essere liberi', 'Popolo'],
+            ['Volonté Générale inalienabile', 'Sovranità popolare indivisibile', 'Costrizione alla libertà repubblicana', 'Patto sociale originario', 'Democrazia diretta radicale']
+        ),
+        (
+            "L'utilitarismo quantitativo di Bentham versus utilitarismo qualitativo di Mill",
+            "Confronta il calcolo felicifico matematico di Bentham ('la massima felicità per il maggior numero') con il correttivo qualitativo di John Stuart Mill: 'Meglio essere un Socrate insoddisfatto che un maiale soddisfatto'.",
+            ['Bentham', 'Mill', 'Utilitarismo', 'Felicità', 'Piacere'],
+            ['Calcolo felicifico benthamiano', 'Gerarchia qualitativa dei piaceri', 'Meglio Socrate insoddisfatto', 'Utilitarismo della regola', "Dignità dell'essere razionale"]
+        ),
+        (
+            'La condizione umana tra nuda vita e agire politico in Hannah Arendt',
+            "In Vita activa, delinea la gerarchia delle tre attività: il Lavoro (legato alla pura sopravvivenza biologica), l'Opera (la costruzione del mondo artificiale) e l'Azione politica (il discorso pubblico condiviso).",
+            ['Arendt', 'Vita activa', 'Lavoro', 'Opera', 'Azione politica'],
+            ['Trinomio arendtiano Lavoro-Opera-Azione', 'Spazio pubblico della parresìa', 'Pluralità come condizione politica', 'Nascita e nuovo inizio (Natality)', "Dignità dell'agire deliberativo"]
+        ),
+        (
+            "Il problema dell'induzione in David Hume e l'abitudine psicologica",
+            "Dimostra nel Trattato sulla natura umana che il nesso di causa-effetto non è fondato sulla logica razionale né su un principio ontologico, ma sulla mera abitudine psicologica e sull'aspettativa soggettiva.",
+            ['Hume', 'Causa ed effetto', 'Sole sorge', 'Abitudine', 'Induzione'],
+            ['Critica humiana del principio causale', 'Credenza psicologica e abitudine', 'Scetticismo epistemologico radicale', "Inconcludenza dell'induzione logica", 'Trattato sulla natura umana']
+        ),
+        (
+            "L'enigma del tempo e l'intuizione della durata vissuta in Henri Bergson",
+            "Distingui il tempo quantitativo e spazializzato dell'orologio e della fisica (la collana di perle discrete) dalla durata reale (durée réelle) come flusso qualitativo e indivisibile della coscienza.",
+            ['Bergson', 'Tempo', 'Orologio', 'Durata', 'Coscienza'],
+            ['Durée réelle bergsoniana', 'Tempo spazializzato della fisica', "Flusso qualitativo continuo dell'io", 'Memoria pura e slancio vitale', 'Intuizione filosofica']
+        ),
+        (
+            "L'essere e il nulla: la libertà come condanna in Jean-Paul Sartre",
+            "Nel capolavoro dell'esistenzialismo, argomenta la celebre tesi: 'L'uomo è condannato a essere libero; condannato perché non si è creato da se stesso, e pur tuttavia libero perché una volta gettato nel mondo è responsabile di tutto'.",
+            ['Sartre', 'Essere e nulla', 'Condannati a essere liberi', 'Responsabilità', 'Esistenzialismo'],
+            ["Esistenza precede l'essenza", 'Condanna alla libertà assoluta', 'Malafede (Mauvaise foi) decostruita', 'Angoscia della scelta incondizionata', 'Responsabilità totale verso il mondo']
+        ),
+        (
+            "La teoria dei giochi e il dilemma del prigioniero applicato all'etica",
+            'Analizza come due soggetti razionali che perseguono egoisticamente il proprio massimo vantaggio finiscano per ottenere un esito peggiore rispetto a una scelta cooperativa basata sulla fiducia reciproca.',
+            ['Teoria dei giochi', 'Dilemma del prigioniero', 'Egoismo', 'Cooperazione', 'Nash'],
+            ['Dilemma del prigioniero strategico', 'Equilibrio di Nash non ottimale', "Paradosso dell'egoismo razionale", 'Evoluzione della cooperazione sociale', 'Patto fiduciario etico']
+        ),
+        (
+            'La critica della ragion pura di Immanuel Kant e la rivoluzione copernicana',
+            "Dimostra come non sia la nostra mente a doversi conformare agli oggetti esterni, ma gli oggetti empirici a doversi conformare alle forme a priori della nostra sensibilità (spazio e tempo) e dell'intelletto (categorie).",
+            ['Kant', 'Ragion pura', 'Spazio e tempo', 'Categorie', 'Rivoluzione copernicana'],
+            ['Rivoluzione copernicana gnoseologica', 'Forme a priori della sensibilità', 'Fenomeno versus Noumeno inaccessibile', "Categorie dell'intelletto trascendentale", 'Giudizi sintetici a priori']
+        ),
+        (
+            "L'Orazione per la Sovranità del Pensiero Critico",
+            "Pronuncia l'arringa conclusiva: la filosofia non è un repertorio di dottrine morte, ma l'esercizio perenne e instancabile della libertà interiore contro ogni oscurantismo e conformismo ideologico.",
+            ['Ideologie', 'Dottrine', 'Filosofia morta', 'Obbedire', 'Fine'],
+            ["Magistero dell'Oratore Filosofo", 'Esercizio perenne della libertà noetica', 'Infrangimento di ogni dogmatismo', 'Trionfo della Ragione critica', 'Luce incorruttibile della Verità']
+        ),
+    ],
+    "c1": [
+        (
+            'Il cogito cartesiano e la fondazione gnoseologica del soggetto moderno',
+            "Esporrai la deduzione metafisica delle Meditazioni: il dubbio iperbolico del genio maligno che demolisce l'evidenza empirica e geometrica, fino all'auto-evidenza indubitabile del Cogito sum.",
+            ['Cartesio', 'Cogito', 'Genio maligno', 'Dubbio', 'Meditazioni'],
+            ['Cogito ergo sum fondativo', 'Dubbio metodico e iperbolico', 'Res cogitans versus Res extensa', 'Auto-evidenza della coscienza pura', 'Punto archimedeo della modernità']
+        ),
+        (
+            "La critica della ragion pura e i limiti trascendentali dell'intelletto umano in Kant",
+            "Analizza la distinzione ontologica tra Fenomeno (l'oggetto come ci appare ordinato dalle nostre forme pure a priori) e Noumeno o Cosa in sé (Ding an sich), invalicabile per la conoscenza umana.",
+            ['Kant', 'Fenomeno', 'Noumeno', 'Cosa in sé', 'Limiti della ragione'],
+            ['Dottrina trascendentale del Noumeno', 'Ding an sich inaccessibile', "Confine insuperabile dell'esperienza", 'Critica delle illusioni metafisiche', 'Idealismo trascendentale']
+        ),
+        (
+            "La dialettica hegeliana del servo-padrone e l'autocoscienza intersoggettiva",
+            "Sviscera il movimento della coscienza che giunge a se stessa solo specchiandosi in un'altra autocoscienza: la paura della morte assoluta che nobilita il servo facendolo signore della natura attraverso il lavoro.",
+            ['Hegel', 'Servo e padrone', 'Fenomenologia', 'Autocoscienza', 'Lavoro'],
+            ['Riconoscimento intersoggettivo hegeliano', 'Paura della morte come maestro assoluto', 'Lavoro come operosità formatrice', 'Alienazione dialettica superata', 'Autonomia dello Spirito']
+        ),
+        (
+            'La crisi delle scienze europee e la fenomenologia del mondo-della-vita in Edmund Husserl',
+            'Illustra la celebre tesi del 1936: la matematizzazione galileiana del cosmo ha operato una sostituzione perversa, scambiando il modello geometrico astratto per la realtà originaria del Lebenswelt.',
+            ['Husserl', 'Crisi delle scienze', 'Galileo', 'Lebenswelt', 'Matematica'],
+            ['Mondo-della-vita (Lebenswelt) husserliano', "Matematizzazione galileiana dell'essere", 'Epoché fenomenologica radicale', "Crisi di senso dell'umanità europea", 'Ritorno alle cose stesse']
+        ),
+        (
+            "Il problema dell'essere e del tempo nell'ontologia heideggeriana",
+            "Nel capolavoro del 1927, dimostra come la metafisica occidentale abbia obliato la differenza ontologica fondamentale tra l'Ente (das Seiende) e l'Essere stesso (das Sein), riducendo l'essere a mera presenza oggettuale.",
+            ['Heidegger', 'Essere e tempo', 'Ente', 'Presenza', "Dimenticare l'essere"],
+            ['Differenza ontologica fondamentale', "Seinsvergessenheit (oblio dell'Essere)", 'Decostruzione della metafisica della presenza', 'Dasein come apertura al senso', "Orizzonte temporale dell'Essere"]
+        ),
+        (
+            'La decostruzione derridiana del logocentrismo e della metafisica della presenza',
+            'Nel saggio Della grammatologia, analizza la Différance: il movimento di differimento e differenziazione temporale che impedisce per sempre alla presenza piena del senso di chiudersi in un significato ultimo.',
+            ['Derrida', 'Différance', 'Logocentrismo', 'Scrittura', 'Presenza'],
+            ["Différance con la 'a' derridiana", 'Decostruzione del logocentrismo occidentale', 'Traccia originaria senza principio', 'Rinvio infinito dei significanti', "Eclissi dell'origine trasparente"]
+        ),
+        (
+            'La genealogia del potere e le biopolitiche foucaultiane nel tardo-capitalismo',
+            "Analizza come il potere moderno non si manifesti più come divieto censorio del sovrano dall'alto, ma come rete capillare, produttiva e invisibile di dispositivi di normalizzazione psichica e corporale.",
+            ['Foucault', 'Potere', 'Sovrano', 'Disciplina', 'Normalizzare'],
+            ['Microfisica del potere capillare', 'Dispositivo biopolitico di normalizzazione', 'Sapere-potere indissolubile', 'Panoptismo contemporaneo interiorizzato', 'Governamentalità dei corpi']
+        ),
+        (
+            'Il principio di falsificabilità popperiano e la logica della scoperta scientifica',
+            "Dimostra l'asimmetria epistemica tra verificazione e falsificazione: un sistema scientifico non si distingue dalla metafisica per la pretesa di essere vero per sempre, ma per la sua capacità di essere confutato dall'esperienza.",
+            ['Popper', 'Falsificabilità', 'Verifica', 'Esperimento', 'Verità assoluta'],
+            ['Asimmetria epistemologica fondamentale', 'Criterio popperiano di demarcazione', 'Fallibilismo metodologico radicale', 'Logica della scoperta scientifica', 'Mondo aperto delle congetture']
+        ),
+        (
+            "L'agire comunicativo habermasiano e le condizioni ideali della deliberazione democratica",
+            "Esporrai la teoria dell'agire orientato all'intesa: la situazione discorsiva ideale dove vale solo la forza del miglior argomento, immune da coercizioni economiche o violenze istituzionali esterne.",
+            ['Habermas', 'Agire comunicativo', 'Miglior argomento', 'Forza', 'Intesa'],
+            ['Situazione discorsiva ideale (Ideale Sprechsituation)', 'Forza del miglior argomento', 'Pretese universali di validità', 'Democrazia deliberativa procedurale', 'Emancipazione comunicativa']
+        ),
+        (
+            "L'aporia dell'Altro assoluto nell'etica di Emmanuel Levinas: Totalità e Infinito",
+            "Sostieni il primato etico dell'Alterità prima di ogni ontologia: il volto vulnerabile e nudo dell'Altro rompe la totalità dell'Io imponendo l'imperativo incondizionato della responsabilità asimmetrica.",
+            ['Levinas', 'Volto', 'Totalità e infinito', 'Altro', 'Io'],
+            ["Epifania dell'Alterità radicale", 'Totalità versus Infinito', 'Asimmetria della responsabilità etica', 'Comandamento tu non ucciderai', "Trascendenza dell'Altro"]
+        ),
+        (
+            'La teoria della giustizia distributiva e il principio di differenza in John Rawls',
+            "Nel capolavoro del 1971, analizza i due principi fondamentali scaturiti dal velo d'ignoranza: l'eguaglianza formale delle libertà fondamentali e la legittimità delle sole disuguaglianze che giovano ai più deboli.",
+            ['Rawls', 'Giustizia', 'Disuguaglianze', 'Poveri', "Velo d'ignoranza"],
+            ['Liberalismo egualitario rawlsiano', 'Principio di differenza distributivo', 'Struttura fondamentale della società', 'Rifiuto della lotteria naturale e sociale', 'Equità procedurale pura']
+        ),
+        (
+            "La società dello spettacolo di Guy Debord e l'alienazione dell'immagine",
+            "Nel testo situazionista del 1967, dimostra come il capitale abbia raggiunto un grado tale di accumulazione da trasformarsi in immagine, alienando l'essere nell'avere e l'avere nel puro apparire mediatico.",
+            ['Debord', 'Società dello spettacolo', 'Immagine', 'Apparire', 'Capitale'],
+            ["Feticismo dell'immagine spettacolare", "Dall'essere all'avere all'apparire", 'Alienazione situazionista totale', 'Mercificazione dello sguardo', 'Critica del tempo mercificato']
+        ),
+        (
+            "L'aporia del dono puro in Jacques Derrida e Marcel Mauss",
+            "Nel saggio Donare il tempo, analizza l'impossibilità logica del dono: nel momento stesso in cui il dono viene riconosciuto come tale dal donatore o dal ricevente, scatta la logica dello scambio e del debito, annullandolo.",
+            ['Derrida', 'Mauss', 'Dono', 'Scambio', 'Debito'],
+            ['Aporia derridiana del dono puro', 'Gratuità assoluta vs reciprocità', 'Saggio sul dono di Mauss de-costruito', 'Donare il tempo', "Interruzione dell'economia del calcolo"]
+        ),
+        (
+            "La decostruzione dell'umanesimo classico nel pensiero post-strutturalista",
+            "Attraverso Foucault, Althusser e Deleuze, dimostra la celebre profezia della fine de 'Le parole e le cose': l'Uomo come invenzione recente della modernità destinata a svanire come un volto di sabbia sulla riva.",
+            ['Foucault', "Morte dell'uomo", 'Sabbia', 'Umanesimo', 'Struttura'],
+            ['Morte del soggetto cartesiano', 'Uomo come piega recente del sapere', 'Volto di sabbia sul bagnasciuga', 'Antiumanesimo teorico', 'Orizzonte post-filosofico']
+        ),
+        (
+            'La critica della ragion dialettica e la serialità in Jean-Paul Sartre',
+            "Nel trattato del 1960, analizza il collettivo alienato: la coda d'attesa all'autobus dove gli individui sono uniti solo dalla comune solitudine e dall'inerzia materiale del pratico-inerte.",
+            ['Sartre', 'Dialettica', 'Autobus', 'Collettivo', 'Inerte'],
+            ['Materia del pratico-inerte sartriano', 'Serialità versus gruppo in fusione', 'Alienazione della prassi umana', 'Critica della ragion dialettica', "Necessità dell'insurrezione"]
+        ),
+        (
+            "La genealogia della morale e la trasvalutazione nietzscheana dell'Amor Fati",
+            "Decostruisci l'invenzione dell'aldilà consolatorio platonico e cristiano come vendetta psicologica contro la bellezza della vita terrena, affermando la volontà dionisiaca del superamento della colpa.",
+            ['Nietzsche', 'Aldilà', 'Colpa', 'Platone', 'Amor fati'],
+            ['Genealogia del nichilismo reattivo', 'Rifiuto della calunnia metafisica', 'Amor Fati come affermazione suprema', 'Dionisiaco contro il Crocifisso', 'Volontà di potenza creatrice']
+        ),
+        (
+            "L'archetipo dell'Antigone e la teoria della giustizia in Jacques Lacan",
+            "Nel Seminario VII sull'etica della psicoanalisi, indaga la bellezza splendente e mortale di Antigone: colei che oltrepassa il limite dell'Ate spinta dal desiderio puro, non cedendo sul proprio desiderio.",
+            ['Lacan', 'Antigone', 'Desiderio', 'Etica', 'Morire'],
+            ['Etica della psicoanalisi lacaniana', 'Non cedere sul proprio desiderio', "Oltrepassamento dell'Ate tragica", 'Bellezza splendente del limite', 'Purezza del significante']
+        ),
+        (
+            'Il paradosso della sovranità e lo stato di eccezione in Giorgio Agamben',
+            "Nel trattato Homo sacer, analizza la struttura paradossale dell'eccezione sovrana: il sovrano è al tempo stesso dentro e fuori l'ordinamento giuridico, avendo il potere legale di sospendere la legge stessa.",
+            ['Agamben', 'Sovrano', 'Stato di eccezione', 'Legge sospesa', 'Homo sacer'],
+            ['Paradosso della sovranità schmittiana-agambeniana', "Topologia dell'eccezione giuridica", 'Sospensione della legge (Iustitium)', 'Nuda vita e potere sovrano', 'Decostruzione della macchina biopolitica']
+        ),
+        (
+            "La dialettica dell'Aufhebung in Hegel: conservare superando",
+            "Spiega il motore verbale e ontologico dell'idealismo assoluto: l'Aufhebung che nega la finitezza unilaterale della tesi e dell'antitesi conservandone la verità sostanziale nella sintesi superiore.",
+            ['Hegel', 'Aufhebung', 'Tesi e antitesi', 'Sintesi', 'Superare'],
+            ['Concetto hegeliano di Aufhebung', 'Negazione della negazione dialettica', 'Conservazione della verità sostanziale', "Movimento autopoietico dell'Assoluto", 'Scienza della logica']
+        ),
+        (
+            "L'Orazione per la Verità Dialettica: il Magistero dell'Oratore Filosofo",
+            "Pronuncia l'arringa conclusiva: la filosofia non possiede la verità come una pietra morta nel pugno, ma è l'ardore vivente del Logos che non teme il conflitto delle contraddizioni terrene.",
+            ['Filosofia', 'Verità posseduta', 'Pietra', 'Fine', 'Certezze'],
+            ["Magistero dell'Oratore Dialettico", 'Ardore inestinguibile del Logos vivo', 'Fecondità della contraddizione ontologica', 'Trionfo della Ragione dialogica', 'Luce perenne della Sapienza']
+        ),
+    ],
+    "c2": [
+        (
+            "L'aporia del fondamento ultimo e il Trilemma di Münchhausen in Hans Albert",
+            "Dimostra l'impossibilità logica di una fondazione epistemologica definitiva: ogni pretesa di verità assoluta cade in una delle tre aporie: regresso all'infinito, circolo vizioso o interruzione dogmatica arbitraria.",
+            ['Münchhausen', 'Fondamento ultimo', 'Verità assoluta', 'Albert', 'Dogma'],
+            ['Trilemma di Münchhausen epistemologico', "Regresso all'infinito delle giustificazioni", 'Circolo logico autoreferenziale', 'Interruzione dogmatica arbitraria', 'Caduta del fondamentalismo gnoseologico']
+        ),
+        (
+            "L'ontologia della decostruzione e il pensiero dell'aporia in Jacques Derrida",
+            "Sviscera l'aporia non come paralisi sterile, ma come l'esperienza dell'indecidibile che sola rende possibile una decisione etica e responsabile oltre la meccanica applicazione della norma.",
+            ['Derrida', 'Aporia', 'Indecidibile', 'Regola', 'Decidere'],
+            ["Esperienza dell'indecidibile puro", 'Aporia come condizione della responsabilità', 'Decostruzione della certezza dogmatica', 'Decisione etica sovrana oltre la norma', 'Fessura salvifica del senso']
+        ),
+        (
+            'Il paradosso della sovranità e la disattivazione del dispositivo in Giorgio Agamben',
+            "Pronuncia una summa sulla teoria dell'inoperosità messianica: la vera liberazione dal giogo del potere e della legge non risiede nella fondazione di una nuova legge ma nella loro disattivazione (katargesis).",
+            ['Agamben', 'Sovranità', 'Potere', 'Legge nuova', 'Inoperosità'],
+            ['Inoperosità messianica (Katargesis)', 'Disattivazione del dispositivo biopolitico', 'Destituzione del potere sovrano', 'Uso dei corpi senza proprietà', 'Forma-di-vita compiuta']
+        ),
+        (
+            "L'enigma del tempo e l'intraducibilità dell'Altro in Emmanuel Levinas",
+            "Indaga l'Altrimenti che essere: come la responsabilità per l'Altro ecceda la dimensione ontologica dell'essere per farsi diacronia pura, tempo che non si lascia sincronizzare nel presente dell'Io.",
+            ['Levinas', 'Altro', 'Tempo', 'Essere', 'Io presente'],
+            ['Diacronia irriducibile levinasiana', "Altrimenti che essere oltre l'essenza", 'Responsabilità anarchica e immemoriale', "Trascendenza dell'Altro assoluto", 'Sostituzione etica estrema']
+        ),
+        (
+            'La genealogia del cinismo moderno e la ragione cinica in Peter Sloterdijk',
+            "Nella Critica della ragion cinica, analizza la falsa coscienza illuminata contemporanea: sapere perfettamente che l'apparato economico e politico è menzognero, e tuttavia continuare a eseguirlo.",
+            ['Sloterdijk', 'Cinismo', 'Ragione cinica', 'Sapere e fare', 'Falsa coscienza'],
+            ['Ragione cinica contemporanea', 'Falsa coscienza illuminata dissacrata', 'Kynismo di Diogene contro cinismo moderno', "Sapere l'inganno ed eseguirlo ugualmente", 'Rivolta della carne disadorna']
+        ),
+        (
+            "La morte del soggetto e l'avvento del post-umano in Gilles Deleuze",
+            "Sostieni la dissoluzione dell'identità personale cartesiana nell'immanenza pura: il soggetto come aggregato nomade di intensità pulsionali, flussi di desiderio e concatenamenti macchinici.",
+            ['Deleuze', 'Io cartesiano', 'Soggetto', 'Desiderio', 'Post-umano'],
+            ['Piano di immanenza puro deleuziano', 'Concatenamento macchinico del desiderio', "Soggettivazione come piega dell'esterno", 'De-territorializzazione nomade', "Oltre l'antropocentrismo"]
+        ),
+        (
+            'La distruzione della teologia politica e il paradosso della grazia in Walter Benjamin',
+            "Nel Frammento teologico-politico, analizza l'antitesi tra l'ordine profano della felicità terrena e l'avvento del Regno messianico: il sacro che agisce solo come cesura, interruzione e dissoluzione della storia.",
+            ['Benjamin', 'Teologia politica', 'Messia', 'Storia', 'Profano'],
+            ['Frammento teologico-politico benjaminiano', "Ritmo dell'ordine profano", 'Cesura messianica redentrice', 'Deperimento come restituzione', 'Rifiuto della teologia di Stato']
+        ),
+        (
+            "L'aporia della verità e il prospettivismo radicale in Friedrich Nietzsche",
+            "Commenta il celebre aforisma postumo: 'Non ci sono fatti, ma solo interpretazioni'. La verità non come rispecchiamento dell'oggetto, ma come esercizio di volontà di potenza interpretativa.",
+            ['Nietzsche', 'Non ci sono fatti', 'Verità oggettiva', 'Interpretazione', 'Realtà'],
+            ['Prospettivismo radicale nietzscheano', 'Non ci sono fatti solo interpretazioni', 'Verità come esercito di metafore', 'Volontà di potenza ermeneutica', 'Superamento del realismo ingenuo']
+        ),
+        (
+            'La fenomenologia della carne e il chiasmo in Maurice Merleau-Ponty',
+            "Nel saggio incompiuto Il visibile e l'invisibile, illustra la nozione rivoluzionaria di Chair (Carne): l'essere umano come vedente e insieme visibile, toccante e toccato nell'intreccio col mondo.",
+            ['Merleau-Ponty', 'Carne', 'Visibile e invisibile', 'Corpo e mondo', 'Toccare'],
+            ['Concetto ontologico di Chair (Carne)', 'Chiasma e reversibilità sensoriale', 'Toccante-toccato e vedente-visibile', "Tessuto originario dell'essere", 'Superamento del dualismo cartesiano']
+        ),
+        (
+            "L'aporia dell'indecidibile e il paradosso della decisione sovrana in Jacques Derrida",
+            'Dimostra come una decisione che si limitasse ad applicare una regola preesistente non sarebbe affatto una decisione libera ma solo un calcolo algoritmico programmato, privo di etica.',
+            ['Derrida', 'Decisione', 'Regola', 'Calcolo', 'Algoritmo'],
+            ["Esperienza dell'indecidibile puro", 'Salto etico della decisione sovrana', 'Oltre il calcolo algoritmico', 'Responsabilità senza garanzie', "Follia dell'atto morale"]
+        ),
+        (
+            'La decostruzione del concetto di Totalità: Levinas versus Hegel',
+            "Confronta la sintesi onnicomprensiva hegeliana (dove ogni differenza viene infine metabolizzata e ricondotta all'Unità dello Spirito) con la frattura irriducibile dell'Infinito levinasiano.",
+            ['Hegel', 'Levinas', 'Totalità', 'Infinito', 'Tutto unito'],
+            ['Totalità hegeliana versus Infinito levinasiano', "Frattura irriducibile dell'alterità", 'Rifiuto della metabolizzazione dialettica', "Trascendenza dell'eccedenza etica", 'Scacco della sintesi assoluta']
+        ),
+        (
+            'La genealogia della sovranità e la bio-politica in Michel Foucault',
+            "Nella serie di lezioni Bisogna difendere la società, dimostra come la sovranità statale moderna sia nata come internalizzazione disciplinare della guerra di conquista coloniale all'interno delle metropoli.",
+            ['Foucault', 'Guerra interna', 'Sovranità', 'Razza', 'Stato'],
+            ['Internalizzazione della guerra civile', "Guerra come prisma d'analisi foucaultiano", 'Biopolitica della purezza sociale', 'Genealogia del razzismo di Stato', 'Dispositivi di sicurezza moderni']
+        ),
+        (
+            "L'archetipo dell'Antigone e la legge non scritta nel pensiero di Martin Heidegger",
+            "Ripercorri l'interpretazione del coro dell'Antigone nel saggio del 1935: l'essere umano come to deinotaton (il più tremendo e perturbante), colui che varca i flutti ma rischia di perdersi senza dimora (Apolis).",
+            ['Heidegger', 'Antigone', 'Deinotaton', 'Tremendo', 'Apolis'],
+            ['To deinotaton heideggeriano', "Perturbante primordiale dell'essere umano", 'Lacerazione tra Nomos e Dike', 'Apolis e senza dimora ontologica', 'Tragicità del varcamento']
+        ),
+        (
+            'Il silenzio contemplativo e la teologia negativa in Maestro Eckhart',
+            "Pronuncia una meditazione sublime sul distacco puro (Gelassenheit): spogliarsi persino di Dio per incontrare il Fondamento vergine dell'essere dove non esiste né nome, né forma, né parola.",
+            ['Eckhart', 'Dio', 'Distacco', 'Preghiera', 'Nome'],
+            ['Mistica apofatica renana di Eckhart', 'Gelassenheit e supremo distacco', "Svuotamento dell'anima (Kenosis)", "Fondo senza fondo dell'Essere (Abgrund)", "Silenzio dell'adorazione ineffabile"]
+        ),
+        (
+            "L'enigma del simulacro e l'eclissi del referente in Jean Baudrillard",
+            "Analizza come nell'iperrealtà tardo-capitalista i segni e le immagini non rimandino più a fatti reali sottostanti, ma si auto-generino in un circuito chiuso dove il reale è stato assassinato dal codice.",
+            ['Baudrillard', 'Simulacro', 'Reale morto', 'Immagini', 'Codice'],
+            ['Precessione dei simulacri baudrillardeana', 'Iperrealtà e assassinio del reale', 'Simulazione integrale autopoietica', 'Dissoluzione del referente materiale', 'Trasparenza spettrale del male']
+        ),
+        (
+            "La dialettica della cura e l'oblio dell'essere in Martin Heidegger",
+            "Sviscera la caduta dell'esserci (Verfallenheit) nell'inautenticità della chiacchiera e della curiosità mondana: solo l'angoscia isola il Dasein richiamandolo alla sua autentica possibilità di scelta.",
+            ['Heidegger', 'Chiacchiera', 'Inautentico', 'Curiosità', 'Angoscia'],
+            ['Verfallenheit e caduta mondana', 'Dittatura impersonale del Si (das Man)', 'Angoscia isolatrice disvelante', 'Richiamo della coscienza autentica', "Ricomposizione del senso dell'essere"]
+        ),
+        (
+            'La critica della ragion cinica e il kynismo disarmato di Diogene di Sinope',
+            "Opponi al cinismo borghese contemporaneo (che si adatta opportunisticamente al potere) il kynismo antico di Diogene nella botte: vivere nella nudità, nella parresìa e nel disprezzo dell'oro.",
+            ['Diogene', 'Botte', 'Alessandro Magno', 'Cinismo', 'Nudo'],
+            ['Kynismo antico sovversivo di Diogene', 'Rifiuto della convenzione cortigiana', 'Parresìa corporea e sfrontata', 'Spostati dal mio sole', "Libertà disadorna dell'inerme"]
+        ),
+        (
+            "L'aporia dell'ospitalità incondizionata e il diritto cosmopolitico in Derrida",
+            "Analizza la contraddizione insurmontabile: l'ospitalità pura deve accogliere chiunque arrivi senza chiedere documenti, ma per realizzarsi storicamente ha bisogno delle leggi e dei confini che la negano.",
+            ['Derrida', 'Ospitalità', 'Confini', 'Straniero', 'Leggi'],
+            ["Aporia dell'ospitalità pura", 'Legge incondizionata vs leggi condizionali', "Eteronomia radicale dell'accoglienza", 'Sovranità disarmata sulla soglia', 'Diritto cosmopolitico messianico']
+        ),
+        (
+            'Il silenzio come vertice supremo della speculazione metafisica',
+            "Dimostra con Ludwig Wittgenstein (Tractatus Logico-Philosophicus) la conclusione irrevocabile della filosofia rigorosa: 'Su ciò di cui non si può parlare, si deve tacere'. Il mistico come silenzio reverente.",
+            ['Wittgenstein', 'Tractatus', 'Tacere', 'Parole finite', 'Mistico'],
+            ['Proposizione 7 del Tractatus wittgensteiniano', 'Wovon man nicht sprechen kann', "Silenzio dell'indicibile mistico", 'Confine insuperabile del linguaggio', 'Pace contemplativa del pensiero']
+        ),
+        (
+            "L'Inno al Logos Vivente: il Congedo Supremo dell'Oratore Filosofico",
+            "Chiudi il corso magistrale di Filosofia, Idee e Debate consacrando la parola dell'oratore: la voce dell'uomo che, custode della luce e del dubbio, continua a interrogare il mistero dell'Universo.",
+            ['Fine', 'Tutto finito', 'Mistero risolto', 'Logos', 'Silenzio finale'],
+            ["Magistero supremo dell'Oratore Filosofico", 'Inno al Logos vivente e perenne', 'Trionfo della Verità e del Dubbio', 'Consacrazione solenne della Parola', 'Luce imperitura della Coscienza']
+        ),
+    ],
+}

@@ -33,6 +33,9 @@ const App = {
     await GameEngine.loadData();
     if (window.AudioEngine && window.AudioEngine.init) window.AudioEngine.init();
     this.renderLevelGrid();
+    if (window.GameEngine && window.GameEngine.checkAutoSaveOnStartup) {
+      window.GameEngine.checkAutoSaveOnStartup();
+    }
 
     // Chiudi dropdown utente cliccando fuori
     document.addEventListener('click', (e) => {
@@ -68,7 +71,21 @@ const App = {
     console.log("L'Oratore v3.0 initialized with 6 QCER levels, shared round categories, and Ops! Storia turn flow.");
   },
 
-  showView(viewId, pushHistory = true) {
+  async showView(viewId, pushHistory = true) {
+    const isPublic = ['view-welcome', 'view-regolamento'].includes(viewId);
+    if (!isPublic && window.HubSubscriptionGuard && typeof window.HubSubscriptionGuard.verifyAccess === 'function') {
+      const currentUser = (window.Auth && window.Auth.user) || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) || null;
+      const currentRole = (window.Auth && window.Auth.role) || 'guest';
+      const isAllowed = await window.HubSubscriptionGuard.verifyAccess({
+        user: currentUser,
+        role: currentRole,
+        isPublicView: false
+      });
+      if (!isAllowed) {
+        return;
+      }
+    }
+
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     const target = document.getElementById(viewId);
     if (target) {
@@ -78,6 +95,10 @@ const App = {
 
     if (viewId === 'view-regolamento' && window.OratoreRulesService) {
       window.OratoreRulesService.renderPublicView('view-regolamento-container');
+    }
+
+    if (viewId === 'view-welcome' && window.GameEngine && window.GameEngine.checkAutoSaveOnStartup) {
+      window.GameEngine.checkAutoSaveOnStartup();
     }
 
     if (pushHistory && window.history && (!window.history.state || window.history.state.view !== viewId)) {
@@ -102,7 +123,18 @@ const App = {
     if (dd) dd.classList.toggle('hidden');
   },
 
-  startSetupFlow() {
+  async startSetupFlow() {
+    if (window.HubSubscriptionGuard && typeof window.HubSubscriptionGuard.verifyAccess === 'function') {
+      const currentUser = (window.Auth && window.Auth.user) || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser) || null;
+      const currentRole = (window.Auth && window.Auth.role) || 'guest';
+      const isAllowed = await window.HubSubscriptionGuard.verifyAccess({
+        user: currentUser,
+        role: currentRole,
+        isPublicView: false
+      });
+      if (!isAllowed) return;
+    }
+
     this.selectedSetup = {
       teamsCount: null,
       teams: [],
