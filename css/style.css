@@ -960,6 +960,32 @@ a:hover {
   .header-nav-btn span {
     display: none;
   }
+  /* Game HUD compatto su smartphone */
+  .game-hud-bar {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 12px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+  .active-team-pill {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .game-hud-bar > div:last-child {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  .circular-timer-container {
+    width: 130px !important;
+    height: 130px !important;
+    margin: 0 auto !important;
+  }
+  .orator-full-screen-wrap {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
 }
 
 /* Step 4: Level Selector */
